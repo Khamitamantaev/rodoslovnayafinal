@@ -94,6 +94,7 @@ async function getGitHubUser({ code }): Promise<GitHubUser> {
       `https://github.com/login/oauth/access_token?client_id=${GITHUB_CLIENT_ID}&client_secret=${GITHUB_CLIENT_SECRET}&code=${code}`,
     )
     .then(res => {
+      console.log(res);
       return res.data;
     })
     .catch(error => {

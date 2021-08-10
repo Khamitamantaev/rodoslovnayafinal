@@ -32,7 +32,7 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
   const ua = get(ctx, 'req.headers[user-agent]', '');
   const token = parseCookie({
     cookie: get(ctx, 'req.headers.cookie', ''),
-    name: 'token'
+    name: 'token',
   });
 
   initSentry({ user: get(jwt.decode(token), 'user', null) });
@@ -45,7 +45,7 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
     query: get(ctx, 'query', null),
     userContext: null,
     ua,
-    ...initialProps
+    ...initialProps,
   };
 
   return { pageProps };
