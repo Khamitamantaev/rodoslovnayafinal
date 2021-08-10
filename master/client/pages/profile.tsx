@@ -1,6 +1,11 @@
 import * as React from 'react';
 import { get } from 'lodash';
 import {
+  Card,
+  Stack,
+  Heading,
+  Avatar,
+  Box,
   Button,
   InputField,
   TextareaField,
@@ -8,7 +13,7 @@ import {
   useToasts,
   Flex,
   Columns,
-  Container
+  Container,
 } from 'bumbag';
 import useTranslation from 'locales/useTranslation';
 import * as Yup from 'yup';
@@ -17,6 +22,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useMeQuery, useUpdateUserMutation } from 'generated';
 import App from 'components/App';
 import withApollo from 'lib/withApollo';
+import { Text } from 'bumbag/ts/Text/Text.styles';
 
 function SettingsPage() {
   const { t } = useTranslation();
@@ -28,16 +34,16 @@ function SettingsPage() {
     onCompleted: () => {
       toasts.success({
         title: t('page.profile.form.onSuccess.title'),
-        message: t('page.profile.form.onSuccess.message')
+        message: t('page.profile.form.onSuccess.message'),
       });
-    }
+    },
   });
 
   const defaultValues = me
     ? {
         email: me.email,
         name: me.name,
-        bio: me.bio || ''
+        bio: me.bio || '',
       }
     : {};
 
@@ -47,22 +53,22 @@ function SettingsPage() {
       .required('Email is required')
       .nullable(),
     name: Yup.string().required('Email is required'),
-    bio: Yup.string()
+    bio: Yup.string(),
   });
 
   const { handleSubmit, errors, control } = useForm({
     defaultValues,
-    resolver: yupResolver(validationSchema)
+    resolver: yupResolver(validationSchema),
   });
-  const onSubmit = values => {
+  const onSubmit = (values) => {
     return updateUser({
       variables: {
         input: {
           email: values.email,
           name: values.name,
-          bio: values.bio
-        }
-      }
+          bio: values.bio,
+        },
+      },
     });
   };
 
@@ -78,6 +84,36 @@ function SettingsPage() {
       requiresUser
     >
       <Container breakpoint="tablet">
+      <Card borderRadius="5" paddingY="major-4" width="300px" marginLeft="auto" marginRight="auto">
+  <Stack spacing="major-2" alignX="center">
+    <Avatar
+      borderRadius="100%"
+      src="https://bit.ly/3tve2fu"
+      size="large"
+    />
+    <Stack alignX="center" spacing="major-1">
+      <Heading fontSize="500">{me.name}</Heading>
+      {/* <Text
+        use="h2"
+        color="text100"
+        fontSize="150"
+        fontWeight="500"
+        textTransform="uppercase"
+      >
+        Bumbag Entrepreneur
+      </Text> */}
+    </Stack>
+    {/* <Button
+      use="a"
+      href="https://twitter.com/jxom_"
+      iconBefore="solid-twitter"
+      palette="twitter"
+      variant="outlined"
+    >
+      Twitter
+    </Button> */}
+  </Stack>
+</Card>
         <form onSubmit={handleSubmit(onSubmit)}>
           <FieldStack>
             <Controller
@@ -128,6 +164,7 @@ function SettingsPage() {
           </Flex>
         </form>
       </Container>
+      
     </App>
   );
 }
