@@ -84,36 +84,6 @@ function SettingsPage() {
       requiresUser
     >
       <Container breakpoint="tablet">
-      <Card borderRadius="5" paddingY="major-4" width="300px" marginLeft="auto" marginRight="auto">
-  <Stack spacing="major-2" alignX="center">
-    <Avatar
-      borderRadius="100%"
-      src="https://bit.ly/3tve2fu"
-      size="large"
-    />
-    <Stack alignX="center" spacing="major-1">
-      <Heading fontSize="500">{me.name}</Heading>
-      {/* <Text
-        use="h2"
-        color="text100"
-        fontSize="150"
-        fontWeight="500"
-        textTransform="uppercase"
-      >
-        Bumbag Entrepreneur
-      </Text> */}
-    </Stack>
-    {/* <Button
-      use="a"
-      href="https://twitter.com/jxom_"
-      iconBefore="solid-twitter"
-      palette="twitter"
-      variant="outlined"
-    >
-      Twitter
-    </Button> */}
-  </Stack>
-</Card>
         <form onSubmit={handleSubmit(onSubmit)}>
           <FieldStack>
             <Controller
