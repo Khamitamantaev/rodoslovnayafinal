@@ -11,13 +11,13 @@ generator client {
 }
 
 model Product {
-  id String @id @default(cuid())
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name String
+  name        String
   description String?
-  price Decimal
-  sku String @unique
-  published Boolean @default(false)
+  price       Decimal
+  sku         String  @unique
+  published   Boolean @default(false)
 }
