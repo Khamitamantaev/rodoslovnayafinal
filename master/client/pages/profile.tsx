@@ -84,6 +84,28 @@ function SettingsPage() {
       requiresUser
     >
       <Container breakpoint="tablet">
+      <Columns>
+  <Columns.Column>
+    <Box backgroundColor="whitesmoke" padding="0.5rem">
+      First column
+    </Box>
+  </Columns.Column>
+  <Columns.Column>
+    <Box backgroundColor="whitesmoke" padding="0.5rem">
+      Second column
+    </Box>
+  </Columns.Column>
+  <Columns.Column>
+    <Box backgroundColor="whitesmoke" padding="0.5rem">
+      Third column
+    </Box>
+  </Columns.Column>
+  <Columns.Column>
+    <Box backgroundColor="whitesmoke" padding="0.5rem">
+      Fourth column
+    </Box>
+  </Columns.Column>
+</Columns>
         <form onSubmit={handleSubmit(onSubmit)}>
           <FieldStack>
             <Controller
