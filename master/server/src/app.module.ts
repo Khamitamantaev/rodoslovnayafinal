@@ -15,6 +15,7 @@ import { services, schemas, resolvers } from './config/providers';
 import { ChatModule } from '@chat/chat.module';
 import { UserModule } from '@user/user.module';
 import { AuthModule } from '@auth/auth.module';
+
 @Module({
   imports: [
     MongooseModule.forRoot(MONO_DB_CONNECTION_STRING, {
@@ -50,7 +51,7 @@ import { AuthModule } from '@auth/auth.module';
     UserModule,
   ],
   controllers: [HealthzController],
-  providers: [...services, ...resolvers],
+  providers: [...services, ...resolvers,],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
