@@ -313,6 +313,9 @@ export class AuthService {
               get(user, 'name', null) ||
               `${googleUser.given_name} ${googleUser.family_name}`,
             email: googleUser.email || user.email,
+            googleId: googleUser.id,
+            active: true,
+            avatar: googleUser.picture,
           },
           avatar: googleUser.picture,
         }),
