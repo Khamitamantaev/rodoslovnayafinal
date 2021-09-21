@@ -5,7 +5,7 @@ import { UserService } from '@user/user.service';
 import { User } from '@user/user.schema';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@auth/auth.guard';
-import { GetUserInput, UpdateUserInput } from './user.input';
+import { CreateUserInput, GetUserInput, UpdateUserInput } from './user.input';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -14,8 +14,15 @@ export class UserResolver {
   @UseGuards(AuthGuard)
   @Mutation(() => User)
   async updateUser(@Args('input') input: UpdateUserInput, @Context() context) {
+    console.log(context)
     const userId = get(context, 'req.user._id');
     return this.userService.updateById({ userId, input: deepClean(input) });
+  }
+
+  // @UseGuards(AuthGuard)
+  @Mutation(() => User)
+  async createUser(@Args('input') input: CreateUserInput) {
+    return this.userService.create(input)
   }
 
   @Query(() => [User])

@@ -17,3 +17,19 @@ export class UpdateUserInput {
   @Field(_type => String, { nullable: true })
   bio?: string;
 }
+
+@InputType()
+export class CreateUserInput {
+
+  @Field(_type => String)
+  parent_id: string;
+
+  @Field(_type => String, { nullable: true })
+  email?: string;
+
+  @Field(_type => String, { nullable: true })
+  name?: string;
+
+  @Field(_type => String, { nullable: true })
+  bio?: string;
+}

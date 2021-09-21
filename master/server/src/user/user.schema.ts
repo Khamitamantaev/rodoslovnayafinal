@@ -24,11 +24,27 @@ export const UserSchema = new mongoose.Schema(
     redditId: { type: String, required: false },
     googleId: { type: String, required: false },
     avatar: String,
+    parent_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      default: null,
+      ref: 'User'
+    },
+    ancestors: [{
+         _id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            index: true
+    },
+         name: String,
+         slug: String
+    }]
   },
   {
     timestamps: true,
   },
 );
+
+mongoose.model('User', UserSchema);
 
 function encryptPassword(
   this: User & { password: string },

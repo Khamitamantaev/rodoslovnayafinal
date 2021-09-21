@@ -2,6 +2,7 @@ import { Model, CreateQuery, UpdateQuery, FilterQuery } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './user.schema';
+import { CreateUserInput } from './user.input';
 
 @Injectable()
 export class UserService {
@@ -19,8 +20,8 @@ export class UserService {
       .exec();
   }
 
-  async create(args: CreateQuery<User>): Promise<User> {
-    return this.userModel.create(args);
+  async create(createUserInput: CreateUserInput): Promise<User> {
+    return this.userModel.create(createUserInput);
   }
 
   async findAll(): Promise<User[]> {

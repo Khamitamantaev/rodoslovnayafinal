@@ -45,11 +45,19 @@ input SocialAuthInput {
 
 type Mutation {
   updateUser(input: UpdateUserInput!): User!
+  createUser(input: CreateUserInput!): User!
   logout: User
   sendMessage(input: SendMessageInput!): Message!
 }
 
 input UpdateUserInput {
+  email: String
+  name: String
+  bio: String
+}
+
+input CreateUserInput {
+  parent_id: String!
   email: String
   name: String
   bio: String

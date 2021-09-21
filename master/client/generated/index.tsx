@@ -15,6 +15,13 @@ export type Scalars = {
   Float: number;
 };
 
+export type CreateUserInput = {
+  readonly parent_id: Scalars['String'];
+  readonly email?: Maybe<Scalars['String']>;
+  readonly name?: Maybe<Scalars['String']>;
+  readonly bio?: Maybe<Scalars['String']>;
+};
+
 export type GetUserInput = {
   readonly userPermalink: Scalars['String'];
 };
@@ -28,6 +35,7 @@ export type Message = {
 export type Mutation = {
   readonly __typename?: 'Mutation';
   readonly updateUser: User;
+  readonly createUser: User;
   readonly logout?: Maybe<User>;
   readonly sendMessage: Message;
 };
@@ -35,6 +43,11 @@ export type Mutation = {
 
 export type MutationUpdateUserArgs = {
   input: UpdateUserInput;
+};
+
+
+export type MutationCreateUserArgs = {
+  input: CreateUserInput;
 };
 
 
