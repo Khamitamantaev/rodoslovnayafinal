@@ -17,6 +17,7 @@ type User {
   redditId: String!
   avatar: String
   bio: String
+  ancestors: [User!]!
   role: Roles!
 }
 

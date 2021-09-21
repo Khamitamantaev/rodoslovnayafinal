@@ -21,7 +21,13 @@ export class UserService {
   }
 
   async create(createUserInput: CreateUserInput): Promise<User> {
-    return this.userModel.create(createUserInput);
+    let currentuser = await this.userModel.findById(createUserInput.parent_id).exec();
+      // console.log(currentuser)
+      const user = await this.userModel.create(createUserInput);
+      let ancest = currentuser.ancestors; 
+      ancest.push(user)
+      await this.userModel.findByIdAndUpdate (createUserInput.parent_id, { ancestors: ancest},  {useFindAndModify: false} );
+      return user
   }
 
   async findAll(): Promise<User[]> {
@@ -36,3 +42,7 @@ export class UserService {
     return this.userModel.findOne(query).lean();
   }
 }
+function deepClean(arg0: any): UpdateQuery<User> {
+  throw new Error('Function not implemented.');
+}
+

@@ -21,7 +21,10 @@ export class UserResolver {
 
   // @UseGuards(AuthGuard)
   @Mutation(() => User)
-  async createUser(@Args('input') input: CreateUserInput) {
+  async createUser(@Args('input') input: CreateUserInput, @Context() context) {
+    // const userId = get(context, 'req.user._id');
+    // const userId = "614a154bbdd14a250ca59578"
+    // console.log(userId + ' - это id юзера который добавляет под себя пользователя')
     return this.userService.create(input)
   }
 

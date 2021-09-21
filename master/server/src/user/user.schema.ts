@@ -35,8 +35,7 @@ export const UserSchema = new mongoose.Schema(
             ref: "User",
             index: true
     },
-         name: String,
-         slug: String
+         name: String
     }]
   },
   {
@@ -132,6 +131,9 @@ export class User extends Document {
 
   @Field({ nullable: true })
   readonly bio?: string;
+
+  @Field(_type => [User])
+  readonly ancestors: [User];
 
   @Field(_type => Roles, { nullable: false })
   readonly role: Roles;
