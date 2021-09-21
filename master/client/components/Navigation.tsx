@@ -36,7 +36,7 @@ function Dropdown() {
           <DropdownMenu.Item iconBefore="solid-pen">
             <Link href="/rodoslovnaya" passHref>
               <BBLink width="100%" display="block" textAlign="center">
-                {t('Родсловная')}
+                {t('Rodoslovnaya')}
               </BBLink>
             </Link>
           </DropdownMenu.Item>
