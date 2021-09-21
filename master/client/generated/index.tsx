@@ -121,6 +121,7 @@ export type User = {
   readonly redditId: Scalars['String'];
   readonly avatar?: Maybe<Scalars['String']>;
   readonly bio?: Maybe<Scalars['String']>;
+  readonly ancestors: ReadonlyArray<User>;
   readonly role: Roles;
 };
 
