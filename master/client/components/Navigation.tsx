@@ -33,6 +33,13 @@ function Dropdown() {
               </BBLink>
             </Link>
           </DropdownMenu.Item>
+          <DropdownMenu.Item iconBefore="solid-pen">
+            <Link href="/rodoslovnaya" passHref>
+              <BBLink width="100%" display="block" textAlign="center">
+                {t('Родсловная')}
+              </BBLink>
+            </Link>
+          </DropdownMenu.Item>
           <DropdownMenu.Item>
             <Button
               width="100%"
@@ -43,6 +50,7 @@ function Dropdown() {
               {t('navigation.logout')}
             </Button>
           </DropdownMenu.Item>
+          
         </>
       }
     >
@@ -62,7 +70,7 @@ function Navigation() {
       <TopNav.Section>
         <Link href="/" passHref>
           <TopNav.Item href="/" fontWeight="semibold">
-            <Image src="/logo.png" height="44px" />
+            <Image src="/rodos.png" height="90px" />
           </TopNav.Item>
         </Link>
       </TopNav.Section>

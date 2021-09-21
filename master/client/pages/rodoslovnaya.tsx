@@ -4,6 +4,7 @@ import App from 'components/App';
 import { useTranslation } from 'react-i18next';
 import Diagram, { createSchema, useSchema } from 'beautiful-react-diagrams';
 import 'beautiful-react-diagrams/styles.css';
+import { Box, Flex } from 'bumbag';
 
 
 
@@ -31,9 +32,23 @@ function RodoslovnayaPage() {
 
     return (
         <App title={t('Ваша родословная')} description={t('Здесь можно создать и распечатать свою родословную')} requiresUser>
-            <div style={{ height: '26.5rem' }}>
+            <Flex alignX="center">
+                <Flex alignX="left">
+                <Box width="400px" height="520px" >
+                <div>Here will buttons for createUser</div>
+                    </Box>  
+                </Flex>
+                <Flex alignX="right" >
+                <Box width="800px" height="520px" >
+                <div style={{ height: '26.5rem' }}>
                 <Diagram schema={schema} onChange={onChange} />
             </div>
+                    </Box>  
+                    
+                </Flex>
+            </Flex>
+
+            
 
         </App>
     )
