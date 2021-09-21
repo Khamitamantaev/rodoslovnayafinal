@@ -11,7 +11,7 @@ import { Roles } from '@enums';
 
 export const UserSchema = new mongoose.Schema(
   {
-    email: { type: String },
+    email: { type: String, unique: true },
     name: String,
     password: { type: String },
     active: { type: Boolean, default: false },

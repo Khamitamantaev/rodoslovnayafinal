@@ -296,9 +296,11 @@ export class AuthService {
 
   async googleAuth(input, context) {
     const googleUser = await getGoogleUser({ code: input.code });
+    console.log('-----------------Welcome User!------------------')
+    console.log(googleUser)
 
     let user = await this.userModel
-      .findOne({ googleId: String(googleUser.id) })
+      .findOne({ email: String(googleUser.email) })
       .exec();
 
     if (user) {
