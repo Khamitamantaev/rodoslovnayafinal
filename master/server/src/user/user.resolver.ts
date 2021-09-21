@@ -14,7 +14,7 @@ export class UserResolver {
   @UseGuards(AuthGuard)
   @Mutation(() => User)
   async updateUser(@Args('input') input: UpdateUserInput, @Context() context) {
-    console.log(context)
+    // console.log(context)
     const userId = get(context, 'req.user._id');
     return this.userService.updateById({ userId, input: deepClean(input) });
   }
@@ -32,6 +32,8 @@ export class UserResolver {
   async users() {
     return this.userService.findAll();
   }
+
+
 
   @Query(() => User, { nullable: true })
   async me(@Context() context) {

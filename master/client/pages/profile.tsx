@@ -14,6 +14,7 @@ import {
   Flex,
   Columns,
   Container,
+  Set,
 } from 'bumbag';
 import useTranslation from 'locales/useTranslation';
 import * as Yup from 'yup';
@@ -23,6 +24,7 @@ import { useMeQuery, useUpdateUserMutation } from 'generated';
 import App from 'components/App';
 import withApollo from 'lib/withApollo';
 import { Text } from 'bumbag/ts/Text/Text.styles';
+import { ActionButtons } from 'bumbag';
 
 function SettingsPage() {
   const { t } = useTranslation();
@@ -41,10 +43,10 @@ function SettingsPage() {
 
   const defaultValues = me
     ? {
-        email: me.email,
-        name: me.name,
-        bio: me.bio || '',
-      }
+      email: me.email,
+      name: me.name,
+      bio: me.bio || '',
+    }
     : {};
 
   const validationSchema = Yup.object({
@@ -70,7 +72,7 @@ function SettingsPage() {
         },
       },
     });
-  };
+  };// Здесь у меня хранится запрос на обновление юзера, а точнее его профиля.
 
   if (loading) {
     return <p>Loading ...</p>;
@@ -84,29 +86,18 @@ function SettingsPage() {
       requiresUser
     >
       <Container breakpoint="tablet">
-      <Columns>
-  <Columns.Column>
-    <Box backgroundColor="whitesmoke" padding="0.5rem">
-      First column
-    </Box>
-  </Columns.Column>
-  <Columns.Column>
-    <Box backgroundColor="whitesmoke" padding="0.5rem">
-      Second column
-    </Box>
-  </Columns.Column>
-  <Columns.Column>
-    <Box backgroundColor="whitesmoke" padding="0.5rem">
-      Third column
-    </Box>
-  </Columns.Column>
-  <Columns.Column>
-    <Box backgroundColor="whitesmoke" padding="0.5rem">
-      Fourth column
-    </Box>
-  </Columns.Column>
-</Columns>
-        <form onSubmit={handleSubmit(onSubmit)}>
+      {/* <Set>
+  <Avatar variant="circle" src="/bean.jpg" alt="Photo of Mr. Bean" size="small" />
+  <Avatar variant="circle" src="/bean.jpg" alt="Photo of Mr. Bean" />
+  <Avatar variant="circle" src="/bean.jpg" alt="Photo of Mr. Bean" size="medium" />
+  <Avatar variant="circle" src="/bean.jpg" alt="Photo of Mr. Bean" size="large" />
+  <Avatar variant="circle" src="/bean.jpg" alt="Photo of Mr. Bean" size="150px" />
+</Set> */}
+        {/* <ActionButtons
+          onClickSubmit={() => console.log('submitted')}
+          onClickCancel={() => console.log('cancelled')}
+        /> */}
+        {/* <form onSubmit={handleSubmit(onSubmit)}>
           <FieldStack>
             <Controller
               control={control}
@@ -154,9 +145,9 @@ function SettingsPage() {
               {t('page.profile.form.callToAction')}
             </Button>
           </Flex>
-        </form>
+        </form> */}
       </Container>
-      
+
     </App>
   );
 }
