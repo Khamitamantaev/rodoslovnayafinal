@@ -1,4 +1,6 @@
 import * as React from 'react';
+import 'beautiful-react-diagrams/styles.css';
+import Diagram, { createSchema, useSchema } from 'beautiful-react-diagrams';
 import { get } from 'lodash';
 import {
   Card,
@@ -40,6 +42,25 @@ function SettingsPage() {
       });
     },
   });
+
+  const initialSchema = createSchema({
+    nodes: [
+      { id: 'node-1', content: 'Node 1', coordinates: [250, 60], },
+      { id: 'node-2', content: 'Node 2', coordinates: [100, 200], },
+      { id: 'node-3', content: 'Node 3', coordinates: [250, 220], },
+      { id: 'node-4', content: 'Node 4', coordinates: [400, 200], },
+    ],
+    links: [
+      { input: 'node-2',  output: 'node-4', label: 'сестра', readonly: true },
+      { input: 'node-1',  output: 'node-2', label: 'БРАТ', readonly: true },
+      { input: 'node-1',  output: 'node-3', label: 'ОТЕЦ', readonly: true },
+      { input: 'node-1',  output: 'node-4', label: 'Мама', readonly: true, className: 'my-custom-link-class' },
+    ]
+  });
+
+
+
+  const [schema, { onChange }] = useSchema(initialSchema);
 
   const defaultValues = me
     ? {
@@ -86,13 +107,16 @@ function SettingsPage() {
       requiresUser
     >
       <Container breakpoint="tablet">
-      {/* <Set>
+      <div style={{ height: '26.5rem' }}>
+      <Diagram schema={schema} onChange={onChange} />
+    </div>
+      <Set>
   <Avatar variant="circle" src="/bean.jpg" alt="Photo of Mr. Bean" size="small" />
   <Avatar variant="circle" src="/bean.jpg" alt="Photo of Mr. Bean" />
   <Avatar variant="circle" src="/bean.jpg" alt="Photo of Mr. Bean" size="medium" />
   <Avatar variant="circle" src="/bean.jpg" alt="Photo of Mr. Bean" size="large" />
   <Avatar variant="circle" src="/bean.jpg" alt="Photo of Mr. Bean" size="150px" />
-</Set> */}
+</Set>
         {/* <ActionButtons
           onClickSubmit={() => console.log('submitted')}
           onClickCancel={() => console.log('cancelled')}
