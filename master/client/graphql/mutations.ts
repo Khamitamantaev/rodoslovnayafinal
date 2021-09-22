@@ -34,16 +34,9 @@ export const SEND_MESSAGE_MUTATION = gql`
 `;
 
 export const REGISTER_USER_MUTATION = gql`
-mutation {
-  createUser(input:{
-    name: "PorvuBleaVnuk222",
-    email: "porvubleVnuk222@gmail.com",
-    parent_id: "614a18137a15b430e422243a"
-  })
-  {
-    name
-  }
-}
-
-
-`;
+mutation createUser($input: CreateUserInput!) {
+    createUser(input: $input){
+        name
+        email
+    }
+}`;
