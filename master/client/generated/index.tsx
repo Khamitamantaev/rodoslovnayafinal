@@ -16,7 +16,6 @@ export type Scalars = {
 };
 
 export type CreateUserInput = {
-  readonly parent_id: Scalars['String'];
   readonly email?: Maybe<Scalars['String']>;
   readonly name?: Maybe<Scalars['String']>;
   readonly bio?: Maybe<Scalars['String']>;

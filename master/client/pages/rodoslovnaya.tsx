@@ -44,7 +44,6 @@ function RodoslovnayaPage() {
                 input: {
                     email: values.email,
                     name: values.username,
-                    parent_id: values.parent_id,
                 },
             },
         });
@@ -76,12 +75,6 @@ function RodoslovnayaPage() {
                                     name="email"
                                     label="Email"
                                     marginBottom="10px"
-                                />
-                                <Field
-                                    component={InputField.Formik}
-                                    name="parent_id"
-                                    label="ParentID"
-                                    marginBottom="20px"
                                 />
                                 <Button isLoading={creating} disabled={creating} type="submit" palette="success">Success</Button>
                             </Form>

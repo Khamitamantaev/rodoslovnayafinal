@@ -20,13 +20,13 @@ export class UserService {
       .exec();
   }
 
-  async create(createUserInput: CreateUserInput): Promise<User> {
-    let currentuser = await this.userModel.findById(createUserInput.parent_id).exec();
+  async create(createUserInput: CreateUserInput, userId: string): Promise<User> {
+    let currentuser = await this.userModel.findById(userId).exec();
       // console.log(currentuser)
       const user = await this.userModel.create(createUserInput);
       let ancest = currentuser.ancestors; 
       ancest.push(user)
-      await this.userModel.findByIdAndUpdate (createUserInput.parent_id, { ancestors: ancest},  {useFindAndModify: false} );
+      await this.userModel.findByIdAndUpdate (userId, { ancestors: ancest},  {useFindAndModify: false} );
       return user
   }
 

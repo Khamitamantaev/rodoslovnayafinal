@@ -21,9 +21,6 @@ export class UpdateUserInput {
 @InputType()
 export class CreateUserInput {
 
-  @Field(_type => String)
-  parent_id: string;
-
   @Field(_type => String, { nullable: true })
   email?: string;
 

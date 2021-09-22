@@ -58,7 +58,6 @@ input UpdateUserInput {
 }
 
 input CreateUserInput {
-  parent_id: String!
   email: String
   name: String
   bio: String
