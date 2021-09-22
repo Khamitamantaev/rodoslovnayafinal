@@ -3,7 +3,6 @@ import { Flex, Heading, Columns } from 'bumbag';
 import GitHubLogin from 'components/auth/GitHubLogin';
 import RedditLogin from 'components/auth/RedditLogin';
 import GoogleLogin from 'components/auth/GoogleLogin';
-
 import useTranslation from 'locales/useTranslation';
 
 function LoginButtons() {
@@ -15,10 +14,10 @@ function LoginButtons() {
         <Flex flexDirection="column">
           <Heading fontSize="400">{t('page.login.heading')}</Heading>
           <br />
-          <GitHubLogin />
+          {/* <GitHubLogin />
           <br />
           <RedditLogin />
-          <br />
+          <br /> */}
           <GoogleLogin />
         </Flex>
       </Columns.Column>

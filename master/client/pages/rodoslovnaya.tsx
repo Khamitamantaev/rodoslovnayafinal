@@ -28,26 +28,27 @@ function RodoslovnayaPage() {
         ]
     });
 
-    const [createUser, { loading: updating, error }] = useCreateUserMutation({
+    //[Toast success не работает, после того, как пользователь создан, не выходит окно]
+    const [createUser, { loading: creating, error }] = useCreateUserMutation({
         onCompleted: () => {
-          toasts.success({
-            title: t('page.rodoslovnaya.form.onSuccess.title'),
-            message: t('page.rodoslovnaya.form.onSuccess.message'),
-          });
+            toasts.success({
+                title: '',
+                message: 'Пользователь успешно добавлен',
+            });
         },
-      });
+    });
 
-      const onSubmit = (values) => {
+    const onSubmit = (values) => {
         return createUser({
-          variables: {
-            input: {
-              email: values.email,
-              name: values.name,
-              parent_id: values.parent_id,
+            variables: {
+                input: {
+                    email: values.email,
+                    name: values.username,
+                    parent_id: values.parent_id,
+                },
             },
-          },
         });
-      };// Здесь у меня хранится запрос на обновление юзера, а точнее его профиля.
+    };// Здесь у меня хранится запрос на обновление юзера, а точнее его профиля.
 
 
 
@@ -57,10 +58,10 @@ function RodoslovnayaPage() {
         <App title={t('Ваша родословная')} description={t('Здесь можно создать и распечатать свою родословную')} requiresUser>
             <Flex alignX="center">
                 <Flex alignX="left">
-                    <Box width="300px" height="520px" border="1px solid" padding="10px" >
-                        <Label marginBottom="12px">Добавить</Label>
+                    <Box width="300px" height="520px" padding="10px" >
+                        <Label marginBottom="12px">Добавить пользователя</Label>
                         <Formik
-                            initialValues={{ }}
+                            initialValues={{}}
                             onSubmit={onSubmit}
                         >
                             <Form>
@@ -68,32 +69,27 @@ function RodoslovnayaPage() {
                                     component={InputField.Formik}
                                     name="username"
                                     label="Username"
+                                    marginBottom="10px"
                                 />
-                                 <Field
+                                <Field
                                     component={InputField.Formik}
                                     name="email"
                                     label="Email"
+                                    marginBottom="10px"
                                 />
-                                 <Field
+                                <Field
                                     component={InputField.Formik}
                                     name="parent_id"
                                     label="ParentID"
+                                    marginBottom="20px"
                                 />
-                                {/* <InputField label="Username" marginBottom="12px" variant="underline" />
-                                <InputField label="email" marginBottom="12px" variant="underline" />
-                                <InputField label="parent_id" marginBottom="12px" variant="underline" /> */}
-                                <Button type="submit" palette="success">Success</Button>
+                                <Button isLoading={creating} disabled={creating} type="submit" palette="success">Success</Button>
                             </Form>
                         </Formik>
-                        {/* <Label marginBottom="12px">Добавить</Label>
-                        <Input label="Username" marginBottom="12px" variant="underline" />
-                        <Input label="email" marginBottom="12px" variant="underline" />
-                        <Input label="parent_id" marginBottom="12px" variant="underline" />
-                        <Button palette="success">Success</Button> */}
                     </Box>
                 </Flex>
                 <Flex alignX="right" >
-                    <Box width="800px" height="520px" border="1px solid" >
+                    <Box width="800px" height="520px"  >
                         <div style={{ height: '26.5rem' }}>
                             <Diagram schema={schema} onChange={onChange} />
                         </div>
