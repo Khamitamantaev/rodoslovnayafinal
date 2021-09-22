@@ -40,6 +40,13 @@ function Dropdown() {
               </BBLink>
             </Link>
           </DropdownMenu.Item>
+          <DropdownMenu.Item iconBefore="solid-pen">
+            <Link href="/testpage" passHref>
+              <BBLink width="100%" display="block" textAlign="center">
+                {t('Testpage')}
+              </BBLink>
+            </Link>
+          </DropdownMenu.Item>
           <DropdownMenu.Item>
             <Button
               width="100%"

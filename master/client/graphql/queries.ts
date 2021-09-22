@@ -57,3 +57,12 @@ export const GET_GOOGLE_LOG_LINK = gql`
     getGoogleAuthURL
   }
 `;
+
+export const GET_USER_ANCESTORS = gql`
+  query findAllAncestors {
+    findAllAncestors {
+      _id
+      name
+    }
+  }
+`;

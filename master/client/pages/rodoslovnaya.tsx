@@ -4,10 +4,10 @@ import App from 'components/App';
 import { useTranslation } from 'react-i18next';
 import Diagram, { createSchema, useSchema } from 'beautiful-react-diagrams';
 import 'beautiful-react-diagrams/styles.css';
-import { ActionButtons, Box, Button, Flex, Input, Label, useToasts } from 'bumbag';
+import { ActionButtons, Box, Button, Flex, Input, Label, Table, useToasts } from 'bumbag';
 import { Formik, Form, Field } from 'formik';
 import { InputField } from 'bumbag';
-import { useCreateUserMutation } from 'generated';
+import { useCreateUserMutation, useFindAllAncestorsQuery } from 'generated';
 
 
 function RodoslovnayaPage() {
@@ -37,6 +37,21 @@ function RodoslovnayaPage() {
             });
         },
     });
+
+    const { data, loading } = useFindAllAncestorsQuery({
+        variables: {
+        },
+    });
+
+    // const users = data.findAllAncestors.map((ancestor) => 
+    // <>
+    // <Table.Row>
+    //   <Table.Cell>{ancestor.name}</Table.Cell>
+    //   <Table.Cell textAlign="right">{ancestor._id}</Table.Cell>
+    // </Table.Row>
+    // </>
+    // )
+    // console.log(data)
 
     const onSubmit = (values) => {
         return createUser({
@@ -79,6 +94,27 @@ function RodoslovnayaPage() {
                                 <Button isLoading={creating} disabled={creating} type="submit" palette="success">Success</Button>
                             </Form>
                         </Formik>
+                        <Table hasDividers>
+                            <Table.Head>
+                                <Table.Row>
+                                    <Table.HeadCell>Name</Table.HeadCell>
+                                    <Table.HeadCell textAlign="right">id</Table.HeadCell>
+                                </Table.Row>
+                            </Table.Head>
+                            <Table.Body>
+                                <Table.Row>
+                                    <Table.Cell>Adidas</Table.Cell>
+                                    <Table.Cell textAlign="right">4</Table.Cell>
+                                    
+                                </Table.Row>
+                            </Table.Body>
+                            <Table.Foot fontWeight="semibold">
+                                <Table.Row>
+                                    <Table.Cell>Total</Table.Cell>
+                                    <Table.Cell />
+                                </Table.Row>
+                            </Table.Foot>
+                        </Table>
                     </Box>
                 </Flex>
                 <Flex alignX="right" >

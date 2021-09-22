@@ -57,6 +57,7 @@ export type MutationSendMessageArgs = {
 export type Query = {
   readonly __typename?: 'Query';
   readonly users: ReadonlyArray<User>;
+  readonly findAllAncestors: ReadonlyArray<User>;
   readonly me?: Maybe<User>;
   readonly user?: Maybe<User>;
   readonly gitHubAuth: User;
@@ -243,6 +244,17 @@ export type GetGoogleAuthUrlQueryVariables = Exact<{ [key: string]: never; }>;
 export type GetGoogleAuthUrlQuery = (
   { readonly __typename?: 'Query' }
   & Pick<Query, 'getGoogleAuthURL'>
+);
+
+export type FindAllAncestorsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FindAllAncestorsQuery = (
+  { readonly __typename?: 'Query' }
+  & { readonly findAllAncestors: ReadonlyArray<(
+    { readonly __typename?: 'User' }
+    & Pick<User, '_id' | 'name'>
+  )> }
 );
 
 export type NewMessageSubscriptionVariables = Exact<{ [key: string]: never; }>;
@@ -599,6 +611,39 @@ export function useGetGoogleAuthUrlLazyQuery(baseOptions?: ApolloReactHooks.Lazy
 export type GetGoogleAuthUrlQueryHookResult = ReturnType<typeof useGetGoogleAuthUrlQuery>;
 export type GetGoogleAuthUrlLazyQueryHookResult = ReturnType<typeof useGetGoogleAuthUrlLazyQuery>;
 export type GetGoogleAuthUrlQueryResult = ApolloReactCommon.QueryResult<GetGoogleAuthUrlQuery, GetGoogleAuthUrlQueryVariables>;
+export const FindAllAncestorsDocument = gql`
+    query findAllAncestors {
+  findAllAncestors {
+    _id
+    name
+  }
+}
+    `;
+
+/**
+ * __useFindAllAncestorsQuery__
+ *
+ * To run a query within a React component, call `useFindAllAncestorsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindAllAncestorsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindAllAncestorsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFindAllAncestorsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindAllAncestorsQuery, FindAllAncestorsQueryVariables>) {
+        return ApolloReactHooks.useQuery<FindAllAncestorsQuery, FindAllAncestorsQueryVariables>(FindAllAncestorsDocument, baseOptions);
+      }
+export function useFindAllAncestorsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindAllAncestorsQuery, FindAllAncestorsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<FindAllAncestorsQuery, FindAllAncestorsQueryVariables>(FindAllAncestorsDocument, baseOptions);
+        }
+export type FindAllAncestorsQueryHookResult = ReturnType<typeof useFindAllAncestorsQuery>;
+export type FindAllAncestorsLazyQueryHookResult = ReturnType<typeof useFindAllAncestorsLazyQuery>;
+export type FindAllAncestorsQueryResult = ApolloReactCommon.QueryResult<FindAllAncestorsQuery, FindAllAncestorsQueryVariables>;
 export const NewMessageDocument = gql`
     subscription newMessage {
   newMessage {

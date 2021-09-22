@@ -28,6 +28,7 @@ enum Roles {
 
 type Query {
   users: [User!]!
+  findAllAncestors: [User!]!
   me: User
   user(input: GetUserInput!): User
   gitHubAuth(input: SocialAuthInput!): User!

@@ -33,6 +33,14 @@ export class UserResolver {
     return this.userService.findAll();
   }
 
+  @UseGuards(AuthGuard)
+  @Query(() => [User])
+  async findAllAncestors(@Context() context) {
+    // const userId = "6149aa4bb1f53b2108f4aa16"
+    const userId = get(context, 'req.user._id');
+    return this.userService.findAllUserAncestors(userId);
+  }
+
 
 
   @Query(() => User, { nullable: true })
