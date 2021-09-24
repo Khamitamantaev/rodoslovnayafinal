@@ -28,7 +28,7 @@ export class UserService {
     let ancest = currentuser.ancestors;
     ancest.push(user)
     await this.userModel.findByIdAndUpdate(userId, { ancestors: ancest }, { useFindAndModify: false });
-    pubsub.publish('userAdded', { userAdded: user });
+    pubsub.publish('userAdded', { userAdded: ancest });
     return user
   }
 

@@ -20,17 +20,17 @@ export class UserResolver {
     return this.userService.updateById({ userId, input: deepClean(input) });
   }
 
-  // @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @Mutation(() => User)
   async createUser(@Args('input') input: CreateUserInput, @Context() context) {
-    // const userId = get(context, 'req.user._id');
-    const userId = "6149aa4bb1f53b2108f4aa16"
+    const userId = get(context, 'req.user._id');
+    // const userId = "6149aa4bb1f53b2108f4aa16"
     console.log(userId + ' - это id юзера который добавляет под себя пользователя')
     const newUser = await this.userService.create(input, userId)
     return newUser
   }
 
-  @Subscription(() => User)
+  @Subscription(() => [User])
   userAdded() {
     return pubsub.asyncIterator('userAdded');
   }

@@ -8,3 +8,12 @@ export const NEW_MESSAGE_SUBSCRIPTION = gql`
     }
   }
 `;
+
+export const NEW_ANCESTORS_SUBSCRIPTION = gql`
+  subscription userAdded {
+    userAdded {
+      _id
+      name
+    }
+  }
+`;
