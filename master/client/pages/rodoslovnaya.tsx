@@ -4,7 +4,7 @@ import App from 'components/App';
 import { useTranslation } from 'react-i18next';
 import Diagram, { createSchema, useSchema } from 'beautiful-react-diagrams';
 import 'beautiful-react-diagrams/styles.css';
-import { ActionButtons, Box, Button, Flex, Input, Label, Table, useToasts } from 'bumbag';
+import { ActionButtons, Avatar, Box, Button, Flex, Input, Label, Table, useToasts } from 'bumbag';
 import { Formik, Form, Field } from 'formik';
 import { InputField } from 'bumbag';
 import { useCreateUserMutation, useFindAllAncestorsQuery } from 'generated';
@@ -88,7 +88,8 @@ function RodoslovnayaPage() {
     });
 
     const CustomRender = ({ id, content, data, inputs, outputs }) => (
-        <div style={{ background: 'purple' }}>
+        <div style={{ background: 'white' }}>
+            <Avatar variant="circle" src="/bean.jpg" alt="Photo of Mr. Bean" />
             <div style={{ textAlign: 'right' }}>
                 <Button icon="times" size="small" onClick={() => data.onClick(id)} />
             </div>
@@ -112,16 +113,11 @@ function RodoslovnayaPage() {
         } = useFindAllAncestorsQuery();
 
         const ancestors = dataAncestors?.findAllAncestors;
-        const [schema, { onChange, addNode, removeNode }] = useSchema(initialSchema);
-        const deleteNodeFromSchema = (id) => {
-            const nodeToRemove = schema.nodes.find(node => node.id === id);
-            removeNode(nodeToRemove);
-        };
-        
+
         useEffect(() => {
             for (let i = 0; i < ancestors?.length; i++) {
                 addNode({
-                    id: ancestors?.[i]._id,
+                    id: ancestors[i]._id,
                     content: ancestors[i].name,
                     coordinates: [
                         schema.nodes[schema.nodes.length - 1].coordinates[0] + 100,
@@ -135,44 +131,17 @@ function RodoslovnayaPage() {
             }
         },[ancestors])
 
-        // for(let i=0; i< ancestors.length; i++){
-        //     addNode({
-        //         id: ancestors?.[i]._id,
-        //         content: ancestors[i].name,
-        //         coordinates: [
-        //           schema.nodes[schema.nodes.length - 1].coordinates[0] + 100,
-        //           schema.nodes[schema.nodes.length - 1].coordinates[1],
-        //         ],
-        //         render: CustomRender,
-        //         data: {onClick: deleteNodeFromSchema},
-        //         inputs: [{ id: `port-${Math.random()}`}],
-        //         outputs: [{ id: `port-${Math.random()}`}],
-        //     })
-        // }
-        // create diagrams schema
-
-
-
-
-        // const addNewNode = () => {
-        //   const nextNode = {
-        //      id: `node-${schema.nodes.length+1}`,
-        //      content: `Node ${schema.nodes.length+1}`,
-        //      coordinates: [
-        //        schema.nodes[schema.nodes.length - 1].coordinates[0] + 100,
-        //        schema.nodes[schema.nodes.length - 1].coordinates[1],
-        //      ],
-        //      render: CustomRender,
-        //      data: {onClick: deleteNodeFromSchema},
-        //      inputs: [{ id: `port-${Math.random()}`}],
-        //      outputs: [{ id: `port-${Math.random()}`}],
-        //  };
-
-        //  addNode(nextNode);
-        // }
+        
+        const [schema, { onChange, addNode, removeNode }] = useSchema(initialSchema);
+        const deleteNodeFromSchema = (id) => {
+            const nodeToRemove = schema.nodes.find(node => node.id === id);
+            removeNode(nodeToRemove);
+        };
+        
+        
 
         return (
-            <div style={{ height: '22.5rem' }}>
+            <div style={{ height: '30rem' }}>
                 {/* <Button color="primary" icon="plus" onClick={addNewNode}>Add new node</Button> */}
                 <Diagram schema={schema} onChange={onChange} />
             </div>
