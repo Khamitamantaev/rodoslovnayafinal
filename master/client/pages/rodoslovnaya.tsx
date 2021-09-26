@@ -93,7 +93,7 @@ function RodoslovnayaPage() {
             <div style={{ textAlign: 'right' }}>
                 <Button icon="times" size="small" onClick={() => data.onClick(id)} />
             </div>
-            <div role="button" style={{ padding: '15px' }}>
+            <div role="button" style={{ padding: '5px' }}>
                 {content}
             </div>
             <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
@@ -109,39 +109,40 @@ function RodoslovnayaPage() {
             data: dataAncestors,
             loading: loadingAncestors,
             // @ts-ignore
-            error: errorAncestors,
-        } = useFindAllAncestorsQuery();
+            error: errorAncestors
+        } = useFindAllAncestorsQuery({pollInterval: 500});
 
         const ancestors = dataAncestors?.findAllAncestors;
-
-        useEffect(() => {
-            for (let i = 0; i < ancestors?.length; i++) {
-                addNode({
-                    id: ancestors[i]._id,
-                    content: ancestors[i].name,
-                    coordinates: [
-                        schema.nodes[schema.nodes.length - 1].coordinates[0] + 100,
-                        schema.nodes[schema.nodes.length - 1].coordinates[1],
-                    ],
-                    render: CustomRender,
-                    data: { onClick: deleteNodeFromSchema },
-                    inputs: [{ id: `port-${Math.random()}` }],
-                    outputs: [{ id: `port-${Math.random()}` }],
-                })
-            }
-        },[ancestors])
-
-        
         const [schema, { onChange, addNode, removeNode }] = useSchema(initialSchema);
         const deleteNodeFromSchema = (id) => {
             const nodeToRemove = schema.nodes.find(node => node.id === id);
             removeNode(nodeToRemove);
         };
+
+        useEffect(() => {
+                for (let i = 0; i < ancestors?.length; i++) {
+                    addNode({
+                        id: ancestors[i]._id,
+                        content: ancestors[i].name,
+                        coordinates: [
+                            schema.nodes[schema.nodes.length - 1].coordinates[0] + 100,
+                            schema.nodes[schema.nodes.length - 1].coordinates[1],
+                        ],
+                        render: CustomRender,
+                        data: { onClick: deleteNodeFromSchema },
+                        inputs: [{ id: `port-${Math.random()}` }],
+                        outputs: [{ id: `port-${Math.random()}` }],
+                    })
+                }
+        },[])
+
+        
+        
         
         
 
         return (
-            <div style={{ height: '30rem' }}>
+            <div style={{ height: '60rem' }}>
                 {/* <Button color="primary" icon="plus" onClick={addNewNode}>Add new node</Button> */}
                 <Diagram schema={schema} onChange={onChange} />
             </div>
@@ -189,7 +190,7 @@ function RodoslovnayaPage() {
                     </Box>
                 </Flex>
                 <Flex alignX="right" >
-                    <Box width="800px" height="520px"  >
+                    <Box width="800px" height="1000px"  >
                         {/* <UserListComponent /> */}
                         <UncontrolledDiagram />
                     </Box>
