@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 
 
 function RodoslovnayaPage() {
-    
+
     const { t } = useTranslation();
     const toasts = useToasts();
     const [createUser, { loading: creating, error }] = useCreateUserMutation({
@@ -25,107 +25,209 @@ function RodoslovnayaPage() {
     });
 
     const UserListComponent = (props) => {
-        let [initancestors, setInitAncestors] = useState([])
 
         const {
             data: dataAncestors,
             loading: loadingAncestors,
             // @ts-ignore
             error: errorAncestors,
-          } = useFindAllAncestorsQuery();
+        } = useFindAllAncestorsQuery();
 
         const ancestors = dataAncestors?.findAllAncestors;
 
-        if(loadingAncestors){
+        if (loadingAncestors) {
             console.log('loading')
         }
 
-        if(dataAncestors) {
-          console.log(dataAncestors);
-        //   setAncestors(dataAncestors.findAllAncestors)
+        if (dataAncestors) {
+            console.log(dataAncestors);
+            //   setAncestors(dataAncestors.findAllAncestors)
         }
-        if(errorAncestors) {
-          console.log(errorAncestors);
-          return "error"; // blocks rendering
+        if (errorAncestors) {
+            console.log(errorAncestors);
+            return "error"; // blocks rendering
         }
-    
-    return (
-        <Table>
-            <Table.Head>
-                <Table.Row>
-                    <Table.HeadCell>Name</Table.HeadCell>
-                    <Table.HeadCell textAlign="right">Quantity</Table.HeadCell>
-                    <Table.HeadCell textAlign="right">Price</Table.HeadCell>
-                </Table.Row>
-            </Table.Head>
-            <Table.Body>
-                {ancestors?.map(ancestor => (
-                    <Table.Row key={ancestor._id}>
-                        <Table.Cell>{ancestor.name}</Table.Cell>
-                        <Table.Cell textAlign="right">3</Table.Cell>
-                        <Table.Cell textAlign="right">$9.00</Table.Cell>
+
+        return (
+            <Table>
+                <Table.Head>
+                    <Table.Row>
+                        <Table.HeadCell>Name</Table.HeadCell>
+                        <Table.HeadCell textAlign="right">Quantity</Table.HeadCell>
                     </Table.Row>
-                ))}
-            </Table.Body>
-            <Table.Foot fontWeight="semibold">
-                <Table.Row>
-                    <Table.Cell>Total</Table.Cell>
-                    <Table.Cell />
-                    <Table.Cell textAlign="right">$36.00</Table.Cell>
-                </Table.Row>
-            </Table.Foot>
-        </Table>
-    );
-}
+                </Table.Head>
+                <Table.Body>
+                    {ancestors?.map(ancestor => (
+                        <Table.Row key={ancestor._id}>
+                            <Table.Cell>{ancestor.name}</Table.Cell>
+                            <Table.Cell textAlign="right">{ancestor._id}</Table.Cell>
 
+                        </Table.Row>
+                    ))}
+                </Table.Body>
+                <Table.Foot fontWeight="semibold">
+                    <Table.Row>
+                        <Table.Cell>Total</Table.Cell>
+                        <Table.Cell />
 
-const onSubmit = (values) => {
-    return createUser({
-        variables: {
-            input: {
-                email: values.email,
-                name: values.username,
+                    </Table.Row>
+                </Table.Foot>
+            </Table>
+        );
+    }
+
+    const initialSchema = createSchema({
+        nodes: [
+            {
+                id: 'node-1',
+                content: 'Node 1',
+                coordinates: [150, 60],
+                outputs: [{ id: 'port-1', alignment: 'right' }],
             },
-        },
+        ]
     });
-};
 
-return (
-    <App title={t('Ваша родословная')} description={t('Здесь можно создать и распечатать свою родословную')} requiresUser>
-        <Flex alignX="center">
-            <Flex alignX="left">
-                <Box width="300px" height="520px" padding="10px" >
-                    <Label marginBottom="12px">Добавить пользователя</Label>
-                    <Formik
-                        initialValues={{}}
-                        onSubmit={onSubmit}
-                    >
-                        <Form>
-                            <Field
-                                component={InputField.Formik}
-                                name="username"
-                                label="Username"
-                                marginBottom="10px"
-                            />
-                            <Field
-                                component={InputField.Formik}
-                                name="email"
-                                label="Email"
-                                marginBottom="10px"
-                            />
-                            <Button isLoading={creating} disabled={creating} type="submit" palette="success">Success</Button>
-                        </Form>
-                    </Formik>
-                </Box>
+    const CustomRender = ({ id, content, data, inputs, outputs }) => (
+        <div style={{ background: 'purple' }}>
+            <div style={{ textAlign: 'right' }}>
+                <Button icon="times" size="small" onClick={() => data.onClick(id)} />
+            </div>
+            <div role="button" style={{ padding: '15px' }}>
+                {content}
+            </div>
+            <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
+                {inputs.map((port) => React.cloneElement(port, { style: { width: '25px', height: '25px', background: '#1B263B' } }))}
+                {outputs.map((port) => React.cloneElement(port, { style: { width: '25px', height: '25px', background: '#1B263B' } }))}
+            </div>
+        </div>
+    );
+
+    const UncontrolledDiagram = () => {
+
+        const {
+            data: dataAncestors,
+            loading: loadingAncestors,
+            // @ts-ignore
+            error: errorAncestors,
+        } = useFindAllAncestorsQuery();
+
+        const ancestors = dataAncestors?.findAllAncestors;
+        const [schema, { onChange, addNode, removeNode }] = useSchema(initialSchema);
+        const deleteNodeFromSchema = (id) => {
+            const nodeToRemove = schema.nodes.find(node => node.id === id);
+            removeNode(nodeToRemove);
+        };
+        
+        useEffect(() => {
+            for (let i = 0; i < ancestors?.length; i++) {
+                addNode({
+                    id: ancestors?.[i]._id,
+                    content: ancestors[i].name,
+                    coordinates: [
+                        schema.nodes[schema.nodes.length - 1].coordinates[0] + 100,
+                        schema.nodes[schema.nodes.length - 1].coordinates[1],
+                    ],
+                    render: CustomRender,
+                    data: { onClick: deleteNodeFromSchema },
+                    inputs: [{ id: `port-${Math.random()}` }],
+                    outputs: [{ id: `port-${Math.random()}` }],
+                })
+            }
+        },[ancestors])
+
+        // for(let i=0; i< ancestors.length; i++){
+        //     addNode({
+        //         id: ancestors?.[i]._id,
+        //         content: ancestors[i].name,
+        //         coordinates: [
+        //           schema.nodes[schema.nodes.length - 1].coordinates[0] + 100,
+        //           schema.nodes[schema.nodes.length - 1].coordinates[1],
+        //         ],
+        //         render: CustomRender,
+        //         data: {onClick: deleteNodeFromSchema},
+        //         inputs: [{ id: `port-${Math.random()}`}],
+        //         outputs: [{ id: `port-${Math.random()}`}],
+        //     })
+        // }
+        // create diagrams schema
+
+
+
+
+        // const addNewNode = () => {
+        //   const nextNode = {
+        //      id: `node-${schema.nodes.length+1}`,
+        //      content: `Node ${schema.nodes.length+1}`,
+        //      coordinates: [
+        //        schema.nodes[schema.nodes.length - 1].coordinates[0] + 100,
+        //        schema.nodes[schema.nodes.length - 1].coordinates[1],
+        //      ],
+        //      render: CustomRender,
+        //      data: {onClick: deleteNodeFromSchema},
+        //      inputs: [{ id: `port-${Math.random()}`}],
+        //      outputs: [{ id: `port-${Math.random()}`}],
+        //  };
+
+        //  addNode(nextNode);
+        // }
+
+        return (
+            <div style={{ height: '22.5rem' }}>
+                {/* <Button color="primary" icon="plus" onClick={addNewNode}>Add new node</Button> */}
+                <Diagram schema={schema} onChange={onChange} />
+            </div>
+        );
+    };
+
+
+    const onSubmit = (values) => {
+        return createUser({
+            variables: {
+                input: {
+                    email: values.email,
+                    name: values.username,
+                },
+            },
+        });
+    };
+
+    return (
+        <App title={t('Ваша родословная')} description={t('Здесь можно создать и распечатать свою родословную')} requiresUser>
+            <Flex alignX="center">
+                <Flex alignX="left">
+                    <Box width="300px" height="520px" padding="10px" >
+                        <Label marginBottom="12px">Добавить пользователя</Label>
+                        <Formik
+                            initialValues={{}}
+                            onSubmit={onSubmit}
+                        >
+                            <Form>
+                                <Field
+                                    component={InputField.Formik}
+                                    name="username"
+                                    label="Username"
+                                    marginBottom="10px"
+                                />
+                                <Field
+                                    component={InputField.Formik}
+                                    name="email"
+                                    label="Email"
+                                    marginBottom="10px"
+                                />
+                                <Button isLoading={creating} disabled={creating} type="submit" palette="success">Success</Button>
+                            </Form>
+                        </Formik>
+                    </Box>
+                </Flex>
+                <Flex alignX="right" >
+                    <Box width="800px" height="520px"  >
+                        {/* <UserListComponent /> */}
+                        <UncontrolledDiagram />
+                    </Box>
+                </Flex>
             </Flex>
-            <Flex alignX="right" >
-                <Box width="800px" height="520px"  >
-                    <UserListComponent />
-                </Box>
-            </Flex>
-        </Flex>
-    </App>
-)
+        </App>
+    )
 }
 
 export default withApolloWithSubscriptions(RodoslovnayaPage);
