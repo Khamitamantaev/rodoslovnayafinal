@@ -69,6 +69,6 @@ input SendMessageInput {
 }
 
 type Subscription {
-  userAdded: User!
+  userAdded: [User!]!
   newMessage: Message!
 }
