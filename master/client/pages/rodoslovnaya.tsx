@@ -134,7 +134,7 @@ function RodoslovnayaPage() {
                         outputs: [{ id: `port-${Math.random()}` }],
                     })
                 }
-        },[])
+        },[loadingAncestors])
 
         
         
