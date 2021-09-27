@@ -4,7 +4,7 @@ import App from 'components/App';
 import { useTranslation } from 'react-i18next';
 import Diagram, { createSchema, useSchema } from 'beautiful-react-diagrams';
 import 'beautiful-react-diagrams/styles.css';
-import { ActionButtons, Avatar, Box, Button, Flex, Input, Label, Table, useToasts } from 'bumbag';
+import { ActionButtons, Avatar, Box, Button, Flex, Input, Label, Paragraph, Table, Text, useToasts } from 'bumbag';
 import { Formik, Form, Field } from 'formik';
 import { InputField } from 'bumbag';
 import { useCreateUserMutation, useFindAllAncestorsQuery } from 'generated';
@@ -88,19 +88,29 @@ function RodoslovnayaPage() {
     });
 
     const CustomRender = ({ id, content, data, inputs, outputs }) => (
-        <div style={{ background: 'white' }}>
-            <Avatar variant="circle" src="/bean.jpg" alt="Photo of Mr. Bean" />
-            <div style={{ textAlign: 'right' }}>
-                <Button icon="times" size="small" onClick={() => data.onClick(id)} />
-            </div>
-            <div role="button" style={{ padding: '5px' }}>
-                {content}
-            </div>
-            <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
-                {inputs.map((port) => React.cloneElement(port, { style: { width: '25px', height: '25px', background: '#1B263B' } }))}
-                {outputs.map((port) => React.cloneElement(port, { style: { width: '25px', height: '25px', background: '#1B263B' } }))}
-            </div>
-        </div>
+        <Flex alignX="center">
+            <Box width="50px" height="50px" backgroundColor="white"  >
+            <Avatar variant="circle" src="/bean.jpg" alt="Photo of Mr. Bean"  />
+            <Text use="cite" color='dark' >{content}</Text>
+             <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
+                 {inputs.map((port) => React.cloneElement(port, { style: { width: '20px', height: '20px', background: '#1B263B' } }))}
+               {outputs.map((port) => React.cloneElement(port, { style: { width: '20px', height: '20px', background: '#1B263B' } }))}
+           </div>
+            </Box>
+        </Flex>
+        // <div style={{ background: 'white' }}>
+        //     <Avatar variant="circle" src="/bean.jpg" alt="Photo of Mr. Bean" />
+        //     <div style={{ textAlign: 'right' }}>
+        //         <Button icon="times" size="small" onClick={() => data.onClick(id)} />
+        //     </div>
+        //     <div role="button" style={{ padding: '5px' }}>
+        //         {content}
+        //     </div>
+        //     <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
+        //         {inputs.map((port) => React.cloneElement(port, { style: { width: '25px', height: '25px', background: '#1B263B' } }))}
+        //         {outputs.map((port) => React.cloneElement(port, { style: { width: '25px', height: '25px', background: '#1B263B' } }))}
+        //     </div>
+        // </div>
     );
 
     const UncontrolledDiagram = () => {
@@ -110,7 +120,7 @@ function RodoslovnayaPage() {
             loading: loadingAncestors,
             // @ts-ignore
             error: errorAncestors
-        } = useFindAllAncestorsQuery({pollInterval: 500});
+        } = useFindAllAncestorsQuery({ pollInterval: 500 });
 
         const ancestors = dataAncestors?.findAllAncestors;
         const [schema, { onChange, addNode, removeNode }] = useSchema(initialSchema);
@@ -120,26 +130,26 @@ function RodoslovnayaPage() {
         };
 
         useEffect(() => {
-                for (let i = 0; i < ancestors?.length; i++) {
-                    addNode({
-                        id: ancestors[i]._id,
-                        content: ancestors[i].name,
-                        coordinates: [
-                            schema.nodes[schema.nodes.length - 1].coordinates[0] + 100,
-                            schema.nodes[schema.nodes.length - 1].coordinates[1],
-                        ],
-                        render: CustomRender,
-                        data: { onClick: deleteNodeFromSchema },
-                        inputs: [{ id: `port-${Math.random()}` }],
-                        outputs: [{ id: `port-${Math.random()}` }],
-                    })
-                }
-        },[loadingAncestors])
+            for (let i = 0; i < ancestors?.length; i++) {
+                addNode({
+                    id: ancestors[i]._id,
+                    content: ancestors[i].name,
+                    coordinates: [
+                        schema.nodes[schema.nodes.length - 1].coordinates[0] + 100,
+                        schema.nodes[schema.nodes.length - 1].coordinates[1],
+                    ],
+                    render: CustomRender,
+                    data: { onClick: deleteNodeFromSchema },
+                    inputs: [{ id: `port-${Math.random()}` }],
+                    outputs: [{ id: `port-${Math.random()}` }],
+                })
+            }
+        }, [loadingAncestors])
 
-        
-        
-        
-        
+
+
+
+
 
         return (
             <div style={{ height: '60rem' }}>

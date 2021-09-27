@@ -38,7 +38,6 @@ export class UserService {
 
   async findAllUserAncestors(userId: string): Promise<User[]> {
     let currentuser = await this.userModel.findById(userId).exec();
-    console.log(currentuser.ancestors)
     return currentuser.ancestors;
   }
 
