@@ -83,34 +83,35 @@ function RodoslovnayaPage() {
                 content: 'Node 1',
                 coordinates: [150, 60],
                 outputs: [{ id: 'port-1', alignment: 'right' }],
+                disableDrag : false
             },
         ]
     });
 
-    const CustomRender = ({ id, content, data, inputs, outputs }) => (
-        <Flex alignX="center">
-            <Box width="50px" height="50px" backgroundColor="white"  >
-            <Avatar variant="circle" src="/bean.jpg" alt="Photo of Mr. Bean"  />
-            <Text use="cite" color='dark' >{content}</Text>
-             <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
+    const PictureRender = ({ id, content, data, inputs, outputs }) => (
+        <Flex alignY="center">
+            <Box width="80px" height="50px" backgroundColor="white"  >
+            {/* <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
                  {inputs.map((port) => React.cloneElement(port, { style: { width: '20px', height: '20px', background: '#1B263B' } }))}
                {outputs.map((port) => React.cloneElement(port, { style: { width: '20px', height: '20px', background: '#1B263B' } }))}
-           </div>
+           </div> */}
+            <Avatar variant="circle" src="/bean.jpg" alt="Photo of Mr. Bean"  />
+            <Text use="cite" color='dark' >{content}</Text>
             </Box>
         </Flex>
-        // <div style={{ background: 'white' }}>
-        //     <Avatar variant="circle" src="/bean.jpg" alt="Photo of Mr. Bean" />
-        //     <div style={{ textAlign: 'right' }}>
-        //         <Button icon="times" size="small" onClick={() => data.onClick(id)} />
-        //     </div>
-        //     <div role="button" style={{ padding: '5px' }}>
-        //         {content}
-        //     </div>
-        //     <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
-        //         {inputs.map((port) => React.cloneElement(port, { style: { width: '25px', height: '25px', background: '#1B263B' } }))}
-        //         {outputs.map((port) => React.cloneElement(port, { style: { width: '25px', height: '25px', background: '#1B263B' } }))}
-        //     </div>
-        // </div>
+    );
+
+    const CustomRender = ({ id, content, data, inputs, outputs }) => (
+        <Flex alignY="center">
+            <Box width="80px" height="50px" backgroundColor="white"  >
+            {/* <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
+                 {inputs.map((port) => React.cloneElement(port, { style: { width: '20px', height: '20px', background: '#1B263B' } }))}
+               {outputs.map((port) => React.cloneElement(port, { style: { width: '20px', height: '20px', background: '#1B263B' } }))}
+           </div> */}
+            <Avatar variant="circle" src="/bean.jpg" alt="Photo of Mr. Bean"  />
+            <Text use="cite" color='dark' >{content}</Text>
+            </Box>
+        </Flex>
     );
 
     const UncontrolledDiagram = () => {
