@@ -4,31 +4,17 @@ import App from 'components/App';
 import { useTranslation } from 'react-i18next';
 import Diagram, { createSchema, useSchema } from 'beautiful-react-diagrams';
 import 'beautiful-react-diagrams/styles.css';
-import { ActionButtons, Box, Button, Flex, Input, Label, Table, useToasts } from 'bumbag';
+import { ActionButtons, Avatar, Box, Button, Flex, Input, Label, Paragraph, Table, Text, useToasts } from 'bumbag';
 import { Formik, Form, Field } from 'formik';
 import { InputField } from 'bumbag';
 import { useCreateUserMutation, useFindAllAncestorsQuery } from 'generated';
+import { useEffect, useState } from 'react';
 
 
 function RodoslovnayaPage() {
+
     const { t } = useTranslation();
     const toasts = useToasts();
-    const initialSchema = createSchema({
-        nodes: [
-            // { id: 'node-1', content: 'Node 1', coordinates: [250, 60], },
-            // { id: 'node-2', content: 'Node 2', coordinates: [100, 200], },
-            // { id: 'node-3', content: 'Node 3', coordinates: [250, 220], },
-            // { id: 'node-4', content: 'Node 4', coordinates: [400, 200], },
-        ],
-        links: [
-            // { input: 'node-2', output: 'node-4', label: 'сестра', readonly: true },
-            // { input: 'node-1', output: 'node-2', label: 'БРАТ', readonly: true },
-            // { input: 'node-1', output: 'node-3', label: 'ОТЕЦ', readonly: true },
-            // { input: 'node-1', output: 'node-4', label: 'Мама', readonly: true, className: 'my-custom-link-class' },
-        ]
-    });
-
-    //[Toast success не работает, после того, как пользователь создан, не выходит окно]
     const [createUser, { loading: creating, error }] = useCreateUserMutation({
         onCompleted: () => {
             toasts.success({
@@ -38,20 +24,142 @@ function RodoslovnayaPage() {
         },
     });
 
-    const { data, loading } = useFindAllAncestorsQuery({
-        variables: {
-        },
+    const UserListComponent = (props) => {
+
+        const {
+            data: dataAncestors,
+            loading: loadingAncestors,
+            // @ts-ignore
+            error: errorAncestors,
+        } = useFindAllAncestorsQuery();
+
+        const ancestors = dataAncestors?.findAllAncestors;
+
+        if (loadingAncestors) {
+            console.log('loading')
+        }
+
+        if (dataAncestors) {
+            console.log(dataAncestors);
+            //   setAncestors(dataAncestors.findAllAncestors)
+        }
+        if (errorAncestors) {
+            console.log(errorAncestors);
+            return "error"; // blocks rendering
+        }
+
+        return (
+            <Table>
+                <Table.Head>
+                    <Table.Row>
+                        <Table.HeadCell>Name</Table.HeadCell>
+                        <Table.HeadCell textAlign="right">Quantity</Table.HeadCell>
+                    </Table.Row>
+                </Table.Head>
+                <Table.Body>
+                    {ancestors?.map(ancestor => (
+                        <Table.Row key={ancestor._id}>
+                            <Table.Cell>{ancestor.name}</Table.Cell>
+                            <Table.Cell textAlign="right">{ancestor._id}</Table.Cell>
+
+                        </Table.Row>
+                    ))}
+                </Table.Body>
+                <Table.Foot fontWeight="semibold">
+                    <Table.Row>
+                        <Table.Cell>Total</Table.Cell>
+                        <Table.Cell />
+
+                    </Table.Row>
+                </Table.Foot>
+            </Table>
+        );
+    }
+
+    const initialSchema = createSchema({
+        nodes: [
+            {
+                id: 'node-1',
+                content: 'Node 1',
+                coordinates: [150, 60],
+                outputs: [{ id: 'port-1', alignment: 'right' }],
+                disableDrag : false
+            },
+        ]
     });
 
-    // const users = data.findAllAncestors.map((ancestor) => 
-    // <>
-    // <Table.Row>
-    //   <Table.Cell>{ancestor.name}</Table.Cell>
-    //   <Table.Cell textAlign="right">{ancestor._id}</Table.Cell>
-    // </Table.Row>
-    // </>
-    // )
-    // console.log(data)
+    const PictureRender = ({ id, content, data, inputs, outputs }) => (
+        <Flex alignY="center">
+            <Box width="80px" height="50px" backgroundColor="white"  >
+            {/* <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
+                 {inputs.map((port) => React.cloneElement(port, { style: { width: '20px', height: '20px', background: '#1B263B' } }))}
+               {outputs.map((port) => React.cloneElement(port, { style: { width: '20px', height: '20px', background: '#1B263B' } }))}
+           </div> */}
+            <Avatar variant="circle" src="/bean.jpg" alt="Photo of Mr. Bean"  />
+            <Text use="cite" color='dark' >{content}</Text>
+            </Box>
+        </Flex>
+    );
+
+    const CustomRender = ({ id, content, data, inputs, outputs }) => (
+        <Flex alignY="center">
+            <Box width="80px" height="50px" backgroundColor="white"  >
+            {/* <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
+                 {inputs.map((port) => React.cloneElement(port, { style: { width: '20px', height: '20px', background: '#1B263B' } }))}
+               {outputs.map((port) => React.cloneElement(port, { style: { width: '20px', height: '20px', background: '#1B263B' } }))}
+           </div> */}
+            <Avatar variant="circle" src="/bean.jpg" alt="Photo of Mr. Bean"  />
+            <Text use="cite" color='dark' >{content}</Text>
+            </Box>
+        </Flex>
+    );
+
+    const UncontrolledDiagram = () => {
+
+        const {
+            data: dataAncestors,
+            loading: loadingAncestors,
+            // @ts-ignore
+            error: errorAncestors
+        } = useFindAllAncestorsQuery({ pollInterval: 500 });
+
+        const ancestors = dataAncestors?.findAllAncestors;
+        const [schema, { onChange, addNode, removeNode }] = useSchema(initialSchema);
+        const deleteNodeFromSchema = (id) => {
+            const nodeToRemove = schema.nodes.find(node => node.id === id);
+            removeNode(nodeToRemove);
+        };
+
+        useEffect(() => {
+            for (let i = 0; i < ancestors?.length; i++) {
+                addNode({
+                    id: ancestors[i]._id,
+                    content: ancestors[i].name,
+                    coordinates: [
+                        schema.nodes[schema.nodes.length - 1].coordinates[0] + 100,
+                        schema.nodes[schema.nodes.length - 1].coordinates[1],
+                    ],
+                    render: CustomRender,
+                    data: { onClick: deleteNodeFromSchema },
+                    inputs: [{ id: `port-${Math.random()}` }],
+                    outputs: [{ id: `port-${Math.random()}` }],
+                })
+            }
+        }, [loadingAncestors])
+
+
+
+
+
+
+        return (
+            <div style={{ height: '60rem' }}>
+                {/* <Button color="primary" icon="plus" onClick={addNewNode}>Add new node</Button> */}
+                <Diagram schema={schema} onChange={onChange} />
+            </div>
+        );
+    };
+
 
     const onSubmit = (values) => {
         return createUser({
@@ -62,11 +170,7 @@ function RodoslovnayaPage() {
                 },
             },
         });
-    };// Здесь у меня хранится запрос на обновление юзера, а точнее его профиля.
-
-
-
-    const [schema, { onChange }] = useSchema(initialSchema);
+    };
 
     return (
         <App title={t('Ваша родословная')} description={t('Здесь можно создать и распечатать свою родословную')} requiresUser>
@@ -94,41 +198,15 @@ function RodoslovnayaPage() {
                                 <Button isLoading={creating} disabled={creating} type="submit" palette="success">Success</Button>
                             </Form>
                         </Formik>
-                        <Table hasDividers>
-                            <Table.Head>
-                                <Table.Row>
-                                    <Table.HeadCell>Name</Table.HeadCell>
-                                    <Table.HeadCell textAlign="right">id</Table.HeadCell>
-                                </Table.Row>
-                            </Table.Head>
-                            <Table.Body>
-                                <Table.Row>
-                                    <Table.Cell>Adidas</Table.Cell>
-                                    <Table.Cell textAlign="right">4</Table.Cell>
-                                    
-                                </Table.Row>
-                            </Table.Body>
-                            <Table.Foot fontWeight="semibold">
-                                <Table.Row>
-                                    <Table.Cell>Total</Table.Cell>
-                                    <Table.Cell />
-                                </Table.Row>
-                            </Table.Foot>
-                        </Table>
                     </Box>
                 </Flex>
                 <Flex alignX="right" >
-                    <Box width="800px" height="520px"  >
-                        <div style={{ height: '26.5rem' }}>
-                            <Diagram schema={schema} onChange={onChange} />
-                        </div>
+                    <Box width="800px" height="1000px"  >
+                        {/* <UserListComponent /> */}
+                        <UncontrolledDiagram />
                     </Box>
-
                 </Flex>
             </Flex>
-
-
-
         </App>
     )
 }

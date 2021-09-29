@@ -1,4 +1,4 @@
-import { Resolver, Query, Context, Args, Mutation } from '@nestjs/graphql';
+import { Resolver, Query, Context, Args, Mutation, Subscription } from '@nestjs/graphql';
 import deepClean from 'deep-clean';
 import { get } from 'lodash';
 import { UserService } from '@user/user.service';
@@ -6,6 +6,7 @@ import { User } from '@user/user.schema';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@auth/auth.guard';
 import { CreateUserInput, GetUserInput, UpdateUserInput } from './user.input';
+import pubsub from 'src/subscriptions/pubsub';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -23,9 +24,15 @@ export class UserResolver {
   @Mutation(() => User)
   async createUser(@Args('input') input: CreateUserInput, @Context() context) {
     const userId = get(context, 'req.user._id');
-    // const userId = "614a154bbdd14a250ca59578"
+    // const userId = "6149aa4bb1f53b2108f4aa16"
     console.log(userId + ' - это id юзера который добавляет под себя пользователя')
-    return this.userService.create(input, userId)
+    const newUser = await this.userService.create(input, userId)
+    return newUser
+  }
+
+  @Subscription(() => [User])
+  userAdded() {
+    return pubsub.asyncIterator('userAdded');
   }
 
   @Query(() => [User])

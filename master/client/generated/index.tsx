@@ -101,6 +101,7 @@ export type SocialAuthInput = {
 
 export type Subscription = {
   readonly __typename?: 'Subscription';
+  readonly userAdded: ReadonlyArray<User>;
   readonly newMessage: Message;
 };
 
@@ -266,6 +267,17 @@ export type NewMessageSubscription = (
     { readonly __typename?: 'Message' }
     & Pick<Message, 'sent' | 'body'>
   ) }
+);
+
+export type UserAddedSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UserAddedSubscription = (
+  { readonly __typename?: 'Subscription' }
+  & { readonly userAdded: ReadonlyArray<(
+    { readonly __typename?: 'User' }
+    & Pick<User, '_id' | 'name'>
+  )> }
 );
 
 
@@ -673,3 +685,32 @@ export function useNewMessageSubscription(baseOptions?: ApolloReactHooks.Subscri
       }
 export type NewMessageSubscriptionHookResult = ReturnType<typeof useNewMessageSubscription>;
 export type NewMessageSubscriptionResult = ApolloReactCommon.SubscriptionResult<NewMessageSubscription>;
+export const UserAddedDocument = gql`
+    subscription userAdded {
+  userAdded {
+    _id
+    name
+  }
+}
+    `;
+
+/**
+ * __useUserAddedSubscription__
+ *
+ * To run a query within a React component, call `useUserAddedSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useUserAddedSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserAddedSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUserAddedSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<UserAddedSubscription, UserAddedSubscriptionVariables>) {
+        return ApolloReactHooks.useSubscription<UserAddedSubscription, UserAddedSubscriptionVariables>(UserAddedDocument, baseOptions);
+      }
+export type UserAddedSubscriptionHookResult = ReturnType<typeof useUserAddedSubscription>;
+export type UserAddedSubscriptionResult = ApolloReactCommon.SubscriptionResult<UserAddedSubscription>;

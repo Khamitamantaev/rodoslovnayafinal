@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './user.schema';
 import { CreateUserInput } from './user.input';
+import pubsub from 'src/subscriptions/pubsub';
 
 @Injectable()
 export class UserService {
@@ -27,6 +28,7 @@ export class UserService {
     let ancest = currentuser.ancestors;
     ancest.push(user)
     await this.userModel.findByIdAndUpdate(userId, { ancestors: ancest }, { useFindAndModify: false });
+    pubsub.publish('userAdded', { userAdded: ancest });
     return user
   }
 
@@ -36,7 +38,6 @@ export class UserService {
 
   async findAllUserAncestors(userId: string): Promise<User[]> {
     let currentuser = await this.userModel.findById(userId).exec();
-    console.log(currentuser.ancestors)
     return currentuser.ancestors;
   }
 
