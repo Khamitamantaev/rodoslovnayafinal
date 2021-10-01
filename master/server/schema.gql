@@ -9,6 +9,8 @@ type Message {
 
 type User {
   _id: ID!
+  leftchildID: User!
+  rightchildID: User!
   email: String
   name: String!
   permalink: String!
@@ -27,8 +29,10 @@ enum Roles {
 }
 
 type Tree {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  _id: ID!
+  name: String!
+  rootUser: String!
+  branches: [String!]!
 }
 
 type Query {
@@ -78,8 +82,8 @@ input SendMessageInput {
 }
 
 input CreateTreeInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  name: String
+  rootUser: String
 }
 
 input UpdateTreeInput {

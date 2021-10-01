@@ -2,6 +2,10 @@ import { InputType, Int, Field } from '@nestjs/graphql';
 
 @InputType()
 export class CreateTreeInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+
+  @Field(_type => String, { nullable: true })
+  name?: string;
+
+  @Field(_type => String, { nullable: true })
+  rootUser?: string;
 }
