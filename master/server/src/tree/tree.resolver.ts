@@ -13,13 +13,13 @@ export class TreeResolver {
     return this.treeService.create(createTreeInput);
   }
 
-  @Query(() => [Tree], { name: 'tree' })
+  @Query(() => [Tree], { name: 'findalltrees' })
   findAll() {
-    return this.treeService.findAll();
+    return this.treeService.findAllTrees();
   }
 
-  @Query(() => Tree, { name: 'tree' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  @Query(() => Tree, { name: 'findbyID' })
+  findOne(@Args('id', { type: () => String }) id: string) {
     return this.treeService.findOne(id);
   }
 

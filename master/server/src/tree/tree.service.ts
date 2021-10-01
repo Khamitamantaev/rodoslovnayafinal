@@ -14,12 +14,12 @@ export class TreeService {
       return CreateTree.save()
   }
 
-  findAll() {
-    return `This action returns all tree`;
+ async findAllTrees() : Promise<Tree[]>{
+    return await this.treeModel.find().lean()
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} tree`;
+  async findOne(id: string) {
+    return await this.treeModel.findById(id)
   }
 
   update(id: number, updateTreeInput: UpdateTreeInput) {

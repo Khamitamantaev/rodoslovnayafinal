@@ -44,7 +44,8 @@ type Query {
   redditAuth(input: SocialAuthInput!): User!
   googleAuth(input: SocialAuthInput!): User!
   getGoogleAuthURL: String!
-  tree(id: Int!): Tree!
+  findalltrees: [Tree!]!
+  findbyID(id: String!): Tree!
 }
 
 input GetUserInput {
