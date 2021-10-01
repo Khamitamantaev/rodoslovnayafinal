@@ -26,6 +26,11 @@ enum Roles {
   ADMIN
 }
 
+type Tree {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 type Query {
   users: [User!]!
   findAllAncestors: [User!]!
@@ -35,6 +40,7 @@ type Query {
   redditAuth(input: SocialAuthInput!): User!
   googleAuth(input: SocialAuthInput!): User!
   getGoogleAuthURL: String!
+  tree(id: Int!): Tree!
 }
 
 input GetUserInput {
@@ -50,6 +56,9 @@ type Mutation {
   createUser(input: CreateUserInput!): User!
   logout: User
   sendMessage(input: SendMessageInput!): Message!
+  createTree(createTreeInput: CreateTreeInput!): Tree!
+  updateTree(updateTreeInput: UpdateTreeInput!): Tree!
+  removeTree(id: Int!): Tree!
 }
 
 input UpdateUserInput {
@@ -66,6 +75,15 @@ input CreateUserInput {
 
 input SendMessageInput {
   body: String!
+}
+
+input CreateTreeInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateTreeInput {
+  id: Int!
 }
 
 type Subscription {

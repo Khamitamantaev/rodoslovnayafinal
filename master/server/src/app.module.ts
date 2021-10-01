@@ -15,6 +15,7 @@ import { services, schemas, resolvers } from './config/providers';
 import { ChatModule } from '@chat/chat.module';
 import { UserModule } from '@user/user.module';
 import { AuthModule } from '@auth/auth.module';
+import { TreeModule } from './tree/tree.module';
 
 @Module({
   imports: [
@@ -49,6 +50,7 @@ import { AuthModule } from '@auth/auth.module';
     AuthModule,
     ChatModule,
     UserModule,
+    TreeModule,
   ],
   controllers: [HealthzController],
   providers: [...services, ...resolvers,],
