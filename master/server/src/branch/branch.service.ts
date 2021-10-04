@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { TreeDocument } from 'src/tree/entities/tree.schema';
@@ -9,17 +9,29 @@ import { Branch, BranchDocument } from './entities/branch.schema';
 @Injectable()
 export class BranchService {
   constructor(@InjectModel('Branch') private branchModel: Model<BranchDocument>,
-              @InjectModel('Tree') private treeModel: Model<TreeDocument>
+    @InjectModel('Tree') private treeModel: Model<TreeDocument>
   ) { }
 
-  async create(createBranchInput: CreateBranchInput) :Promise<Branch> {
-    const newBranch = await this.branchModel.create(createBranchInput)
-    let currentTree = await this.treeModel.findById(createBranchInput.treeID).exec();
-    console.log(currentTree)
-    let branches = currentTree.branches;
-    branches.push(newBranch)
-    await this.treeModel.findByIdAndUpdate(currentTree.id, { branches: branches }, { useFindAndModify: false });
-    return newBranch.save()
+  async create(createBranchInput: CreateBranchInput) {
+    const currentBranch = await this.branchModel.findById(createBranchInput.parentBranchID).exec()
+      let children = currentBranch.branches;
+      const newBranch = await this.branchModel.create(createBranchInput)
+      let currentTree = await this.treeModel.findById(createBranchInput.treeID).exec();
+      // console.log(currentTree)
+      let treebranches = currentTree.branches;
+      treebranches.push(newBranch)
+      children.push(newBranch)
+      await this.branchModel.findByIdAndUpdate(createBranchInput.parentBranchID, { branches: children }, { useFindAndModify: false });
+      await this.treeModel.findByIdAndUpdate(currentTree.id, { branches: treebranches }, { useFindAndModify: false });
+      return newBranch.save()
+   
+    //   const newBranch = await this.branchModel.create(createBranchInput)
+    //   let currentTree = await this.treeModel.findById(createBranchInput.treeID).exec();
+    //   // console.log(currentTree)
+    //   let treebranches = currentTree.branches;
+    //   treebranches.push(newBranch)
+    //   await this.treeModel.findByIdAndUpdate(currentTree.id, { branches: treebranches }, { useFindAndModify: false });
+    //   return newBranch.save()
   }
 
   async findAll(): Promise<Branch[]> {
@@ -31,7 +43,7 @@ export class BranchService {
   }
 
   async update(id: string, updateBranchInput: UpdateBranchInput): Promise<Branch> {
-    const updatedBranch = await this.branchModel.findByIdAndUpdate(id, updateBranchInput, {new: true}).exec()
+    const updatedBranch = await this.branchModel.findByIdAndUpdate(id, updateBranchInput, { new: true }).exec()
     return updatedBranch
   }
 

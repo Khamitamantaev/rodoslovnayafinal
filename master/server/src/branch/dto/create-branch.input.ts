@@ -6,12 +6,9 @@ export class CreateBranchInput {
     @Field(_type => String, { nullable: true })
     treeID?: string;
 
-    @Field(_type => String, { nullable: true })
-    rootUser?: string;
+    @Field(() => String)
+    parentBranchID?: string;
 
     @Field(_type => String, { nullable: true })
-    leftchildID?: string;
-
-    @Field(_type => String, { nullable: true })
-    rightchildID?: string;
+    rootBranchID?: string;
 }

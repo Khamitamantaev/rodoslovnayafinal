@@ -30,8 +30,7 @@ type Branch {
   _id: ID!
   treeID: String
   rootUser: String
-  leftchildID: String
-  rightchildID: String
+  branches: [Branch!]!
 }
 
 type Tree {
@@ -104,9 +103,8 @@ input UpdateTreeInput {
 
 input CreateBranchInput {
   treeID: String
-  rootUser: String
-  leftchildID: String
-  rightchildID: String
+  parentBranchID: String!
+  rootBranchID: String
 }
 
 input UpdateBranchInput {
