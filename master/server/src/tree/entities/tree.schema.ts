@@ -1,6 +1,5 @@
 import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
-import { User } from '@user/user.schema';
 import { Document, Schema as MongooseSchema } from 'mongoose';
 import { Branch } from 'src/branch/entities/branch.schema';
 
@@ -18,9 +17,9 @@ export class Tree {
   @Field(() => String)
   rootUser: string;
 
-  @Field(() => [String]) 
-  @Prop({ type: [MongooseSchema.Types.ObjectId], ref: Branch.name })
-  branches: MongooseSchema.Types.ObjectId[];
+  @Field(() => [Branch]) 
+  @Prop({ type: [{ _id: {index: true, type: MongooseSchema.Types.ObjectId, ref: 'Branch'}, treeID: String, rootUser: String  }] })
+  branches: Branch[];
 }
 
 export type TreeDocument = Tree & Document;

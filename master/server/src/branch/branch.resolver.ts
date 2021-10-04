@@ -23,13 +23,13 @@ export class BranchResolver {
     return this.branchService.findOne(id);
   }
 
-  @Mutation(() => Branch)
+  @Mutation(() => Branch, { name: 'updateBranchByID' })
   updateBranch(@Args('updateBranchInput') updateBranchInput: UpdateBranchInput) {
     return this.branchService.update(updateBranchInput.id, updateBranchInput);
   }
 
-  @Mutation(() => Branch)
-  removeBranch(@Args('id', { type: () => Int }) id: number) {
+  @Mutation(() => Branch, { name: 'removeBranchByID' })
+  removeBranch(@Args('id', { type: () => String }) id: string) {
     return this.branchService.remove(id);
   }
 }

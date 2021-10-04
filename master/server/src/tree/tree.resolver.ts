@@ -18,7 +18,7 @@ export class TreeResolver {
     return this.treeService.findAllTrees();
   }
 
-  @Query(() => Tree, { name: 'findbyID' })
+  @Query(() => Tree, { name: 'findTreebyID' })
   findOne(@Args('id', { type: () => String }) id: string) {
     return this.treeService.findOne(id);
   }

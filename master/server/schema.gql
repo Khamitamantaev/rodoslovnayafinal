@@ -38,7 +38,7 @@ type Tree {
   _id: ID!
   name: String!
   rootUser: String!
-  branches: [String!]!
+  branches: [Branch!]!
 }
 
 type Query {
@@ -51,7 +51,7 @@ type Query {
   googleAuth(input: SocialAuthInput!): User!
   getGoogleAuthURL: String!
   findalltrees: [Tree!]!
-  findbyID(id: String!): Tree!
+  findTreebyID(id: String!): Tree!
   findAllBranches: [Branch!]!
   findBranchByID(id: String!): Branch!
 }
@@ -73,8 +73,8 @@ type Mutation {
   updateTree(updateTreeInput: UpdateTreeInput!): Tree!
   removeTree(id: Int!): Tree!
   createBranch(createBranchInput: CreateBranchInput!): Branch!
-  updateBranch(updateBranchInput: UpdateBranchInput!): Branch!
-  removeBranch(id: Int!): Branch!
+  updateBranchByID(updateBranchInput: UpdateBranchInput!): Branch!
+  removeBranchByID(id: String!): Branch!
 }
 
 input UpdateUserInput {
