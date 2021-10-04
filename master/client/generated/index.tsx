@@ -15,6 +15,11 @@ export type Scalars = {
   Float: number;
 };
 
+export type CreateTreeInput = {
+  readonly name?: Maybe<Scalars['String']>;
+  readonly rootUser?: Maybe<Scalars['String']>;
+};
+
 export type CreateUserInput = {
   readonly email?: Maybe<Scalars['String']>;
   readonly name?: Maybe<Scalars['String']>;
@@ -37,6 +42,9 @@ export type Mutation = {
   readonly createUser: User;
   readonly logout?: Maybe<User>;
   readonly sendMessage: Message;
+  readonly createTree: Tree;
+  readonly updateTree: Tree;
+  readonly removeTree: Tree;
 };
 
 
@@ -54,6 +62,21 @@ export type MutationSendMessageArgs = {
   input: SendMessageInput;
 };
 
+
+export type MutationCreateTreeArgs = {
+  createTreeInput: CreateTreeInput;
+};
+
+
+export type MutationUpdateTreeArgs = {
+  updateTreeInput: UpdateTreeInput;
+};
+
+
+export type MutationRemoveTreeArgs = {
+  id: Scalars['Int'];
+};
+
 export type Query = {
   readonly __typename?: 'Query';
   readonly users: ReadonlyArray<User>;
@@ -64,6 +87,8 @@ export type Query = {
   readonly redditAuth: User;
   readonly googleAuth: User;
   readonly getGoogleAuthURL: Scalars['String'];
+  readonly findalltrees: ReadonlyArray<Tree>;
+  readonly findbyID: Tree;
 };
 
 
@@ -86,6 +111,11 @@ export type QueryGoogleAuthArgs = {
   input: SocialAuthInput;
 };
 
+
+export type QueryFindbyIdArgs = {
+  id: Scalars['String'];
+};
+
 export enum Roles {
   USER = 'USER',
   ADMIN = 'ADMIN'
@@ -105,6 +135,18 @@ export type Subscription = {
   readonly newMessage: Message;
 };
 
+export type Tree = {
+  readonly __typename?: 'Tree';
+  readonly _id: Scalars['ID'];
+  readonly name: Scalars['String'];
+  readonly rootUser: Scalars['String'];
+  readonly branches: ReadonlyArray<Scalars['String']>;
+};
+
+export type UpdateTreeInput = {
+  readonly id: Scalars['Int'];
+};
+
 export type UpdateUserInput = {
   readonly email?: Maybe<Scalars['String']>;
   readonly name?: Maybe<Scalars['String']>;
@@ -114,6 +156,8 @@ export type UpdateUserInput = {
 export type User = {
   readonly __typename?: 'User';
   readonly _id: Scalars['ID'];
+  readonly leftchildID: User;
+  readonly rightchildID: User;
   readonly email?: Maybe<Scalars['String']>;
   readonly name: Scalars['String'];
   readonly permalink: Scalars['String'];

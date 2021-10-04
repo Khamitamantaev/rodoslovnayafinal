@@ -8,13 +8,13 @@ import { Tree, TreeDocument } from './entities/tree.schema';
 @Injectable()
 export class TreeService {
   constructor(@InjectModel('Tree') private treeModel: Model<TreeDocument>) { }
-
- async create(createTreeInput: CreateTreeInput) {
-      const CreateTree = await this.treeModel.create(createTreeInput)
-      return CreateTree.save()
+  
+  async create(createTreeInput: CreateTreeInput) {
+    const CreateTree = await this.treeModel.create(createTreeInput)
+    return CreateTree.save()
   }
 
- async findAllTrees() : Promise<Tree[]>{
+  async findAllTrees(): Promise<Tree[]> {
     return await this.treeModel.find().lean()
   }
 

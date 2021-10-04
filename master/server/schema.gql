@@ -9,8 +9,6 @@ type Message {
 
 type User {
   _id: ID!
-  leftchildID: User!
-  rightchildID: User!
   email: String
   name: String!
   permalink: String!
@@ -26,6 +24,14 @@ type User {
 enum Roles {
   USER
   ADMIN
+}
+
+type Branch {
+  _id: ID!
+  treeID: String
+  rootUser: String
+  leftchildID: String
+  rightchildID: String
 }
 
 type Tree {
@@ -46,6 +52,7 @@ type Query {
   getGoogleAuthURL: String!
   findalltrees: [Tree!]!
   findbyID(id: String!): Tree!
+  branch(id: Int!): Branch!
 }
 
 input GetUserInput {
@@ -64,6 +71,9 @@ type Mutation {
   createTree(createTreeInput: CreateTreeInput!): Tree!
   updateTree(updateTreeInput: UpdateTreeInput!): Tree!
   removeTree(id: Int!): Tree!
+  createBranch(createBranchInput: CreateBranchInput!): Branch!
+  updateBranch(updateBranchInput: UpdateBranchInput!): Branch!
+  removeBranch(id: Int!): Branch!
 }
 
 input UpdateUserInput {
@@ -89,6 +99,21 @@ input CreateTreeInput {
 
 input UpdateTreeInput {
   id: Int!
+}
+
+input CreateBranchInput {
+  treeID: String
+  rootUser: String
+  leftchildID: String
+  rightchildID: String
+}
+
+input UpdateBranchInput {
+  id: String!
+  treeID: String!
+  rootUser: String!
+  leftchildID: String!
+  rightchildID: String!
 }
 
 type Subscription {

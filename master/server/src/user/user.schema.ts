@@ -108,12 +108,6 @@ export class User extends Document {
   @Field(_type => ID, { nullable: false })
   readonly _id: string;
 
-  @Field(_type => User, { nullable: false})
-  leftchildID: string;
-
-  @Field(_type => User, { nullable: false})
-  rightchildID: string;
-
   @Field({ nullable: true })
   readonly email: string;
 

@@ -2,7 +2,7 @@ import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { User } from '@user/user.schema';
 import { Document, Schema as MongooseSchema } from 'mongoose';
-import { Branch } from './branch.schema';
+import { Branch } from 'src/branch/entities/branch.schema';
 
 @Schema()
 @ObjectType()
@@ -19,7 +19,7 @@ export class Tree {
   rootUser: string;
 
   @Field(() => [String]) 
-  @Prop({ type: [MongooseSchema.Types.ObjectId], ref: User.name })
+  @Prop({ type: [MongooseSchema.Types.ObjectId], ref: Branch.name })
   branches: MongooseSchema.Types.ObjectId[];
 }
 
