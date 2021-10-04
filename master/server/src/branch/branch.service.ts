@@ -14,12 +14,12 @@ export class BranchService {
     return newBranch.save()
   }
 
-  findAll() {
-    return `This action returns all branch`;
+  async findAll(): Promise<Branch[]> {
+    return await this.branchModel.find().lean()
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} branch`;
+  findOne(id: string) {
+    return this.branchModel.findById(id)
   }
 
   async update(id: string, updateBranchInput: UpdateBranchInput): Promise<Branch> {

@@ -13,13 +13,13 @@ export class BranchResolver {
     return this.branchService.create(createBranchInput);
   }
 
-  @Query(() => [Branch], { name: 'branch' })
+  @Query(() => [Branch], { name: 'findAllBranches' })
   findAll() {
     return this.branchService.findAll();
   }
 
-  @Query(() => Branch, { name: 'branch' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  @Query(() => Branch, { name: 'findBranchByID' })
+  findOne(@Args('id', { type: () => String }) id: string) {
     return this.branchService.findOne(id);
   }
 

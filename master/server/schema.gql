@@ -52,7 +52,8 @@ type Query {
   getGoogleAuthURL: String!
   findalltrees: [Tree!]!
   findbyID(id: String!): Tree!
-  branch(id: Int!): Branch!
+  findAllBranches: [Branch!]!
+  findBranchByID(id: String!): Branch!
 }
 
 input GetUserInput {
