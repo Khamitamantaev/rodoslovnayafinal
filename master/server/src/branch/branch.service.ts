@@ -13,7 +13,17 @@ export class BranchService {
   ) { }
 
   async create(createBranchInput: CreateBranchInput) {
-    const currentBranch = await this.branchModel.findById(createBranchInput.parentBranchID).exec()
+    if (!createBranchInput.parentBranchID == null || createBranchInput.parentBranchID == undefined) {
+      const newBranch = await this.branchModel.create(createBranchInput)
+      let currentTree = await this.treeModel.findById(createBranchInput.treeID).exec();
+      // console.log(currentTree)
+      let treebranches = currentTree.branches;
+      treebranches.push(newBranch)
+      await this.treeModel.findByIdAndUpdate(currentTree.id, { branches: treebranches }, { useFindAndModify: false });
+      return newBranch.save()
+    }
+    else {
+      let currentBranch = await this.branchModel.findById(createBranchInput.parentBranchID).exec()
       let children = currentBranch.branches;
       const newBranch = await this.branchModel.create(createBranchInput)
       let currentTree = await this.treeModel.findById(createBranchInput.treeID).exec();
@@ -24,14 +34,7 @@ export class BranchService {
       await this.branchModel.findByIdAndUpdate(createBranchInput.parentBranchID, { branches: children }, { useFindAndModify: false });
       await this.treeModel.findByIdAndUpdate(currentTree.id, { branches: treebranches }, { useFindAndModify: false });
       return newBranch.save()
-   
-    //   const newBranch = await this.branchModel.create(createBranchInput)
-    //   let currentTree = await this.treeModel.findById(createBranchInput.treeID).exec();
-    //   // console.log(currentTree)
-    //   let treebranches = currentTree.branches;
-    //   treebranches.push(newBranch)
-    //   await this.treeModel.findByIdAndUpdate(currentTree.id, { branches: treebranches }, { useFindAndModify: false });
-    //   return newBranch.save()
+    }
   }
 
   async findAll(): Promise<Branch[]> {
@@ -47,7 +50,9 @@ export class BranchService {
     return updatedBranch
   }
 
-  remove(id: string) {
+  async remove(id: string) {
+    await this.branchModel.update({}, { $pull: { branches: { _id: id } } }, { multi: true })
+    await this.treeModel.update({}, { $pull: { branches: { _id: id } } }, { multi: true })
     return this.branchModel.findByIdAndDelete(id)
   }
 }

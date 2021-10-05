@@ -103,7 +103,7 @@ input UpdateTreeInput {
 
 input CreateBranchInput {
   treeID: String
-  parentBranchID: String!
+  parentBranchID: String
   rootBranchID: String
 }
 
