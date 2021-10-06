@@ -66,3 +66,28 @@ export const GET_USER_ANCESTORS = gql`
     }
   }
 `;
+
+export const query = gql`
+query findTreebyID($id: String!) {
+  findTreebyID(id: $id) {
+    name
+    branches {
+      _id
+      rootUser
+    }
+  }
+}
+`
+
+export const GET_ALL_TREES = gql`
+  query findalltrees {
+    findalltrees {
+      name
+      branches {
+        _id
+        rootUser
+      }
+    }
+  }
+`;
+

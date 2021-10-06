@@ -7,74 +7,33 @@ import 'beautiful-react-diagrams/styles.css';
 import { ActionButtons, Avatar, Box, Button, Flex, Input, Label, Paragraph, Table, Text, useToasts } from 'bumbag';
 import { Formik, Form, Field } from 'formik';
 import { InputField } from 'bumbag';
-import { useCreateUserMutation, useFindAllAncestorsQuery } from 'generated';
+import { useCreateTreeMutation, useCreateUserMutation, useFindAllAncestorsQuery, useFindalltreesQuery } from 'generated';
 import { useEffect, useState } from 'react';
+import Trees from 'components/tree/trees';
 
 
 function RodoslovnayaPage() {
 
     const { t } = useTranslation();
     const toasts = useToasts();
-    const [createUser, { loading: creating, error }] = useCreateUserMutation({
+    // const [createUser, { loading: creating, error }] = useCreateUserMutation({
+    //     onCompleted: () => {
+    //         toasts.success({
+    //             title: '',
+    //             message: 'Пользователь успешно добавлен',
+    //         });
+    //     },
+    // });
+
+    const [createTree, { loading: treeloading, error }] = useCreateTreeMutation({
         onCompleted: () => {
             toasts.success({
                 title: '',
-                message: 'Пользователь успешно добавлен',
+                message: 'Дерево успешно добавлено',
             });
         },
     });
 
-    const UserListComponent = (props) => {
-
-        const {
-            data: dataAncestors,
-            loading: loadingAncestors,
-            // @ts-ignore
-            error: errorAncestors,
-        } = useFindAllAncestorsQuery();
-
-        const ancestors = dataAncestors?.findAllAncestors;
-
-        if (loadingAncestors) {
-            console.log('loading')
-        }
-
-        if (dataAncestors) {
-            console.log(dataAncestors);
-            //   setAncestors(dataAncestors.findAllAncestors)
-        }
-        if (errorAncestors) {
-            console.log(errorAncestors);
-            return "error"; // blocks rendering
-        }
-
-        return (
-            <Table>
-                <Table.Head>
-                    <Table.Row>
-                        <Table.HeadCell>Name</Table.HeadCell>
-                        <Table.HeadCell textAlign="right">Quantity</Table.HeadCell>
-                    </Table.Row>
-                </Table.Head>
-                <Table.Body>
-                    {ancestors?.map(ancestor => (
-                        <Table.Row key={ancestor._id}>
-                            <Table.Cell>{ancestor.name}</Table.Cell>
-                            <Table.Cell textAlign="right">{ancestor._id}</Table.Cell>
-
-                        </Table.Row>
-                    ))}
-                </Table.Body>
-                <Table.Foot fontWeight="semibold">
-                    <Table.Row>
-                        <Table.Cell>Total</Table.Cell>
-                        <Table.Cell />
-
-                    </Table.Row>
-                </Table.Foot>
-            </Table>
-        );
-    }
 
     const initialSchema = createSchema({
         nodes: [
@@ -83,33 +42,20 @@ function RodoslovnayaPage() {
                 content: 'Node 1',
                 coordinates: [150, 60],
                 outputs: [{ id: 'port-1', alignment: 'right' }],
-                disableDrag : false
+                disableDrag: false
             },
         ]
     });
 
-    const PictureRender = ({ id, content, data, inputs, outputs }) => (
-        <Flex alignY="center">
-            <Box width="80px" height="50px" backgroundColor="white"  >
-            {/* <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
-                 {inputs.map((port) => React.cloneElement(port, { style: { width: '20px', height: '20px', background: '#1B263B' } }))}
-               {outputs.map((port) => React.cloneElement(port, { style: { width: '20px', height: '20px', background: '#1B263B' } }))}
-           </div> */}
-            <Avatar variant="circle" src="/bean.jpg" alt="Photo of Mr. Bean"  />
-            <Text use="cite" color='dark' >{content}</Text>
-            </Box>
-        </Flex>
-    );
-
     const CustomRender = ({ id, content, data, inputs, outputs }) => (
         <Flex alignY="center">
             <Box width="80px" height="50px" backgroundColor="white"  >
-            {/* <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
+                {/* <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
                  {inputs.map((port) => React.cloneElement(port, { style: { width: '20px', height: '20px', background: '#1B263B' } }))}
                {outputs.map((port) => React.cloneElement(port, { style: { width: '20px', height: '20px', background: '#1B263B' } }))}
            </div> */}
-            <Avatar variant="circle" src="/bean.jpg" alt="Photo of Mr. Bean"  />
-            <Text use="cite" color='dark' >{content}</Text>
+                <Avatar variant="circle" src="/bean.jpg" alt="Photo of Mr. Bean" />
+                <Text use="cite" color='dark' >{content}</Text>
             </Box>
         </Flex>
     );
@@ -146,12 +92,6 @@ function RodoslovnayaPage() {
                 })
             }
         }, [loadingAncestors])
-
-
-
-
-
-
         return (
             <div style={{ height: '60rem' }}>
                 {/* <Button color="primary" icon="plus" onClick={addNewNode}>Add new node</Button> */}
@@ -160,44 +100,71 @@ function RodoslovnayaPage() {
         );
     };
 
+    const {
+        data: dataTrees,
+        loading: loadingTrees,
+        // @ts-ignore
+        error: errorTrees
+    } = useFindalltreesQuery({ pollInterval: 500 })
 
-    const onSubmit = (values) => {
-        return createUser({
+    const trees = dataTrees?.findalltrees;
+
+    useEffect(() => {
+
+    }, [dataTrees])
+
+
+    // const onSubmit = (values) => {
+    //     return createUser({
+    //         variables: {
+    //             input: {
+    //                 email: values.email,
+    //                 name: values.username,
+    //             },
+    //         },
+    //     });
+    // };
+
+    const onSubmitTree = (values) => {
+        return createTree({
             variables: {
                 input: {
-                    email: values.email,
-                    name: values.username,
-                },
-            },
-        });
-    };
+                    name: values.name,
+                    rootUser: values.rootUser
+                }
+            }
+        })
+    }
 
     return (
         <App title={t('Ваша родословная')} description={t('Здесь можно создать и распечатать свою родословную')} requiresUser>
             <Flex alignX="center">
                 <Flex alignX="left">
                     <Box width="300px" height="520px" padding="10px" >
-                        <Label marginBottom="12px">Добавить пользователя</Label>
+                        <Label marginBottom="12px">Add Tree</Label>
                         <Formik
                             initialValues={{}}
-                            onSubmit={onSubmit}
+                            onSubmit={onSubmitTree}
                         >
                             <Form>
                                 <Field
                                     component={InputField.Formik}
-                                    name="username"
-                                    label="Username"
+                                    name="name"
+                                    label="TreeName"
                                     marginBottom="10px"
                                 />
                                 <Field
                                     component={InputField.Formik}
-                                    name="email"
-                                    label="Email"
+                                    name="rootUser"
+                                    label="ID"
                                     marginBottom="10px"
                                 />
-                                <Button isLoading={creating} disabled={creating} type="submit" palette="success">Success</Button>
+                                <Button isLoading={treeloading} disabled={treeloading} type="submit" palette="success">Success</Button>
                             </Form>
                         </Formik>
+                        <Box>
+                            <Trees trees={trees} />
+                        </Box>
                     </Box>
                 </Flex>
                 <Flex alignX="right" >

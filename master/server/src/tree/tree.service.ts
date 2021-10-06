@@ -18,7 +18,7 @@ export class TreeService {
     return await this.treeModel.find().lean()
   }
 
-  async findOne(id: string) {
+  async findOne(id: string): Promise<Tree> {
     return await this.treeModel.findById(id)
   }
 
