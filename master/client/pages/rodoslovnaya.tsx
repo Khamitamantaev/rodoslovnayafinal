@@ -14,16 +14,10 @@ import Trees from 'components/tree/trees';
 
 function RodoslovnayaPage() {
 
+    const [currentTree, setCurrentTree] = useState("");
+
     const { t } = useTranslation();
     const toasts = useToasts();
-    // const [createUser, { loading: creating, error }] = useCreateUserMutation({
-    //     onCompleted: () => {
-    //         toasts.success({
-    //             title: '',
-    //             message: 'Пользователь успешно добавлен',
-    //         });
-    //     },
-    // });
 
     const [createTree, { loading: treeloading, error }] = useCreateTreeMutation({
         onCompleted: () => {
@@ -110,20 +104,9 @@ function RodoslovnayaPage() {
     const trees = dataTrees?.findalltrees;
 
     useEffect(() => {
+        console.log(currentTree)
+    }, [dataTrees, currentTree])
 
-    }, [dataTrees])
-
-
-    // const onSubmit = (values) => {
-    //     return createUser({
-    //         variables: {
-    //             input: {
-    //                 email: values.email,
-    //                 name: values.username,
-    //             },
-    //         },
-    //     });
-    // };
 
     const onSubmitTree = (values) => {
         return createTree({
@@ -141,7 +124,7 @@ function RodoslovnayaPage() {
             <Flex alignX="center">
                 <Flex alignX="left">
                     <Box width="300px" height="520px" padding="10px" >
-                        <Label marginBottom="12px">Add Tree</Label>
+                        <Label marginBottom="20px">Add Tree</Label>
                         <Formik
                             initialValues={{}}
                             onSubmit={onSubmitTree}
@@ -162,8 +145,8 @@ function RodoslovnayaPage() {
                                 <Button isLoading={treeloading} disabled={treeloading} type="submit" palette="success">Success</Button>
                             </Form>
                         </Formik>
-                        <Box>
-                            <Trees trees={trees} />
+                        <Box marginTop="20px">
+                            <Trees trees={trees} setCurrentTree={setCurrentTree}/>
                         </Box>
                     </Box>
                 </Flex>

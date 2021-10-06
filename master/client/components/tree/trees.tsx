@@ -1,14 +1,16 @@
 import React from 'react';
-import { List } from 'bumbag';
+import { Box, Button, List, Set } from 'bumbag';
 
-function Trees({trees}) {
+function Trees(props) {
 
   return (
-    <List>
-      {trees.map(tree => {
-        return <List.Item key={tree._id}>{tree.name}</List.Item>;
-      })}
-    </List>
+    <Box>
+      <Set orientation="vertical" isFilled>
+        {props.trees.map(tree => {
+          return <Button onClick={() => props.setCurrentTree(tree.name)} key={tree._id}>{tree.name}</Button>;
+        })}
+      </Set>
+    </Box>
   );
 }
 
