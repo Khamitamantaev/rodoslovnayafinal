@@ -26,6 +26,20 @@ enum Roles {
   ADMIN
 }
 
+type Branch {
+  _id: ID!
+  treeID: String
+  rootUser: String
+  branches: [Branch!]!
+}
+
+type Tree {
+  _id: ID!
+  name: String!
+  rootUser: String!
+  branches: [Branch!]!
+}
+
 type Query {
   users: [User!]!
   findAllAncestors: [User!]!
@@ -35,6 +49,10 @@ type Query {
   redditAuth(input: SocialAuthInput!): User!
   googleAuth(input: SocialAuthInput!): User!
   getGoogleAuthURL: String!
+  findalltrees: [Tree!]!
+  findTreebyID(id: String!): Tree!
+  findAllBranches: [Branch!]!
+  findBranchByID(id: String!): Branch!
 }
 
 input GetUserInput {
@@ -50,6 +68,12 @@ type Mutation {
   createUser(input: CreateUserInput!): User!
   logout: User
   sendMessage(input: SendMessageInput!): Message!
+  createTree(createTreeInput: CreateTreeInput!): Tree!
+  updateTree(updateTreeInput: UpdateTreeInput!): Tree!
+  removeTree(id: Int!): Tree!
+  createBranch(createBranchInput: CreateBranchInput!): Branch!
+  updateBranchByID(updateBranchInput: UpdateBranchInput!): Branch!
+  removeBranchByID(id: String!): Branch!
 }
 
 input UpdateUserInput {
@@ -66,6 +90,29 @@ input CreateUserInput {
 
 input SendMessageInput {
   body: String!
+}
+
+input CreateTreeInput {
+  name: String
+  rootUser: String
+}
+
+input UpdateTreeInput {
+  id: Int!
+}
+
+input CreateBranchInput {
+  treeID: String
+  parentBranchID: String
+  rootBranchID: String
+}
+
+input UpdateBranchInput {
+  id: String!
+  treeID: String!
+  rootUser: String!
+  leftchildID: String!
+  rightchildID: String!
 }
 
 type Subscription {

@@ -34,7 +34,7 @@ export const UserSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
             index: true
-    },
+              },
          name: String
     }]
   },

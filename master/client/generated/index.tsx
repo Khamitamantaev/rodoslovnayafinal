@@ -15,6 +15,25 @@ export type Scalars = {
   Float: number;
 };
 
+export type Branch = {
+  readonly __typename?: 'Branch';
+  readonly _id: Scalars['ID'];
+  readonly treeID?: Maybe<Scalars['String']>;
+  readonly rootUser?: Maybe<Scalars['String']>;
+  readonly branches: ReadonlyArray<Branch>;
+};
+
+export type CreateBranchInput = {
+  readonly treeID?: Maybe<Scalars['String']>;
+  readonly parentBranchID?: Maybe<Scalars['String']>;
+  readonly rootBranchID?: Maybe<Scalars['String']>;
+};
+
+export type CreateTreeInput = {
+  readonly name?: Maybe<Scalars['String']>;
+  readonly rootUser?: Maybe<Scalars['String']>;
+};
+
 export type CreateUserInput = {
   readonly email?: Maybe<Scalars['String']>;
   readonly name?: Maybe<Scalars['String']>;
@@ -37,6 +56,12 @@ export type Mutation = {
   readonly createUser: User;
   readonly logout?: Maybe<User>;
   readonly sendMessage: Message;
+  readonly createTree: Tree;
+  readonly updateTree: Tree;
+  readonly removeTree: Tree;
+  readonly createBranch: Branch;
+  readonly updateBranchByID: Branch;
+  readonly removeBranchByID: Branch;
 };
 
 
@@ -54,6 +79,36 @@ export type MutationSendMessageArgs = {
   input: SendMessageInput;
 };
 
+
+export type MutationCreateTreeArgs = {
+  createTreeInput: CreateTreeInput;
+};
+
+
+export type MutationUpdateTreeArgs = {
+  updateTreeInput: UpdateTreeInput;
+};
+
+
+export type MutationRemoveTreeArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type MutationCreateBranchArgs = {
+  createBranchInput: CreateBranchInput;
+};
+
+
+export type MutationUpdateBranchByIdArgs = {
+  updateBranchInput: UpdateBranchInput;
+};
+
+
+export type MutationRemoveBranchByIdArgs = {
+  id: Scalars['String'];
+};
+
 export type Query = {
   readonly __typename?: 'Query';
   readonly users: ReadonlyArray<User>;
@@ -64,6 +119,10 @@ export type Query = {
   readonly redditAuth: User;
   readonly googleAuth: User;
   readonly getGoogleAuthURL: Scalars['String'];
+  readonly findalltrees: ReadonlyArray<Tree>;
+  readonly findTreebyID: Tree;
+  readonly findAllBranches: ReadonlyArray<Branch>;
+  readonly findBranchByID: Branch;
 };
 
 
@@ -86,6 +145,16 @@ export type QueryGoogleAuthArgs = {
   input: SocialAuthInput;
 };
 
+
+export type QueryFindTreebyIdArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryFindBranchByIdArgs = {
+  id: Scalars['String'];
+};
+
 export enum Roles {
   USER = 'USER',
   ADMIN = 'ADMIN'
@@ -103,6 +172,26 @@ export type Subscription = {
   readonly __typename?: 'Subscription';
   readonly userAdded: ReadonlyArray<User>;
   readonly newMessage: Message;
+};
+
+export type Tree = {
+  readonly __typename?: 'Tree';
+  readonly _id: Scalars['ID'];
+  readonly name: Scalars['String'];
+  readonly rootUser: Scalars['String'];
+  readonly branches: ReadonlyArray<Branch>;
+};
+
+export type UpdateBranchInput = {
+  readonly id: Scalars['String'];
+  readonly treeID: Scalars['String'];
+  readonly rootUser: Scalars['String'];
+  readonly leftchildID: Scalars['String'];
+  readonly rightchildID: Scalars['String'];
+};
+
+export type UpdateTreeInput = {
+  readonly id: Scalars['Int'];
 };
 
 export type UpdateUserInput = {
@@ -173,6 +262,19 @@ export type CreateUserMutation = (
   & { readonly createUser: (
     { readonly __typename?: 'User' }
     & Pick<User, 'name' | 'email'>
+  ) }
+);
+
+export type CreateTreeMutationVariables = Exact<{
+  input: CreateTreeInput;
+}>;
+
+
+export type CreateTreeMutation = (
+  { readonly __typename?: 'Mutation' }
+  & { readonly createTree: (
+    { readonly __typename?: 'Tree' }
+    & Pick<Tree, 'name' | 'rootUser'>
   ) }
 );
 
@@ -255,6 +357,38 @@ export type FindAllAncestorsQuery = (
   & { readonly findAllAncestors: ReadonlyArray<(
     { readonly __typename?: 'User' }
     & Pick<User, '_id' | 'name'>
+  )> }
+);
+
+export type FindTreebyIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type FindTreebyIdQuery = (
+  { readonly __typename?: 'Query' }
+  & { readonly findTreebyID: (
+    { readonly __typename?: 'Tree' }
+    & Pick<Tree, 'name'>
+    & { readonly branches: ReadonlyArray<(
+      { readonly __typename?: 'Branch' }
+      & Pick<Branch, '_id' | 'rootUser'>
+    )> }
+  ) }
+);
+
+export type FindalltreesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FindalltreesQuery = (
+  { readonly __typename?: 'Query' }
+  & { readonly findalltrees: ReadonlyArray<(
+    { readonly __typename?: 'Tree' }
+    & Pick<Tree, 'name'>
+    & { readonly branches: ReadonlyArray<(
+      { readonly __typename?: 'Branch' }
+      & Pick<Branch, '_id' | 'rootUser'>
+    )> }
   )> }
 );
 
@@ -418,6 +552,39 @@ export function useCreateUserMutation(baseOptions?: ApolloReactHooks.MutationHoo
 export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutation>;
 export type CreateUserMutationResult = ApolloReactCommon.MutationResult<CreateUserMutation>;
 export type CreateUserMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;
+export const CreateTreeDocument = gql`
+    mutation createTree($input: CreateTreeInput!) {
+  createTree(createTreeInput: $input) {
+    name
+    rootUser
+  }
+}
+    `;
+export type CreateTreeMutationFn = ApolloReactCommon.MutationFunction<CreateTreeMutation, CreateTreeMutationVariables>;
+
+/**
+ * __useCreateTreeMutation__
+ *
+ * To run a mutation, you first call `useCreateTreeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateTreeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createTreeMutation, { data, loading, error }] = useCreateTreeMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateTreeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateTreeMutation, CreateTreeMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateTreeMutation, CreateTreeMutationVariables>(CreateTreeDocument, baseOptions);
+      }
+export type CreateTreeMutationHookResult = ReturnType<typeof useCreateTreeMutation>;
+export type CreateTreeMutationResult = ApolloReactCommon.MutationResult<CreateTreeMutation>;
+export type CreateTreeMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateTreeMutation, CreateTreeMutationVariables>;
 export const GitHubAuthDocument = gql`
     query gitHubAuth($input: SocialAuthInput!) {
   gitHubAuth(input: $input) {
@@ -656,6 +823,79 @@ export function useFindAllAncestorsLazyQuery(baseOptions?: ApolloReactHooks.Lazy
 export type FindAllAncestorsQueryHookResult = ReturnType<typeof useFindAllAncestorsQuery>;
 export type FindAllAncestorsLazyQueryHookResult = ReturnType<typeof useFindAllAncestorsLazyQuery>;
 export type FindAllAncestorsQueryResult = ApolloReactCommon.QueryResult<FindAllAncestorsQuery, FindAllAncestorsQueryVariables>;
+export const FindTreebyIdDocument = gql`
+    query findTreebyID($id: String!) {
+  findTreebyID(id: $id) {
+    name
+    branches {
+      _id
+      rootUser
+    }
+  }
+}
+    `;
+
+/**
+ * __useFindTreebyIdQuery__
+ *
+ * To run a query within a React component, call `useFindTreebyIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindTreebyIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindTreebyIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useFindTreebyIdQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindTreebyIdQuery, FindTreebyIdQueryVariables>) {
+        return ApolloReactHooks.useQuery<FindTreebyIdQuery, FindTreebyIdQueryVariables>(FindTreebyIdDocument, baseOptions);
+      }
+export function useFindTreebyIdLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindTreebyIdQuery, FindTreebyIdQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<FindTreebyIdQuery, FindTreebyIdQueryVariables>(FindTreebyIdDocument, baseOptions);
+        }
+export type FindTreebyIdQueryHookResult = ReturnType<typeof useFindTreebyIdQuery>;
+export type FindTreebyIdLazyQueryHookResult = ReturnType<typeof useFindTreebyIdLazyQuery>;
+export type FindTreebyIdQueryResult = ApolloReactCommon.QueryResult<FindTreebyIdQuery, FindTreebyIdQueryVariables>;
+export const FindalltreesDocument = gql`
+    query findalltrees {
+  findalltrees {
+    name
+    branches {
+      _id
+      rootUser
+    }
+  }
+}
+    `;
+
+/**
+ * __useFindalltreesQuery__
+ *
+ * To run a query within a React component, call `useFindalltreesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindalltreesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindalltreesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFindalltreesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindalltreesQuery, FindalltreesQueryVariables>) {
+        return ApolloReactHooks.useQuery<FindalltreesQuery, FindalltreesQueryVariables>(FindalltreesDocument, baseOptions);
+      }
+export function useFindalltreesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindalltreesQuery, FindalltreesQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<FindalltreesQuery, FindalltreesQueryVariables>(FindalltreesDocument, baseOptions);
+        }
+export type FindalltreesQueryHookResult = ReturnType<typeof useFindalltreesQuery>;
+export type FindalltreesLazyQueryHookResult = ReturnType<typeof useFindalltreesLazyQuery>;
+export type FindalltreesQueryResult = ApolloReactCommon.QueryResult<FindalltreesQuery, FindalltreesQueryVariables>;
 export const NewMessageDocument = gql`
     subscription newMessage {
   newMessage {
