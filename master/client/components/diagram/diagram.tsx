@@ -12,22 +12,24 @@ import { useEffect, useState } from 'react';
 
 
 function UncontrolledDiagram(props) {
-    // var result = props.trees.find(obj => {
-    //     return obj.name === props.currentTree
-    // })
-    // const branches = result.branches
-    useEffect(() => {
-        
+
+    var result = props.trees.find(obj => {
+        return obj.name === props.currentTree
+    })
+    const branches = result?.branches
+    useEffect(() => {   
+        console.log(result)
     }, [props.currentTree])
 
     return (
         <div style={{ height: '60rem' }}>
             <div>{props.currentTree}</div>
-            {/* <List>
-                {branches.map(tree => {
-                    return <List.Item key={tree._id}>{tree.rootUser}</List.Item>;
-                })}
-            </List> */}
+            <List>
+            { branches && branches.length ?
+                branches.map((tree) => (
+                    <List.Item key={tree._id}>{tree._id}</List.Item>
+               )) : null}
+            </List>
         </div>
     );
 }
