@@ -67,7 +67,7 @@ export const GET_USER_ANCESTORS = gql`
   }
 `;
 
-export const query = gql`
+export const GET_TREE_BY_ID = gql`
 query findTreebyID($id: String!) {
   findTreebyID(id: $id) {
     name
@@ -90,4 +90,5 @@ export const GET_ALL_TREES = gql`
     }
   }
 `;
+
 
