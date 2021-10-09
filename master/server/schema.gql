@@ -30,6 +30,8 @@ type Branch {
   _id: ID!
   treeID: String
   rootUser: String
+  positionX: Float
+  positionY: Float
   branches: [Branch!]!
 }
 
@@ -104,6 +106,8 @@ input UpdateTreeInput {
 input CreateBranchInput {
   treeID: String
   parentBranchID: String
+  positionX: Float
+  positionY: Float
   rootBranchID: String
 }
 

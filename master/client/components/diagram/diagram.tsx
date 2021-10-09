@@ -10,6 +10,7 @@ import { InputField } from 'bumbag';
 import { useCreateTreeMutation, useCreateUserMutation, useFindAllAncestorsQuery, useFindalltreesQuery, useFindTreebyIdQuery } from 'generated';
 import { useEffect, useState } from 'react';
 import BarChart from 'components/svg/BarChart';
+import Smile from 'components/svg/Smile';
 
 
 function UncontrolledDiagram(props) {
@@ -58,7 +59,8 @@ function UncontrolledDiagram(props) {
     return (
         <div style={{ height: '60rem' }}>
             <div>{props.currentTree}</div>
-            <BarChart data={data} />
+            <Smile/>
+            {/* <BarChart data={data} /> */}
             {/* <List>
             { branches && branches.length ?
                 branches.map((tree) => (
