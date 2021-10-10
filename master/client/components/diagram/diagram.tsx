@@ -11,6 +11,7 @@ import { useCreateTreeMutation, useCreateUserMutation, useFindAllAncestorsQuery,
 import { useEffect, useState } from 'react';
 import BarChart from 'components/svg/BarChart';
 import Smile from 'components/svg/Smile';
+import TestCircle from 'components/svg/circlecomponents/testcircle';
 
 
 function UncontrolledDiagram(props) {
@@ -23,44 +24,23 @@ function UncontrolledDiagram(props) {
         console.log(result)
     }, [props.currentTree])
 
-    const width = 166;
-    const height = 166;
+    const width = 200;
+    const height = 200;
+    const circleRadius = 30;
 
     return (
+        
         <div style={{ height: '60rem' }}>
+            {/* <img src="./tree.jpg" width="900" height="600"/> */}
             <div>{props.currentTree}</div>
-
-            {/* <Smile
-                width={width}
-                height={height}
-                centerX={width / 2}
-                centerY={height / 2}
-                strokeWidth={20}
-                eyeOffSetX={90}
-                eyeOffSetY={100}
-                eyeRadius={40}
-
-                mouthRadius={140}
-                mouthWidth={20}
-            /> */}
-            {/* <BarChart data={data} /> */}
-
             {branches && branches.length ?
                 branches.map((tree) => (
-                    <Smile
-                        key={tree._id}
-                        width={width}
-                        height={height}
-                        centerX={width / 2}
-                        centerY={height / 2}
-                        strokeWidth={10}
-                        eyeOffSetX={30}
-                        eyeOffSetY={30}
-                        eyeRadius={10}
-
-                        mouthRadius={40}
-                        mouthWidth={10}
-                    />
+                    <TestCircle 
+                    key={tree._id} 
+                    width={width} 
+                    height={height} 
+                    circleRadius={circleRadius} 
+                />
                 )) : null}
         </div>
     );

@@ -30,7 +30,7 @@ export type CreateBranchInput = {
   readonly parentBranchID?: Maybe<Scalars['String']>;
   readonly positionX?: Maybe<Scalars['Float']>;
   readonly positionY?: Maybe<Scalars['Float']>;
-  readonly rootBranchID?: Maybe<Scalars['String']>;
+  readonly rootUser?: Maybe<Scalars['String']>;
 };
 
 export type CreateTreeInput = {

@@ -108,7 +108,7 @@ input CreateBranchInput {
   parentBranchID: String
   positionX: Float
   positionY: Float
-  rootBranchID: String
+  rootUser: String
 }
 
 input UpdateBranchInput {

@@ -1,17 +1,8 @@
-import { useD3 } from '../hooks/useD3';
 import React from 'react';
-import * as d3 from 'd3';
-
 import BackgroundCircle from './circlecomponents/BackgroundCircle';
 import Eyes from './circlecomponents/eyes';
 import Mouth from './circlecomponents/Mouth';
 import FaceContainer from './containers/FaceContainer';
-
-
-
-
-
-
 
 function Smile({ 
   width, 

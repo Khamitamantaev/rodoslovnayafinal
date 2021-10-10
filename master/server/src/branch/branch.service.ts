@@ -13,18 +13,19 @@ export class BranchService {
   ) { }
 
   async create(createBranchInput: CreateBranchInput) {
-    if (!createBranchInput.parentBranchID == null || createBranchInput.parentBranchID == undefined) {
+    if (createBranchInput.parentBranchID == null 
+      || createBranchInput.parentBranchID == "" 
+      || createBranchInput.parentBranchID == undefined) {
       const newBranch = await this.branchModel.create(createBranchInput)
       let currentTree = await this.treeModel.findById(createBranchInput.treeID).exec();
-      // console.log(currentTree)
       let treebranches = currentTree.branches;
       treebranches.push(newBranch)
       await this.treeModel.findByIdAndUpdate(currentTree.id, { branches: treebranches }, { useFindAndModify: false });
       return newBranch.save()
     }
     else {
-      let currentBranch = await this.branchModel.findById(createBranchInput.parentBranchID).exec()
-      let children = currentBranch.branches;
+      let parentBranch = await this.branchModel.findById(createBranchInput.parentBranchID).exec()
+      let children = parentBranch.branches;
       const newBranch = await this.branchModel.create(createBranchInput)
       let currentTree = await this.treeModel.findById(createBranchInput.treeID).exec();
       // console.log(currentTree)
@@ -32,7 +33,7 @@ export class BranchService {
       treebranches.push(newBranch)
       children.push(newBranch)
       await this.branchModel.findByIdAndUpdate(createBranchInput.parentBranchID, { branches: children }, { useFindAndModify: false });
-      await this.treeModel.findByIdAndUpdate(currentTree.id, { branches: treebranches }, { useFindAndModify: false });
+      await this.treeModel.findByIdAndUpdate(currentTree.id, { branches: treebranches  }, { useFindAndModify: false });
       return newBranch.save()
     }
   }
