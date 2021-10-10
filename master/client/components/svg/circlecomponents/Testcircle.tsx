@@ -5,26 +5,23 @@ import React, { useState, useEffect } from 'react';
 
 
 
-const TestCircle = ({ width, height, circleRadius }) => {
+const TestCircle = ({ circleRadius, positionX, positionY }) => {
 
-    const initialMousePosition = { x: width/2, y: height/2};
 
-    // const handleMouseMove = (event) => {
-    //     const { clientX, clientY } = event;
-    //     setMousePosition({x: clientX, y: clientY})
-    // }
+    const [initPosition, setInitPosition] = useState({ x: 0, y: 0 })
 
-    const [onMousePosition, setMousePosition] = useState(initialMousePosition) 
 
-    return <svg width={width} height={height} >
-        <circle
-            cx={onMousePosition.x}
-            cy={onMousePosition.y}
-            r={circleRadius}
-            fill="green"
-        />
-    </svg>
+    useEffect(() => {
+        setInitPosition({ x: positionX, y: positionY })
+    }, [positionX, positionY])
 
+    return (
+    <circle
+        cx={initPosition.x}
+        cy={initPosition.y}
+        r={circleRadius}
+        fill="green"
+    ></circle>)
 }
 
 export default TestCircle

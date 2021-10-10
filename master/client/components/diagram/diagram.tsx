@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import BarChart from 'components/svg/BarChart';
 import Smile from 'components/svg/Smile';
 import TestCircle from 'components/svg/circlecomponents/testcircle';
+import CircleContainer from 'components/svg/circlecomponents/CircleContainer';
 
 
 function UncontrolledDiagram(props) {
@@ -24,24 +25,26 @@ function UncontrolledDiagram(props) {
         console.log(result)
     }, [props.currentTree])
 
-    const width = 200;
-    const height = 200;
+    const width = 1000;
+    const height = 800;
     const circleRadius = 30;
 
     return (
         
-        <div style={{ height: '60rem' }}>
+        <div>
             {/* <img src="./tree.jpg" width="900" height="600"/> */}
             <div>{props.currentTree}</div>
+            <CircleContainer width={width} height={height}>
             {branches && branches.length ?
-                branches.map((tree) => (
+                branches.map((branch) => (
                     <TestCircle 
-                    key={tree._id} 
-                    width={width} 
-                    height={height} 
+                    key={branch._id} 
+                    positionX={branch.positionX}
+                    positionY={branch.positionY}
                     circleRadius={circleRadius} 
                 />
                 )) : null}
+            </CircleContainer>
         </div>
     );
 }

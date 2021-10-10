@@ -391,7 +391,7 @@ export type FindalltreesQuery = (
     & Pick<Tree, 'name'>
     & { readonly branches: ReadonlyArray<(
       { readonly __typename?: 'Branch' }
-      & Pick<Branch, '_id' | 'rootUser'>
+      & Pick<Branch, '_id' | 'positionX' | 'positionY' | 'rootUser'>
     )> }
   )> }
 );
@@ -870,6 +870,8 @@ export const FindalltreesDocument = gql`
     name
     branches {
       _id
+      positionX
+      positionY
       rootUser
     }
   }
