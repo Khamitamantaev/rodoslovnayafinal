@@ -20,12 +20,16 @@ export type Branch = {
   readonly _id: Scalars['ID'];
   readonly treeID?: Maybe<Scalars['String']>;
   readonly rootUser?: Maybe<Scalars['String']>;
+  readonly positionX?: Maybe<Scalars['Float']>;
+  readonly positionY?: Maybe<Scalars['Float']>;
   readonly branches: ReadonlyArray<Branch>;
 };
 
 export type CreateBranchInput = {
   readonly treeID?: Maybe<Scalars['String']>;
   readonly parentBranchID?: Maybe<Scalars['String']>;
+  readonly positionX?: Maybe<Scalars['Float']>;
+  readonly positionY?: Maybe<Scalars['Float']>;
   readonly rootBranchID?: Maybe<Scalars['String']>;
 };
 
