@@ -29,6 +29,7 @@ enum Roles {
 type Branch {
   _id: ID!
   treeID: String
+  parentID: String
   rootUser: String
   positionX: Float
   positionY: Float
@@ -105,7 +106,7 @@ input UpdateTreeInput {
 
 input CreateBranchInput {
   treeID: String
-  parentBranchID: String
+  parentID: String
   positionX: Float
   positionY: Float
   rootUser: String

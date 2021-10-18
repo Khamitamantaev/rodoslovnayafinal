@@ -74,6 +74,7 @@ query findTreebyID($id: String!) {
     branches {
       _id
       rootUser
+      parentID
     }
   }
 }
@@ -88,6 +89,7 @@ export const GET_ALL_TREES = gql`
         positionX
         positionY
         rootUser
+        parentID
       }
     }
   }
