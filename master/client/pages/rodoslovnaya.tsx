@@ -11,9 +11,15 @@ import { useCreateTreeMutation, useCreateUserMutation, useFindAllAncestorsQuery,
 import { useEffect, useState } from 'react';
 import Trees from 'components/tree/trees';
 import UncontrolledDiagram from 'components/diagram/diagram';
+import Tree from 'react-d3-tree'
+import { RawNodeDatum } from 'react-d3-tree/lib/types/common';
 
 
 function RodoslovnayaPage() {
+    const [tree, setTree] = useState<RawNodeDatum | RawNodeDatum[]>({
+        name: 'Root',
+        children: []
+    })
 
     const [currentTree, setCurrentTree] = useState("");
     // const [trees, setTrees] = useState([{}])
@@ -43,6 +49,12 @@ function RodoslovnayaPage() {
     useEffect(() => {
         // setTrees(dataTrees?.findalltrees)
         // console.log(trees)
+        if(dataTrees) {
+            console.log(trees)
+        }
+        // let trees_map = Object.fromEntries(
+        //     trees.map((tree) => [{ ...tree, children: [] }])
+        //   );
     }, [dataTrees, currentTree])
 
 
@@ -91,7 +103,8 @@ function RodoslovnayaPage() {
                 <Flex alignX="right" >
                     <Box width="800px" height="1000px"  >
                         {/* <UserListComponent /> */}
-                      <UncontrolledDiagram  trees={trees} currentTree={currentTree} />
+                      {/* <UncontrolledDiagram  trees={trees} currentTree={currentTree} /> */}
+                      <Tree data={tree}/>
                     </Box>
                 </Flex>
             </Flex>
