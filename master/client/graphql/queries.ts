@@ -86,8 +86,7 @@ export const GET_ALL_TREES = gql`
       name
       branches {
         _id
-        positionX
-        positionY
+        name
         rootUser
         parentID
       }

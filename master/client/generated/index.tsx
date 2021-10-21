@@ -18,6 +18,7 @@ export type Scalars = {
 export type Branch = {
   readonly __typename?: 'Branch';
   readonly _id: Scalars['ID'];
+  readonly name?: Maybe<Scalars['String']>;
   readonly treeID?: Maybe<Scalars['String']>;
   readonly parentID?: Maybe<Scalars['String']>;
   readonly rootUser?: Maybe<Scalars['String']>;
@@ -27,10 +28,9 @@ export type Branch = {
 };
 
 export type CreateBranchInput = {
+  readonly name?: Maybe<Scalars['String']>;
   readonly treeID?: Maybe<Scalars['String']>;
   readonly parentID?: Maybe<Scalars['String']>;
-  readonly positionX?: Maybe<Scalars['Float']>;
-  readonly positionY?: Maybe<Scalars['Float']>;
   readonly rootUser?: Maybe<Scalars['String']>;
 };
 
@@ -392,7 +392,7 @@ export type FindalltreesQuery = (
     & Pick<Tree, 'name'>
     & { readonly branches: ReadonlyArray<(
       { readonly __typename?: 'Branch' }
-      & Pick<Branch, '_id' | 'positionX' | 'positionY' | 'rootUser' | 'parentID'>
+      & Pick<Branch, '_id' | 'name' | 'rootUser' | 'parentID'>
     )> }
   )> }
 );
@@ -872,8 +872,7 @@ export const FindalltreesDocument = gql`
     name
     branches {
       _id
-      positionX
-      positionY
+      name
       rootUser
       parentID
     }

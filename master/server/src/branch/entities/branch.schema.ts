@@ -11,6 +11,10 @@ export class Branch {
 
   @Field(() => String, { nullable: true})
   @Prop({ required: false})
+  name: string;
+
+  @Field(() => String, { nullable: true})
+  @Prop({ required: false})
   treeID: string;
 
   @Field(() => String, { nullable: true})
@@ -30,7 +34,7 @@ export class Branch {
   positionY: number;
 
   @Field(() => [Branch]) 
-  @Prop({ type: [{ _id: {index: true, type: MongooseSchema.Types.ObjectId, ref: 'Branch'}, treeID: String, parentID: String, rootUser: String, positionX: String, positionY: String}] })
+  @Prop({ type: [{ _id: {index: true, type: MongooseSchema.Types.ObjectId, ref: 'Branch'}, name: String, treeID: String, parentID: String, rootUser: String}] })
   branches: Branch[];
 }
 

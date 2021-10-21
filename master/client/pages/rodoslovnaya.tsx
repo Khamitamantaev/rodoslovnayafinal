@@ -43,20 +43,20 @@ function RodoslovnayaPage() {
         // @ts-ignore
         error: errorTrees
     } = useFindalltreesQuery({ pollInterval: 500 })
-
     const trees = dataTrees?.findalltrees;
 
 
+
     useEffect(() => {
-        if(dataTrees){
+        if (trees?.length) {
             var result = trees.find(obj => {
                 return obj.name === currentTree
             })
-            let branch_map = Object.fromEntries(
-                result.branches.map((branch) => [branch._id, { ...branch, children: [] }])
-              );
-            console.log(branch_map)
-        }  
+            console.log(result)
+
+        }
+
+
     }, [dataTrees, currentTree])
 
 
