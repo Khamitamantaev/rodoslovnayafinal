@@ -35,7 +35,7 @@ function RodoslovnayaPage() {
             });
         },
     });
-    
+
 
     const {
         data: dataTrees,
@@ -46,15 +46,17 @@ function RodoslovnayaPage() {
 
     const trees = dataTrees?.findalltrees;
 
+
     useEffect(() => {
-        // setTrees(dataTrees?.findalltrees)
-        // console.log(trees)
-        if(dataTrees) {
-            console.log(trees)
-        }
-        // let trees_map = Object.fromEntries(
-        //     trees.map((tree) => [{ ...tree, children: [] }])
-        //   );
+        if(dataTrees){
+            var result = trees.find(obj => {
+                return obj.name === currentTree
+            })
+            let branch_map = Object.fromEntries(
+                result.branches.map((branch) => [branch._id, { ...branch, children: [] }])
+              );
+            console.log(branch_map)
+        }  
     }, [dataTrees, currentTree])
 
 
@@ -96,15 +98,15 @@ function RodoslovnayaPage() {
                             </Form>
                         </Formik>
                         <Box marginTop="20px">
-                            <Trees trees={trees} setCurrentTree={setCurrentTree}/>
+                            <Trees trees={trees} setCurrentTree={setCurrentTree} />
                         </Box>
                     </Box>
                 </Flex>
                 <Flex alignX="right" >
                     <Box width="800px" height="1000px"  >
                         {/* <UserListComponent /> */}
-                      {/* <UncontrolledDiagram  trees={trees} currentTree={currentTree} /> */}
-                      <Tree data={tree}/>
+                        {/* <UncontrolledDiagram  trees={trees} currentTree={currentTree} /> */}
+                        <Tree data={tree} />
                     </Box>
                 </Flex>
             </Flex>
