@@ -18,7 +18,12 @@ export class Tree {
   rootUser: string;
 
   @Field(() => [Branch]) 
-  @Prop({ type: [{ _id: {index: true, type: MongooseSchema.Types.ObjectId, ref: 'Branch'}, name: String, treeID: String, parentID: String, rootUser: String}] })
+  @Prop({ type: [{ _id: {index: true, type: MongooseSchema.Types.ObjectId, ref: 'Branch'},
+                   name: String, 
+                   treeID: String, 
+                   parentID: String, 
+                   rootUser: String, 
+                  }] })
   branches: Branch[];
 }
 

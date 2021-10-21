@@ -45,17 +45,36 @@ function RodoslovnayaPage() {
     } = useFindalltreesQuery({ pollInterval: 500 })
     const trees = dataTrees?.findalltrees;
 
+    function list_to_tree(list) {
+        var map = {}, node, roots = [], i;
 
-
+        for (i = 0; i < list.length; i++) {
+            map[list[i]._id] = i;
+        }
+    }
     useEffect(() => {
-        if (trees?.length) {
+        if (currentTree) {
             var result = trees.find(obj => {
                 return obj.name === currentTree
             })
-            console.log(result)
-
+            // console.log(result.branches)
+            const nest = (items, _id = null, link = 'parentID') =>
+                items
+                    .filter(item => item[link] === _id)
+                    .map(item => ({ ...item, children: nest(items, item._id) }));
+            console.log(
+                nest(result.branches)
+            )
+            if (result.branches.length !== 0) {
+                setTree(nest(result.branches))
+            }
+            else setTree(
+                {
+                    name: 'Root',
+                    children: []
+                }
+            )
         }
-
 
     }, [dataTrees, currentTree])
 
