@@ -4,6 +4,7 @@ import { Formik, Form, Field } from 'formik';
 
 import { ActionButtons, Avatar, Box, Button, Flex, Input, Label, Paragraph, Table, Text, useToasts } from 'bumbag';
 import { InputField } from 'bumbag';
+import { useCreateBranchMutation } from 'generated';
 interface AddMemberModalProps {
     isOpen: boolean;
     onClose: () => void;
@@ -12,17 +13,31 @@ interface AddMemberModalProps {
 export const AddMemberModal: React.FC<AddMemberModalProps> = ({
     isOpen,
     onClose }) => {
+    const toasts = useToasts();
+    const [createBranch, { loading: branchloading, error }] = useCreateBranchMutation({
+        onCompleted: () => {
+            toasts.success({
+                title: '',
+                message: 'Ветка успешно добавлено',
+            });
+        },
+    });
 
     const onSubmitBranch = (values) => {
         console.log(values)
-        // return createTree({
-        //     variables: {
-        //         input: {
-        //             name: values.name,
-        //         }
-        //     }
-        // })
+        return createBranch({
+            variables: {
+                input: {
+                    name: values.name,
+                    treeID: values.treeID,
+                    rootUser: values.rootUser,
+                    parentID: values.parentID
+                }
+            }
+        })
     }
+
+
 
     return <Modal isOpen={isOpen} onClose={onClose} size="xs">
         <ModalOverlay />
@@ -32,7 +47,7 @@ export const AddMemberModal: React.FC<AddMemberModalProps> = ({
             </ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-                <Label marginBottom="20px">Add Branch</Label>
+                {/* <Label marginBottom="20px">Add Branch</Label> */}
                 <Formik
                     initialValues={{}}
                     onSubmit={onSubmitBranch}
@@ -41,13 +56,25 @@ export const AddMemberModal: React.FC<AddMemberModalProps> = ({
                         <Field
                             component={InputField.Formik}
                             name="name"
-                            label="TreeName"
+                            label="BranchName"
+                            marginBottom="10px"
+                        />
+                        <Field
+                            component={InputField.Formik}
+                            name="treeID"
+                            label="treeID"
                             marginBottom="10px"
                         />
                         <Field
                             component={InputField.Formik}
                             name="rootUser"
-                            label="ID"
+                            label="RootUser"
+                            marginBottom="10px"
+                        />
+                        <Field
+                            component={InputField.Formik}
+                            name="parentID"
+                            label="parentID"
                             marginBottom="10px"
                         />
                         <Button type="submit" palette="success">Success</Button>

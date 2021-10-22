@@ -50,3 +50,11 @@ mutation createTree($input: CreateTreeInput!) {
 }
 `;
 
+export const CREATE_BRANCH = gql`
+mutation createBranch($input: CreateBranchInput!) {
+  createBranch(createBranchInput: $input) {
+    name
+  }
+}
+`;
+

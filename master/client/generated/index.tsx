@@ -283,6 +283,19 @@ export type CreateTreeMutation = (
   ) }
 );
 
+export type CreateBranchMutationVariables = Exact<{
+  input: CreateBranchInput;
+}>;
+
+
+export type CreateBranchMutation = (
+  { readonly __typename?: 'Mutation' }
+  & { readonly createBranch: (
+    { readonly __typename?: 'Branch' }
+    & Pick<Branch, 'name'>
+  ) }
+);
+
 export type GitHubAuthQueryVariables = Exact<{
   input: SocialAuthInput;
 }>;
@@ -590,6 +603,38 @@ export function useCreateTreeMutation(baseOptions?: ApolloReactHooks.MutationHoo
 export type CreateTreeMutationHookResult = ReturnType<typeof useCreateTreeMutation>;
 export type CreateTreeMutationResult = ApolloReactCommon.MutationResult<CreateTreeMutation>;
 export type CreateTreeMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateTreeMutation, CreateTreeMutationVariables>;
+export const CreateBranchDocument = gql`
+    mutation createBranch($input: CreateBranchInput!) {
+  createBranch(createBranchInput: $input) {
+    name
+  }
+}
+    `;
+export type CreateBranchMutationFn = ApolloReactCommon.MutationFunction<CreateBranchMutation, CreateBranchMutationVariables>;
+
+/**
+ * __useCreateBranchMutation__
+ *
+ * To run a mutation, you first call `useCreateBranchMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateBranchMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createBranchMutation, { data, loading, error }] = useCreateBranchMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateBranchMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateBranchMutation, CreateBranchMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateBranchMutation, CreateBranchMutationVariables>(CreateBranchDocument, baseOptions);
+      }
+export type CreateBranchMutationHookResult = ReturnType<typeof useCreateBranchMutation>;
+export type CreateBranchMutationResult = ApolloReactCommon.MutationResult<CreateBranchMutation>;
+export type CreateBranchMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateBranchMutation, CreateBranchMutationVariables>;
 export const GitHubAuthDocument = gql`
     query gitHubAuth($input: SocialAuthInput!) {
   gitHubAuth(input: $input) {
