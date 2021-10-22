@@ -83,6 +83,7 @@ query findTreebyID($id: String!) {
 export const GET_ALL_TREES = gql`
   query findalltrees {
     findalltrees {
+      _id
       name
       branches {
         _id

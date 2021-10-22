@@ -402,7 +402,7 @@ export type FindalltreesQuery = (
   { readonly __typename?: 'Query' }
   & { readonly findalltrees: ReadonlyArray<(
     { readonly __typename?: 'Tree' }
-    & Pick<Tree, 'name'>
+    & Pick<Tree, '_id' | 'name'>
     & { readonly branches: ReadonlyArray<(
       { readonly __typename?: 'Branch' }
       & Pick<Branch, '_id' | 'name' | 'rootUser' | 'parentID'>
@@ -914,6 +914,7 @@ export type FindTreebyIdQueryResult = ApolloReactCommon.QueryResult<FindTreebyId
 export const FindalltreesDocument = gql`
     query findalltrees {
   findalltrees {
+    _id
     name
     branches {
       _id

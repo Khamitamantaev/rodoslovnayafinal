@@ -22,6 +22,13 @@ function RodoslovnayaPage() {
         children: []
     })
 
+    const [currentBranch, setCurrentBranch] = useState({
+        name: "",
+        treeID: "",
+        rootUser: "",
+        parentID: "",
+    })
+
 
     //for Modal 
     const [isOpen, setIsOpen] = useState(false)
@@ -56,10 +63,11 @@ function RodoslovnayaPage() {
     } = useFindalltreesQuery({ pollInterval: 100 })
 
     const trees = dataTrees?.findalltrees;
+    console.log(trees)
     useEffect(() => {
         if (currentTree) {
             var result = trees.find(obj => {
-                return obj.name === currentTree
+                return obj._id === currentTree
             })
             // console.log(result.branches)
             const nest = (items, _id = null, link = 'parentID') =>
@@ -82,7 +90,7 @@ function RodoslovnayaPage() {
 
     }, [dataTrees, currentTree])
 
-   
+
 
 
     const onSubmitTree = (values) => {
@@ -96,17 +104,25 @@ function RodoslovnayaPage() {
         })
     }
 
-   const handleClick = (nodeData, evt) => {
-        console.log(nodeData, evt);
+    const handleClick = (nodeData, evt) => {
+        // console.log(nodeData, evt);
+        // console.log(nodeData.data)
+        setCurrentBranch({
+            name: nodeData.data.name,
+            treeID: currentTree,
+            rootUser: nodeData.data.rootUser,
+            parentID: nodeData.data._id,
+        })
+        console.log(currentBranch)
         setIsOpen(!isOpen)
-      }
+    }
 
-      const straightPathFunc = (linkDatum, orientation) => {
+    const straightPathFunc = (linkDatum, orientation) => {
         const { source, target } = linkDatum;
         return orientation === 'horizontal'
-          ? `M${source.y},${source.x}L${target.y},${target.x}`
-          : `M${source.x},${source.y}L${target.x},${target.y}`;
-      };
+            ? `M${source.y},${source.x}L${target.y},${target.x}`
+            : `M${source.x},${source.y}L${target.x},${target.y}`;
+    };
 
     return (
         <App title={t('Ваша родословная')} description={t('Здесь можно создать и распечатать свою родословную')} requiresUser>
@@ -143,8 +159,8 @@ function RodoslovnayaPage() {
                     <Box width="800px" height="1000px"  >
                         {/* <UserListComponent /> */}
                         {/* <UncontrolledDiagram  trees={trees} currentTree={currentTree} /> */}
-                        <Tree data={tree} nodeSize={{ x: 140, y: 100}} onNodeClick={handleClick}  pathFunc={straightPathFunc} orientation={"vertical"} />
-                        <AddMemberModal isOpen={isOpen} onClose={close}>
+                        <Tree data={tree} nodeSize={{ x: 140, y: 100 }} onNodeClick={handleClick} pathFunc={straightPathFunc} orientation={"vertical"} />
+                        <AddMemberModal isOpen={isOpen} onClose={close} currentBranch={currentBranch}>
 
                         </AddMemberModal>
                     </Box>

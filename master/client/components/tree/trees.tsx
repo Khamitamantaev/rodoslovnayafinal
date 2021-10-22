@@ -7,7 +7,7 @@ function Trees(props) {
     <Box>
       <Set orientation="vertical" isFilled>
         {props.trees.map(tree => {
-          return <Button onClick={() => props.setCurrentTree(tree.name)} key={tree._id}>{tree.name}</Button>;
+          return <Button onClick={() => props.setCurrentTree(tree._id)} key={tree._id}>{tree.name}</Button>;
         })}
       </Set>
     </Box>

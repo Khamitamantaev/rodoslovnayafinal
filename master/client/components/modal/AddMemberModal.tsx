@@ -8,11 +8,18 @@ import { useCreateBranchMutation } from 'generated';
 interface AddMemberModalProps {
     isOpen: boolean;
     onClose: () => void;
+    currentBranch: {
+        name: string,
+        treeID: string,
+        rootUser: string,
+        parentID: string
+    }
 }
 
 export const AddMemberModal: React.FC<AddMemberModalProps> = ({
     isOpen,
-    onClose }) => {
+    onClose,
+currentBranch }) => {
     const toasts = useToasts();
     const [createBranch, { loading: branchloading, error }] = useCreateBranchMutation({
         onCompleted: () => {
@@ -29,9 +36,9 @@ export const AddMemberModal: React.FC<AddMemberModalProps> = ({
             variables: {
                 input: {
                     name: values.name,
-                    treeID: values.treeID,
-                    rootUser: values.rootUser,
-                    parentID: values.parentID
+                    treeID: "616304e324705a2bd0f37a16",
+                    rootUser: currentBranch.rootUser,
+                    parentID: currentBranch.parentID
                 }
             }
         })
@@ -59,7 +66,7 @@ export const AddMemberModal: React.FC<AddMemberModalProps> = ({
                             label="BranchName"
                             marginBottom="10px"
                         />
-                        <Field
+                        {/* <Field
                             component={InputField.Formik}
                             name="treeID"
                             label="treeID"
@@ -76,7 +83,7 @@ export const AddMemberModal: React.FC<AddMemberModalProps> = ({
                             name="parentID"
                             label="parentID"
                             marginBottom="10px"
-                        />
+                        /> */}
                         <Button type="submit" palette="success">Success</Button>
                     </Form>
                 </Formik>
