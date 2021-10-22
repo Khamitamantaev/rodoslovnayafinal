@@ -11,6 +11,7 @@ import jwt from 'jsonwebtoken';
 import parseCookie from 'helpers/parseCookie';
 import theme from '../constants/theme';
 import withApollo from '../lib/withApollo';
+import { ChakraProvider } from "@chakra-ui/react"
 
 NProgress.configure({ showSpinner: false });
 Router.events.on('routeChangeStart', () => {
@@ -22,8 +23,10 @@ Router.events.on('routeChangeError', () => NProgress.done());
 function MyApp({ Component, pageProps }) {
   return (
     <BumbagProvider isSSR theme={theme}>
-      <Component {...pageProps} />
-      <ToastManager />
+      <ChakraProvider>
+        <Component {...pageProps} />
+        <ToastManager />
+      </ChakraProvider>
     </BumbagProvider>
   );
 }

@@ -13,6 +13,7 @@ import Trees from 'components/tree/trees';
 import UncontrolledDiagram from 'components/diagram/diagram';
 import Tree from 'react-d3-tree'
 import { RawNodeDatum } from 'react-d3-tree/lib/types/common';
+import { AddMemberModal } from 'components/modal/AddMemberModal';
 
 
 function RodoslovnayaPage() {
@@ -20,6 +21,16 @@ function RodoslovnayaPage() {
         name: 'Root',
         children: []
     })
+
+
+    //for Modal 
+    const [isOpen, setIsOpen] = useState(false)
+
+    const close = () => setIsOpen(false)
+
+    const handleSubmit = (name: string) => {
+
+    }
 
     const [currentTree, setCurrentTree] = useState("");
     // const [trees, setTrees] = useState([{}])
@@ -42,7 +53,8 @@ function RodoslovnayaPage() {
         loading: loadingTrees,
         // @ts-ignore
         error: errorTrees
-    } = useFindalltreesQuery({ pollInterval: 500 })
+    } = useFindalltreesQuery({ pollInterval: 100 })
+
     const trees = dataTrees?.findalltrees;
     useEffect(() => {
         if (currentTree) {
@@ -70,6 +82,8 @@ function RodoslovnayaPage() {
 
     }, [dataTrees, currentTree])
 
+   
+
 
     const onSubmitTree = (values) => {
         return createTree({
@@ -84,6 +98,7 @@ function RodoslovnayaPage() {
 
    const handleClick = (nodeData, evt) => {
         console.log(nodeData, evt);
+        setIsOpen(!isOpen)
       }
 
       const straightPathFunc = (linkDatum, orientation) => {
@@ -128,7 +143,10 @@ function RodoslovnayaPage() {
                     <Box width="800px" height="1000px"  >
                         {/* <UserListComponent /> */}
                         {/* <UncontrolledDiagram  trees={trees} currentTree={currentTree} /> */}
-                        <Tree data={tree} onNodeClick={handleClick}  pathFunc={straightPathFunc} />
+                        <Tree data={tree} nodeSize={{ x: 140, y: 100}} onNodeClick={handleClick}  pathFunc={straightPathFunc} orientation={"vertical"} />
+                        <AddMemberModal isOpen={isOpen} onClose={close}>
+
+                        </AddMemberModal>
                     </Box>
                 </Flex>
             </Flex>
