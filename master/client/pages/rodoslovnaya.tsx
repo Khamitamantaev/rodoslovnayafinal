@@ -44,14 +44,6 @@ function RodoslovnayaPage() {
         error: errorTrees
     } = useFindalltreesQuery({ pollInterval: 500 })
     const trees = dataTrees?.findalltrees;
-
-    function list_to_tree(list) {
-        var map = {}, node, roots = [], i;
-
-        for (i = 0; i < list.length; i++) {
-            map[list[i]._id] = i;
-        }
-    }
     useEffect(() => {
         if (currentTree) {
             var result = trees.find(obj => {
@@ -90,6 +82,17 @@ function RodoslovnayaPage() {
         })
     }
 
+   const handleClick = (nodeData, evt) => {
+        console.log(nodeData, evt);
+      }
+
+      const straightPathFunc = (linkDatum, orientation) => {
+        const { source, target } = linkDatum;
+        return orientation === 'horizontal'
+          ? `M${source.y},${source.x}L${target.y},${target.x}`
+          : `M${source.x},${source.y}L${target.x},${target.y}`;
+      };
+
     return (
         <App title={t('Ваша родословная')} description={t('Здесь можно создать и распечатать свою родословную')} requiresUser>
             <Flex alignX="center">
@@ -125,7 +128,7 @@ function RodoslovnayaPage() {
                     <Box width="800px" height="1000px"  >
                         {/* <UserListComponent /> */}
                         {/* <UncontrolledDiagram  trees={trees} currentTree={currentTree} /> */}
-                        <Tree data={tree} />
+                        <Tree data={tree} onNodeClick={handleClick}  pathFunc={straightPathFunc} />
                     </Box>
                 </Flex>
             </Flex>
