@@ -45,7 +45,6 @@ export const CREATE_TREE = gql`
 mutation createTree($input: CreateTreeInput!) {
   createTree(createTreeInput: $input) {
     name 
-    rootUser
   }
 }
 `;

@@ -13,7 +13,7 @@ export class Tree {
   @Field(() => String)
   name: string;
 
-  @Prop({ required: true})
+  @Prop({ required: false})
   @Field(() => String)
   rootUser: string;
 

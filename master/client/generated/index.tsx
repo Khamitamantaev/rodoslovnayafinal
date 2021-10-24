@@ -36,7 +36,6 @@ export type CreateBranchInput = {
 
 export type CreateTreeInput = {
   readonly name?: Maybe<Scalars['String']>;
-  readonly rootUser?: Maybe<Scalars['String']>;
 };
 
 export type CreateUserInput = {
@@ -279,7 +278,7 @@ export type CreateTreeMutation = (
   { readonly __typename?: 'Mutation' }
   & { readonly createTree: (
     { readonly __typename?: 'Tree' }
-    & Pick<Tree, 'name' | 'rootUser'>
+    & Pick<Tree, 'name'>
   ) }
 );
 
@@ -574,7 +573,6 @@ export const CreateTreeDocument = gql`
     mutation createTree($input: CreateTreeInput!) {
   createTree(createTreeInput: $input) {
     name
-    rootUser
   }
 }
     `;

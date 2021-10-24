@@ -1,5 +1,6 @@
 import { Resolver, Query, Mutation, Args, Int, Context } from '@nestjs/graphql';
 import { TreeService } from './tree.service';
+import { get } from 'lodash';
 import { Tree } from './entities/tree.schema';
 import { CreateTreeInput } from './dto/create-tree.input';
 import { UpdateTreeInput } from './dto/update-tree.input';
@@ -9,8 +10,9 @@ export class TreeResolver {
   constructor(private readonly treeService: TreeService) {}
 
   @Mutation(() => Tree)
-  createTree(@Args('createTreeInput') createTreeInput: CreateTreeInput) {
-    return this.treeService.create(createTreeInput);
+  createTree(@Args('createTreeInput') createTreeInput: CreateTreeInput, @Context() context) {
+    const userId = get(context, 'req.user._id');
+    return this.treeService.create(createTreeInput, userId);
   }
 
   @Query(() => [Tree], { name: 'findalltrees' })

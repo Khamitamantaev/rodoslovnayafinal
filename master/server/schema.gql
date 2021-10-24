@@ -98,7 +98,6 @@ input SendMessageInput {
 
 input CreateTreeInput {
   name: String
-  rootUser: String
 }
 
 input UpdateTreeInput {

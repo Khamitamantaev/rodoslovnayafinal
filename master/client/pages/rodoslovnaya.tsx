@@ -98,8 +98,7 @@ function RodoslovnayaPage() {
         return createTree({
             variables: {
                 input: {
-                    name: values.name,
-                    rootUser: values.rootUser
+                    name: values.name
                 }
             }
         })
@@ -141,12 +140,6 @@ function RodoslovnayaPage() {
                                     component={InputField.Formik}
                                     name="name"
                                     label="TreeName"
-                                    marginBottom="10px"
-                                />
-                                <Field
-                                    component={InputField.Formik}
-                                    name="rootUser"
-                                    label="ID"
                                     marginBottom="10px"
                                 />
                                 <Button isLoading={treeloading} disabled={treeloading} type="submit" palette="success">Success</Button>

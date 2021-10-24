@@ -9,8 +9,11 @@ import { Tree, TreeDocument } from './entities/tree.schema';
 export class TreeService {
   constructor(@InjectModel('Tree') private treeModel: Model<TreeDocument>) { }
   
-  async create(createTreeInput: CreateTreeInput) {
-    const CreateTree = await this.treeModel.create(createTreeInput)
+  async create(createTreeInput: CreateTreeInput, userId: string) {
+    const CreateTree = await this.treeModel.create({
+      name: createTreeInput.name,
+      rootUser: userId
+    })
     return CreateTree.save()
   }
 
