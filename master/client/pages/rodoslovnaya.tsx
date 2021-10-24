@@ -63,7 +63,7 @@ function RodoslovnayaPage() {
     } = useFindalltreesQuery({ pollInterval: 100 })
 
     const trees = dataTrees?.findalltrees;
-    console.log(trees)
+    // console.log(trees)
     useEffect(() => {
         if (currentTree) {
             var result = trees.find(obj => {
@@ -113,7 +113,7 @@ function RodoslovnayaPage() {
             rootUser: nodeData.data.rootUser,
             parentID: nodeData.data._id,
         })
-        console.log(currentBranch)
+        // console.log(currentBranch)
         setIsOpen(!isOpen)
     }
 
@@ -159,7 +159,7 @@ function RodoslovnayaPage() {
                     <Box width="800px" height="1000px"  >
                         {/* <UserListComponent /> */}
                         {/* <UncontrolledDiagram  trees={trees} currentTree={currentTree} /> */}
-                        <Tree data={tree} nodeSize={{ x: 140, y: 100 }} onNodeClick={handleClick} pathFunc={straightPathFunc} orientation={"vertical"} />
+                        <Tree data={tree} nodeSize={{ x: 200, y: 100 }} onNodeClick={handleClick} pathFunc={straightPathFunc} orientation={"vertical"} />
                         <AddMemberModal isOpen={isOpen} onClose={close} currentBranch={currentBranch}>
 
                         </AddMemberModal>
