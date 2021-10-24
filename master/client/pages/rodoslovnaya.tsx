@@ -23,6 +23,7 @@ function RodoslovnayaPage() {
     })
 
     const [currentBranch, setCurrentBranch] = useState({
+        _id: "",
         name: "",
         treeID: "",
         rootUser: "",
@@ -108,6 +109,7 @@ function RodoslovnayaPage() {
         // console.log(nodeData, evt);
         // console.log(nodeData.data)
         setCurrentBranch({
+            _id: nodeData.data._id,
             name: nodeData.data.name,
             treeID: currentTree,
             rootUser: nodeData.data.rootUser,
@@ -160,7 +162,7 @@ function RodoslovnayaPage() {
                         {/* <UserListComponent /> */}
                         {/* <UncontrolledDiagram  trees={trees} currentTree={currentTree} /> */}
                         <Tree data={tree} nodeSize={{ x: 200, y: 100 }} onNodeClick={handleClick} pathFunc={straightPathFunc} orientation={"vertical"} />
-                        <AddMemberModal isOpen={isOpen} onClose={close} currentBranch={currentBranch}>
+                        <AddMemberModal isOpen={isOpen} onClose={close} currentBranch={currentBranch} currentTree={currentTree} >
 
                         </AddMemberModal>
                     </Box>

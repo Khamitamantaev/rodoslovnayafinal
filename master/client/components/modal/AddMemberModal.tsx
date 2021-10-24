@@ -9,17 +9,20 @@ interface AddMemberModalProps {
     isOpen: boolean;
     onClose: () => void;
     currentBranch: {
+        _id: string,
         name: string,
         treeID: string,
         rootUser: string,
         parentID: string
     }
+    currentTree: string;
 }
 
 export const AddMemberModal: React.FC<AddMemberModalProps> = ({
     isOpen,
     onClose,
-currentBranch }) => {
+currentBranch,
+currentTree }) => {
     const toasts = useToasts();
     const [createBranch, { loading: branchloading, error }] = useCreateBranchMutation({
         onCompleted: () => {
@@ -36,9 +39,9 @@ currentBranch }) => {
             variables: {
                 input: {
                     name: values.name,
-                    treeID: "616304e324705a2bd0f37a16",
+                    treeID: currentTree,
                     rootUser: currentBranch.rootUser,
-                    parentID: currentBranch.parentID
+                    parentID: currentBranch._id
                 }
             }
         })
