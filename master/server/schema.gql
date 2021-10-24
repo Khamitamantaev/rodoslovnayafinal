@@ -32,8 +32,6 @@ type Branch {
   treeID: String
   parentID: String
   rootUser: String
-  positionX: Float
-  positionY: Float
   branches: [Branch!]!
 }
 

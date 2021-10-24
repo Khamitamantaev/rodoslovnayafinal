@@ -152,12 +152,9 @@ function RodoslovnayaPage() {
                 </Flex>
                 <Flex alignX="right" >
                     <Box width="800px" height="1000px"  >
-                        {/* <UserListComponent /> */}
-                        {/* <UncontrolledDiagram  trees={trees} currentTree={currentTree} /> */}
                         <Tree data={tree} nodeSize={{ x: 200, y: 100 }} onNodeClick={handleClick} pathFunc={straightPathFunc} orientation={"vertical"} />
-                        <AddMemberModal isOpen={isOpen} onClose={close} currentBranch={currentBranch} currentTree={currentTree} >
+                        <AddMemberModal isOpen={isOpen} onClose={close} currentBranch={currentBranch} currentTree={currentTree} />
 
-                        </AddMemberModal>
                     </Box>
                 </Flex>
             </Flex>

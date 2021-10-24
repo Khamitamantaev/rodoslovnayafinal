@@ -25,14 +25,6 @@ export class Branch {
   @Prop({ required: false})
   rootUser: string;
 
-  @Field(() => Number, { nullable: true})
-  @Prop({ required: false})
-  positionX: number;
-
-  @Field(() => Number, { nullable: true})
-  @Prop({ required: false})
-  positionY: number;
-
   @Field(() => [Branch]) 
   @Prop({ type: [{ _id: {index: true, type: MongooseSchema.Types.ObjectId, ref: 'Branch'}, name: String, treeID: String, parentID: String, rootUser: String}] })
   branches: Branch[];
