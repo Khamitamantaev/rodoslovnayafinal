@@ -22,8 +22,6 @@ export type Branch = {
   readonly treeID?: Maybe<Scalars['String']>;
   readonly parentID?: Maybe<Scalars['String']>;
   readonly rootUser?: Maybe<Scalars['String']>;
-  readonly positionX?: Maybe<Scalars['Float']>;
-  readonly positionY?: Maybe<Scalars['Float']>;
   readonly branches: ReadonlyArray<Branch>;
 };
 
