@@ -86,24 +86,6 @@ currentTree }) => {
                             label="BranchName"
                             marginBottom="10px"
                         />
-                        {/* <Field
-                            component={InputField.Formik}
-                            name="treeID"
-                            label="treeID"
-                            marginBottom="10px"
-                        />
-                        <Field
-                            component={InputField.Formik}
-                            name="rootUser"
-                            label="RootUser"
-                            marginBottom="10px"
-                        />
-                        <Field
-                            component={InputField.Formik}
-                            name="parentID"
-                            label="parentID"
-                            marginBottom="10px"
-                        /> */}
                         <Button type="submit" palette="success">Success</Button>
                     </Form>
                 </Formik>

@@ -92,6 +92,19 @@ function RodoslovnayaPage() {
     }, [dataTrees, currentTree])
 
 
+    const renderRectSvgNode = ({ nodeDatum, toggleNode }) => (
+        <g>
+          <rect width="20" height="20" x="-10" onClick={toggleNode} />
+          <text fill="black" strokeWidth="1" x="20">
+            {nodeDatum.name}
+          </text>
+          {nodeDatum.attributes?.department && (
+            <text fill="black" x="20" dy="20" strokeWidth="1">
+              Department: {nodeDatum.attributes?.department}
+            </text>
+          )}
+        </g>
+      );
 
 
     const onSubmitTree = (values) => {
@@ -152,7 +165,12 @@ function RodoslovnayaPage() {
                 </Flex>
                 <Flex alignX="right" >
                     <Box width="800px" height="1000px"  >
-                        <Tree data={tree} nodeSize={{ x: 200, y: 100 }} onNodeClick={handleClick} pathFunc={straightPathFunc} orientation={"vertical"} />
+                        <Tree data={tree} 
+                        nodeSize={{ x: 200, y: 100 }}  
+                        renderCustomNodeElement={renderRectSvgNode} 
+                        onNodeClick={handleClick} 
+                        pathFunc={straightPathFunc} 
+                        orientation={"vertical"} />
                         <AddMemberModal isOpen={isOpen} onClose={close} currentBranch={currentBranch} currentTree={currentTree} />
 
                     </Box>
