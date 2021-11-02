@@ -57,3 +57,11 @@ mutation createBranch($input: CreateBranchInput!) {
 }
 `;
 
+export const DELETE_BRANCH = gql`
+mutation removeBranchByID($input: String!) {
+  removeBranchByID(id: $input) {
+    _id
+  }
+}
+`;
+

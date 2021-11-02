@@ -4,7 +4,7 @@ import { Formik, Form, Field } from 'formik';
 
 import { ActionButtons, Avatar, Box, Button, Flex, Input, Label, Paragraph, Table, Text, useToasts } from 'bumbag';
 import { InputField } from 'bumbag';
-import { useCreateBranchMutation } from 'generated';
+import { useCreateBranchMutation, useRemoveBranchByIdMutation } from 'generated';
 interface AddMemberModalProps {
     isOpen: boolean;
     onClose: () => void;
@@ -24,7 +24,7 @@ export const AddMemberModal: React.FC<AddMemberModalProps> = ({
 currentBranch,
 currentTree }) => {
     const toasts = useToasts();
-    const [createBranch, { loading: branchloading, error }] = useCreateBranchMutation({
+    const [createBranch, { loading: branchaddloading, error }] = useCreateBranchMutation({
         onCompleted: () => {
             toasts.success({
                 title: '',
@@ -32,6 +32,23 @@ currentTree }) => {
             });
         },
     });
+
+    const [deleteBranch, { loading: branchdeleteloading, error: branchdeleteerror }] = useRemoveBranchByIdMutation({
+        onCompleted: () => {
+            toasts.success({
+                title: '',
+                message: 'Ветка успешно добавлено',
+            });
+        },
+    });
+
+    const onSubmitDeleteBranch = (id) => {
+        return deleteBranch({
+            variables: {
+               input: id
+            }
+        })
+    }
 
     const onSubmitBranch = (values) => {
         console.log(values)
@@ -91,9 +108,10 @@ currentTree }) => {
                     </Form>
                 </Formik>
             </ModalBody>
-            <ModalFooter>
-
-            </ModalFooter>
+            <ModalFooter style={{ alignItems: "center"}}>
+            <Text.Block>Удалить текущую ветку?</Text.Block>
+            <Button palette="danger" onClick={() => onSubmitDeleteBranch(currentBranch._id)}>Удалить</Button>              
+            </ModalFooter>  
         </ModalContent>
     </Modal>
 }

@@ -64,7 +64,7 @@ export class BranchService {
     if(nodeList.branches) {
       await Promise.all(nodeList.branches.map( async node => {
           const branch = await this.branchModel.findOne(node)
-      
+
           if(branch.branches) {
             await this.deleteChilds(branch)
           }
@@ -78,7 +78,7 @@ export class BranchService {
   async remove(id: string) {
       const branch = await this.branchModel.findByIdAndDelete(id)
       await this.deleteChilds(branch)
-      
+      return branch
   }
 }
 

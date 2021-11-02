@@ -293,6 +293,19 @@ export type CreateBranchMutation = (
   ) }
 );
 
+export type RemoveBranchByIdMutationVariables = Exact<{
+  input: Scalars['String'];
+}>;
+
+
+export type RemoveBranchByIdMutation = (
+  { readonly __typename?: 'Mutation' }
+  & { readonly removeBranchByID: (
+    { readonly __typename?: 'Branch' }
+    & Pick<Branch, '_id'>
+  ) }
+);
+
 export type GitHubAuthQueryVariables = Exact<{
   input: SocialAuthInput;
 }>;
@@ -631,6 +644,38 @@ export function useCreateBranchMutation(baseOptions?: ApolloReactHooks.MutationH
 export type CreateBranchMutationHookResult = ReturnType<typeof useCreateBranchMutation>;
 export type CreateBranchMutationResult = ApolloReactCommon.MutationResult<CreateBranchMutation>;
 export type CreateBranchMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateBranchMutation, CreateBranchMutationVariables>;
+export const RemoveBranchByIdDocument = gql`
+    mutation removeBranchByID($input: String!) {
+  removeBranchByID(id: $input) {
+    _id
+  }
+}
+    `;
+export type RemoveBranchByIdMutationFn = ApolloReactCommon.MutationFunction<RemoveBranchByIdMutation, RemoveBranchByIdMutationVariables>;
+
+/**
+ * __useRemoveBranchByIdMutation__
+ *
+ * To run a mutation, you first call `useRemoveBranchByIdMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveBranchByIdMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeBranchByIdMutation, { data, loading, error }] = useRemoveBranchByIdMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useRemoveBranchByIdMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<RemoveBranchByIdMutation, RemoveBranchByIdMutationVariables>) {
+        return ApolloReactHooks.useMutation<RemoveBranchByIdMutation, RemoveBranchByIdMutationVariables>(RemoveBranchByIdDocument, baseOptions);
+      }
+export type RemoveBranchByIdMutationHookResult = ReturnType<typeof useRemoveBranchByIdMutation>;
+export type RemoveBranchByIdMutationResult = ApolloReactCommon.MutationResult<RemoveBranchByIdMutation>;
+export type RemoveBranchByIdMutationOptions = ApolloReactCommon.BaseMutationOptions<RemoveBranchByIdMutation, RemoveBranchByIdMutationVariables>;
 export const GitHubAuthDocument = gql`
     query gitHubAuth($input: SocialAuthInput!) {
   gitHubAuth(input: $input) {
