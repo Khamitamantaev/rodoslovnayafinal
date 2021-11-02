@@ -28,7 +28,9 @@ enum Roles {
 
 type Branch {
   _id: ID!
+  name: String
   treeID: String
+  parentID: String
   rootUser: String
   branches: [Branch!]!
 }
@@ -94,7 +96,6 @@ input SendMessageInput {
 
 input CreateTreeInput {
   name: String
-  rootUser: String
 }
 
 input UpdateTreeInput {
@@ -102,9 +103,10 @@ input UpdateTreeInput {
 }
 
 input CreateBranchInput {
+  name: String
   treeID: String
-  parentBranchID: String
-  rootBranchID: String
+  parentID: String
+  rootUser: String
 }
 
 input UpdateBranchInput {

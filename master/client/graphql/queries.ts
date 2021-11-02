@@ -74,6 +74,7 @@ query findTreebyID($id: String!) {
     branches {
       _id
       rootUser
+      parentID
     }
   }
 }
@@ -82,10 +83,13 @@ query findTreebyID($id: String!) {
 export const GET_ALL_TREES = gql`
   query findalltrees {
     findalltrees {
+      _id
       name
       branches {
         _id
+        name
         rootUser
+        parentID
       }
     }
   }

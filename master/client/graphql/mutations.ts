@@ -45,7 +45,22 @@ export const CREATE_TREE = gql`
 mutation createTree($input: CreateTreeInput!) {
   createTree(createTreeInput: $input) {
     name 
-    rootUser
+  }
+}
+`;
+
+export const CREATE_BRANCH = gql`
+mutation createBranch($input: CreateBranchInput!) {
+  createBranch(createBranchInput: $input) {
+    name
+  }
+}
+`;
+
+export const DELETE_BRANCH = gql`
+mutation removeBranchByID($input: String!) {
+  removeBranchByID(id: $input) {
+    _id
   }
 }
 `;

@@ -18,20 +18,22 @@ export type Scalars = {
 export type Branch = {
   readonly __typename?: 'Branch';
   readonly _id: Scalars['ID'];
+  readonly name?: Maybe<Scalars['String']>;
   readonly treeID?: Maybe<Scalars['String']>;
+  readonly parentID?: Maybe<Scalars['String']>;
   readonly rootUser?: Maybe<Scalars['String']>;
   readonly branches: ReadonlyArray<Branch>;
 };
 
 export type CreateBranchInput = {
+  readonly name?: Maybe<Scalars['String']>;
   readonly treeID?: Maybe<Scalars['String']>;
-  readonly parentBranchID?: Maybe<Scalars['String']>;
-  readonly rootBranchID?: Maybe<Scalars['String']>;
+  readonly parentID?: Maybe<Scalars['String']>;
+  readonly rootUser?: Maybe<Scalars['String']>;
 };
 
 export type CreateTreeInput = {
   readonly name?: Maybe<Scalars['String']>;
-  readonly rootUser?: Maybe<Scalars['String']>;
 };
 
 export type CreateUserInput = {
@@ -274,7 +276,33 @@ export type CreateTreeMutation = (
   { readonly __typename?: 'Mutation' }
   & { readonly createTree: (
     { readonly __typename?: 'Tree' }
-    & Pick<Tree, 'name' | 'rootUser'>
+    & Pick<Tree, 'name'>
+  ) }
+);
+
+export type CreateBranchMutationVariables = Exact<{
+  input: CreateBranchInput;
+}>;
+
+
+export type CreateBranchMutation = (
+  { readonly __typename?: 'Mutation' }
+  & { readonly createBranch: (
+    { readonly __typename?: 'Branch' }
+    & Pick<Branch, 'name'>
+  ) }
+);
+
+export type RemoveBranchByIdMutationVariables = Exact<{
+  input: Scalars['String'];
+}>;
+
+
+export type RemoveBranchByIdMutation = (
+  { readonly __typename?: 'Mutation' }
+  & { readonly removeBranchByID: (
+    { readonly __typename?: 'Branch' }
+    & Pick<Branch, '_id'>
   ) }
 );
 
@@ -372,7 +400,7 @@ export type FindTreebyIdQuery = (
     & Pick<Tree, 'name'>
     & { readonly branches: ReadonlyArray<(
       { readonly __typename?: 'Branch' }
-      & Pick<Branch, '_id' | 'rootUser'>
+      & Pick<Branch, '_id' | 'rootUser' | 'parentID'>
     )> }
   ) }
 );
@@ -384,10 +412,10 @@ export type FindalltreesQuery = (
   { readonly __typename?: 'Query' }
   & { readonly findalltrees: ReadonlyArray<(
     { readonly __typename?: 'Tree' }
-    & Pick<Tree, 'name'>
+    & Pick<Tree, '_id' | 'name'>
     & { readonly branches: ReadonlyArray<(
       { readonly __typename?: 'Branch' }
-      & Pick<Branch, '_id' | 'rootUser'>
+      & Pick<Branch, '_id' | 'name' | 'rootUser' | 'parentID'>
     )> }
   )> }
 );
@@ -556,7 +584,6 @@ export const CreateTreeDocument = gql`
     mutation createTree($input: CreateTreeInput!) {
   createTree(createTreeInput: $input) {
     name
-    rootUser
   }
 }
     `;
@@ -585,6 +612,70 @@ export function useCreateTreeMutation(baseOptions?: ApolloReactHooks.MutationHoo
 export type CreateTreeMutationHookResult = ReturnType<typeof useCreateTreeMutation>;
 export type CreateTreeMutationResult = ApolloReactCommon.MutationResult<CreateTreeMutation>;
 export type CreateTreeMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateTreeMutation, CreateTreeMutationVariables>;
+export const CreateBranchDocument = gql`
+    mutation createBranch($input: CreateBranchInput!) {
+  createBranch(createBranchInput: $input) {
+    name
+  }
+}
+    `;
+export type CreateBranchMutationFn = ApolloReactCommon.MutationFunction<CreateBranchMutation, CreateBranchMutationVariables>;
+
+/**
+ * __useCreateBranchMutation__
+ *
+ * To run a mutation, you first call `useCreateBranchMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateBranchMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createBranchMutation, { data, loading, error }] = useCreateBranchMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateBranchMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateBranchMutation, CreateBranchMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateBranchMutation, CreateBranchMutationVariables>(CreateBranchDocument, baseOptions);
+      }
+export type CreateBranchMutationHookResult = ReturnType<typeof useCreateBranchMutation>;
+export type CreateBranchMutationResult = ApolloReactCommon.MutationResult<CreateBranchMutation>;
+export type CreateBranchMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateBranchMutation, CreateBranchMutationVariables>;
+export const RemoveBranchByIdDocument = gql`
+    mutation removeBranchByID($input: String!) {
+  removeBranchByID(id: $input) {
+    _id
+  }
+}
+    `;
+export type RemoveBranchByIdMutationFn = ApolloReactCommon.MutationFunction<RemoveBranchByIdMutation, RemoveBranchByIdMutationVariables>;
+
+/**
+ * __useRemoveBranchByIdMutation__
+ *
+ * To run a mutation, you first call `useRemoveBranchByIdMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveBranchByIdMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeBranchByIdMutation, { data, loading, error }] = useRemoveBranchByIdMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useRemoveBranchByIdMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<RemoveBranchByIdMutation, RemoveBranchByIdMutationVariables>) {
+        return ApolloReactHooks.useMutation<RemoveBranchByIdMutation, RemoveBranchByIdMutationVariables>(RemoveBranchByIdDocument, baseOptions);
+      }
+export type RemoveBranchByIdMutationHookResult = ReturnType<typeof useRemoveBranchByIdMutation>;
+export type RemoveBranchByIdMutationResult = ApolloReactCommon.MutationResult<RemoveBranchByIdMutation>;
+export type RemoveBranchByIdMutationOptions = ApolloReactCommon.BaseMutationOptions<RemoveBranchByIdMutation, RemoveBranchByIdMutationVariables>;
 export const GitHubAuthDocument = gql`
     query gitHubAuth($input: SocialAuthInput!) {
   gitHubAuth(input: $input) {
@@ -830,6 +921,7 @@ export const FindTreebyIdDocument = gql`
     branches {
       _id
       rootUser
+      parentID
     }
   }
 }
@@ -863,10 +955,13 @@ export type FindTreebyIdQueryResult = ApolloReactCommon.QueryResult<FindTreebyId
 export const FindalltreesDocument = gql`
     query findalltrees {
   findalltrees {
+    _id
     name
     branches {
       _id
+      name
       rootUser
+      parentID
     }
   }
 }

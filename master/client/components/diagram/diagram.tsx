@@ -9,6 +9,10 @@ import { Formik, Form, Field } from 'formik';
 import { InputField } from 'bumbag';
 import { useCreateTreeMutation, useCreateUserMutation, useFindAllAncestorsQuery, useFindalltreesQuery, useFindTreebyIdQuery } from 'generated';
 import { useEffect, useState } from 'react';
+import BarChart from 'components/svg/BarChart';
+import Smile from 'components/svg/Smile';
+import TestCircle from 'components/svg/circlecomponents/Testcircle';
+import CircleContainer from 'components/svg/circlecomponents/CircleContainer';
 
 
 function UncontrolledDiagram(props) {
@@ -17,19 +21,30 @@ function UncontrolledDiagram(props) {
         return obj.name === props.currentTree
     })
     const branches = result?.branches
-    useEffect(() => {   
+    useEffect(() => {
         console.log(result)
     }, [props.currentTree])
 
+    const width = 1000;
+    const height = 800;
+    const circleRadius = 30;
+
     return (
-        <div style={{ height: '60rem' }}>
+        
+        <div>
+            {/* <img src="./tree.jpg" width="900" height="600"/> */}
             <div>{props.currentTree}</div>
-            <List>
-            { branches && branches.length ?
-                branches.map((tree) => (
-                    <List.Item key={tree._id}>{tree._id}</List.Item>
-               )) : null}
-            </List>
+            <CircleContainer width={width} height={height}>
+            {branches && branches.length ?
+                branches.map((branch) => (
+                    <TestCircle 
+                    key={branch._id} 
+                    positionX={branch.positionX}
+                    positionY={branch.positionY}
+                    circleRadius={circleRadius} 
+                />
+                )) : null}
+            </CircleContainer>
         </div>
     );
 }

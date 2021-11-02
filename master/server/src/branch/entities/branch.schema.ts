@@ -11,14 +11,22 @@ export class Branch {
 
   @Field(() => String, { nullable: true})
   @Prop({ required: false})
+  name: string;
+
+  @Field(() => String, { nullable: true})
+  @Prop({ required: false})
   treeID: string;
+
+  @Field(() => String, { nullable: true})
+  @Prop({ required: false})
+  parentID: string;
 
   @Field(() => String, { nullable: true})
   @Prop({ required: false})
   rootUser: string;
 
   @Field(() => [Branch]) 
-  @Prop({ type: [{ _id: {index: true, type: MongooseSchema.Types.ObjectId, ref: 'Branch'}, treeID: String}] })
+  @Prop({ type: [{ _id: {index: true, type: MongooseSchema.Types.ObjectId, ref: 'Branch'}, name: String, treeID: String, parentID: String, rootUser: String}] })
   branches: Branch[];
 }
 
