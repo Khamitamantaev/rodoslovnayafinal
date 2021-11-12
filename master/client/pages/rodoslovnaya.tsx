@@ -134,7 +134,7 @@ function RodoslovnayaPage() {
         foreignObjectProps,
         handleClick
       }) => (
-        <g >
+        <g>
           <circle r={15} ></circle>
           {/* `foreignObject` requires width & height to be explicitly set. */}
           <foreignObject {...foreignObjectProps}>
@@ -206,8 +206,6 @@ function RodoslovnayaPage() {
                             renderCustomNodeElement={(rd3tProps) =>
                                 renderForeignObjectNode({ ...rd3tProps, foreignObjectProps, handleClick })
                               }
-                            // renderCustomNodeElement={renderRectSvgNode}
-                            
                             pathFunc={straightPathFunc}
                             orientation={"vertical"} />
                         <AddMemberModal isOpen={isOpen} onClose={close} currentBranch={currentBranch} currentTree={currentTree} />
