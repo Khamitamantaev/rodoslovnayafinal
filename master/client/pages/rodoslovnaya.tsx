@@ -115,17 +115,16 @@ function RodoslovnayaPage() {
     //     </g>
     //   );
 
-    const handleClick = (nodeData, evt) => {
-        // console.log(nodeData, evt);
-        // console.log(nodeData.data)
+    const handleClick = (nodeDatum) => {
+        // console.log(nodeDatum)
         setCurrentBranch({
-            _id: nodeData.data._id,
-            name: nodeData.data.name,
+            _id: nodeDatum._id,
+            name: nodeDatum.name,
             treeID: currentTree,
-            rootUser: nodeData.data.rootUser,
-            parentID: nodeData.data._id,
+            rootUser: nodeDatum.rootUser,
+            parentID: nodeDatum._id,
         })
-        // console.log(currentBranch)
+        console.log(currentBranch)
         setIsOpen(!isOpen)
     }
 
@@ -133,16 +132,18 @@ function RodoslovnayaPage() {
         nodeDatum,
         toggleNode,
         foreignObjectProps,
+        handleClick
       }) => (
-        <g>
+        <g >
           <circle r={15} ></circle>
           {/* `foreignObject` requires width & height to be explicitly set. */}
           <foreignObject {...foreignObjectProps}>
             <div style={{ border: "1px solid black", backgroundColor: "#dedede" }} >
+              <button style={{ width: "100%"}} onClick={() => handleClick(nodeDatum)}>Добавить элемент</button>
               <h3 style={{ textAlign: "center" }}>{nodeDatum.name}</h3>
               {nodeDatum.children && (
                 <button style={{ width: "100%" }} onClick={toggleNode}>
-                  {nodeDatum.__rd3t.collapsed ? "Expand" : "Collapse"}
+                  {nodeDatum.__rd3t.collapsed ? "Развернуть" : "Свернуть"}
                 </button>
               )}
             </div>
@@ -198,12 +199,12 @@ function RodoslovnayaPage() {
                     </Box>
                 </Flex>
                 <Flex alignX="right" >
-                    <Box width="800px" height="1000px"  >
+                    <Box width="800px" height="1000px" >
                         <Tree data={tree}
                             onNodeClick={handleClick}
                             nodeSize={{ x: 200, y: 100 }}
                             renderCustomNodeElement={(rd3tProps) =>
-                                renderForeignObjectNode({ ...rd3tProps, foreignObjectProps })
+                                renderForeignObjectNode({ ...rd3tProps, foreignObjectProps, handleClick })
                               }
                             // renderCustomNodeElement={renderRectSvgNode}
                             
