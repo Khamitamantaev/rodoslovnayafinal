@@ -14,6 +14,7 @@ import UncontrolledDiagram from 'components/diagram/diagram';
 import Tree from 'react-d3-tree'
 import { RawNodeDatum } from 'react-d3-tree/lib/types/common';
 import { AddMemberModal } from 'components/modal/AddMemberModal';
+import syled from 'styled-components';
 
 
 function RodoslovnayaPage() {
@@ -91,31 +92,28 @@ function RodoslovnayaPage() {
 
     }, [dataTrees, currentTree])
 
+    // const renderRectSvgNode = ({ nodeDatum, toogleNode }) => (
+    //     <g fill="white" stroke="green" stroke-width="5" >
+    //         <text fill="black" strokeWidth="1" x="20">
+    //             {nodeDatum.name}
+    //         </text>
+    //         <circle cx="20" cy="20" r="10" onClick={toogleNode} />
+    //     </g>
+    // )
 
-    const renderRectSvgNode = ({ nodeDatum, toggleNode }) => (
-        <g>
-          <rect width="20" height="20" x="-10" onClick={toggleNode} />
-          <text fill="black" strokeWidth="1" x="20">
-            {nodeDatum.name}
-          </text>
-          {nodeDatum.attributes?.department && (
-            <text fill="black" x="20" dy="20" strokeWidth="1">
-              Department: {nodeDatum.attributes?.department}
-            </text>
-          )}
-        </g>
-      );
-
-
-    const onSubmitTree = (values) => {
-        return createTree({
-            variables: {
-                input: {
-                    name: values.name
-                }
-            }
-        })
-    }
+    // const renderRectSvgNode = ({ nodeDatum, toggleNode }) => (
+    //     <g>
+    //       <rect width="20" height="20" x="-10" onClick={toggleNode} />
+    //       <text fill="black" strokeWidth="1" x="20">
+    //         {nodeDatum.name}
+    //       </text>
+    //       {nodeDatum.attributes?.department && (
+    //         <text fill="black" x="20" dy="20" strokeWidth="1">
+    //           Department: {nodeDatum.attributes?.department}
+    //         </text>
+    //       )}
+    //     </g>
+    //   );
 
     const handleClick = (nodeData, evt) => {
         // console.log(nodeData, evt);
@@ -131,12 +129,48 @@ function RodoslovnayaPage() {
         setIsOpen(!isOpen)
     }
 
+    const renderForeignObjectNode = ({
+        nodeDatum,
+        toggleNode,
+        foreignObjectProps,
+      }) => (
+        <g>
+          <circle r={15} ></circle>
+          {/* `foreignObject` requires width & height to be explicitly set. */}
+          <foreignObject {...foreignObjectProps}>
+            <div style={{ border: "1px solid black", backgroundColor: "#dedede" }} >
+              <h3 style={{ textAlign: "center" }}>{nodeDatum.name}</h3>
+              {nodeDatum.children && (
+                <button style={{ width: "100%" }} onClick={toggleNode}>
+                  {nodeDatum.__rd3t.collapsed ? "Expand" : "Collapse"}
+                </button>
+              )}
+            </div>
+          </foreignObject>
+        </g>
+      );
+
+
+    const onSubmitTree = (values) => {
+        return createTree({
+            variables: {
+                input: {
+                    name: values.name
+                }
+            }
+        })
+    }
+
+   
+
     const straightPathFunc = (linkDatum, orientation) => {
         const { source, target } = linkDatum;
         return orientation === 'horizontal'
             ? `M${source.y},${source.x}L${target.y},${target.x}`
             : `M${source.x},${source.y}L${target.x},${target.y}`;
     };
+    const nodeSize = { x: 200, y: 200 };
+    const foreignObjectProps = { width: nodeSize.x, height: nodeSize.y, x: 20 };
 
     return (
         <App title={t('Ваша родословная')} description={t('Здесь можно создать и распечатать свою родословную')} requiresUser>
@@ -165,12 +199,16 @@ function RodoslovnayaPage() {
                 </Flex>
                 <Flex alignX="right" >
                     <Box width="800px" height="1000px"  >
-                        <Tree data={tree} 
-                        nodeSize={{ x: 200, y: 100 }}  
-                        renderCustomNodeElement={renderRectSvgNode} 
-                        onNodeClick={handleClick} 
-                        pathFunc={straightPathFunc} 
-                        orientation={"vertical"} />
+                        <Tree data={tree}
+                            onNodeClick={handleClick}
+                            nodeSize={{ x: 200, y: 100 }}
+                            renderCustomNodeElement={(rd3tProps) =>
+                                renderForeignObjectNode({ ...rd3tProps, foreignObjectProps })
+                              }
+                            // renderCustomNodeElement={renderRectSvgNode}
+                            
+                            pathFunc={straightPathFunc}
+                            orientation={"vertical"} />
                         <AddMemberModal isOpen={isOpen} onClose={close} currentBranch={currentBranch} currentTree={currentTree} />
 
                     </Box>
