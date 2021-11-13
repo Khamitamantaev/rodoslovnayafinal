@@ -4,13 +4,29 @@ import App from 'components/App';
 import { useTranslation } from 'react-i18next';
 import 'beautiful-react-diagrams/styles.css';
 import { ActionButtons, Avatar, Box, Flex, PageWithSidebar, Set, usePage } from 'bumbag';
-
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import MyDocument from "../components/pdf/Document";
 
 function TestPage() {
     const { t } = useTranslation();
-    return (
-        <App title={t('Тестовая страница')} description={t('Здесь я буду помещать тестируемые элементы BUMBAG.STYLE')} requiresUser>
+    const data = { something: "Hi!"};
 
+    return (
+        <App title={t('Тестовая страница PDF')} description={t('Здесь я буду помещать тестируемые элементы PDF')} requiresUser>
+            <PDFDownloadLink document={<MyDocument data={data}/>} fileName="somename.pdf">
+                {({ blob, url, loading, error }) =>
+                    loading ? 'Loading document...' : 'Download now!'
+                }
+            </PDFDownloadLink>
+
+        </App>
+    )
+}
+
+export default withApolloWithSubscriptions(TestPage);
+
+
+{/* 
             <Flex alignX="center">
                 <Box width="200px" height="100px" backgroundColor="primary" />
                 <Box width="200px" height="100px" backgroundColor="secondary" />
@@ -22,7 +38,7 @@ function TestPage() {
             <Flex alignX="right">
                 <Box width="50px" height="50px" backgroundColor="primary" />
                 <Box width="50px" height="50px" backgroundColor="secondary" />
-            </Flex>
+            </Flex> */}
             {/* <PageWithSidebar
                 sidebar={<Box>This is a sidebar</Box>}
                 sidebarPlacement="right"
@@ -48,9 +64,3 @@ function TestPage() {
                 />
 
             </div> */}
-
-        </App>
-    )
-}
-
-export default withApolloWithSubscriptions(TestPage);
