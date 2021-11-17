@@ -77,12 +77,14 @@ function RodoslovnayaPage() {
                 items
                     .filter(item => item[link] === _id)
                     .map(item => ({ ...item, children: nest(items, item._id) }));
-            console.log(
-                nest(result.branches)
-            )
+            // console.log(
+            //     nest(result.branches)
+            // )
             if (result.branches.length !== 0) {
                 setTree(nest(result.branches))
+                // console.log(tree)
             }
+            
             else setTree(
                 {
                     name: 'Root',
@@ -180,7 +182,7 @@ function RodoslovnayaPage() {
                 <Flex alignX="left">
                     <Box width="300px" height="520px" padding="10px" >
                         {/* <Button palette="primary" style={{ marginLeft:"100px"}} >Save PDF</Button> */}
-                        <PDFDownloadLink document={<MyDocument data={data} />} fileName="rodoslovnaya.pdf">
+                        <PDFDownloadLink document={<MyDocument data={tree} />} fileName="rodoslovnaya.pdf">
                             {({ blob, url, loading, error }) =>
                                 loading ? 'Loading document...' :  <Button palette="primary" style={{ marginLeft:"100px"}} >Save PDF</Button>
                             }
