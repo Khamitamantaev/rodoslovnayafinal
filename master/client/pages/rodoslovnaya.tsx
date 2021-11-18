@@ -82,7 +82,7 @@ function RodoslovnayaPage() {
             // )
             if (result.branches.length !== 0) {
                 setTree(nest(result.branches))
-                // console.log(tree)
+                console.log(tree)
             }
             
             else setTree(

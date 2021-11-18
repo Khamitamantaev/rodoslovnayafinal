@@ -1,5 +1,5 @@
 import React from 'react';
-import { Document, Page, Text, View, StyleSheet, Image, Canvas } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet, Image, Canvas, Svg, Circle, Line } from '@react-pdf/renderer';
 
 // Create styles
 const styles = StyleSheet.create({
@@ -24,10 +24,24 @@ const MyDocument = ({ data }) => {
   console.log(data)
 
   return <Document>
-    <Page size="A4" style={styles.page}>
-      <View style={styles.section}>
-        <Text>Hello Khammerson!</Text>
-      </View>
+    <Page size="A2" style={styles.page}>
+    <Svg viewBox="0 0 100 100">
+        <Circle
+          cx="20"
+          cy="20"
+          r="5"
+          fill="tomato"
+          stroke="gray"
+        />
+        <Line
+          x1="0"
+          y1="0"
+          x2="100"
+          y2="100"
+          strokeWidth={1}
+          stroke="rgb(255,0,0)"
+        />
+      </Svg>
     </Page>
   </Document>
 }
