@@ -15,7 +15,8 @@ import Tree from 'react-d3-tree'
 import { RawNodeDatum } from 'react-d3-tree/lib/types/common';
 import { AddMemberModal } from 'components/modal/AddMemberModal';
 import syled from 'styled-components';
-
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import MyDocument from 'components/pdf/Document';
 
 function RodoslovnayaPage() {
     const [tree, setTree] = useState<RawNodeDatum | RawNodeDatum[]>({
@@ -76,12 +77,14 @@ function RodoslovnayaPage() {
                 items
                     .filter(item => item[link] === _id)
                     .map(item => ({ ...item, children: nest(items, item._id) }));
-            console.log(
-                nest(result.branches)
-            )
+            // console.log(
+            //     nest(result.branches)
+            // )
             if (result.branches.length !== 0) {
                 setTree(nest(result.branches))
+                // console.log(tree)
             }
+            
             else setTree(
                 {
                     name: 'Root',
@@ -133,23 +136,25 @@ function RodoslovnayaPage() {
         toggleNode,
         foreignObjectProps,
         handleClick
-      }) => (
+    }) =>
+    
+    (
         <g>
-          <circle r={15} ></circle>
-          {/* `foreignObject` requires width & height to be explicitly set. */}
-          <foreignObject {...foreignObjectProps}>
-            <div style={{ border: "1px solid black", backgroundColor: "#dedede" }} >
-              <button style={{ width: "100%"}} onClick={() => handleClick(nodeDatum)}>Добавить элемент</button>
-              <h3 style={{ textAlign: "center" }}>{nodeDatum.name}</h3>
-              {nodeDatum.children && (
-                <button style={{ width: "100%" }} onClick={toggleNode}>
-                  {nodeDatum.__rd3t.collapsed ? "Развернуть" : "Свернуть"}
-                </button>
-              )}
-            </div>
-          </foreignObject>
+            <circle r={15} ></circle>
+            {/* `foreignObject` requires width & height to be explicitly set. */}
+            <foreignObject {...foreignObjectProps}>
+                <div style={{ border: "1px solid black", backgroundColor: "#1e90ff", fontSize: "12px"}} >
+                    <button style={{ width: "100%" }} onClick={() => handleClick(nodeDatum)}>Добавить элемент</button>
+                    <h3 style={{ textAlign: "center", font: "bold italic large serif", color: "#f4a460" }}>{nodeDatum.name}</h3>
+                    {nodeDatum.children && (
+                        <button style={{ width: "100%" }} onClick={toggleNode}>
+                            {nodeDatum.__rd3t.collapsed ? "Развернуть" : "Свернуть"}
+                        </button>
+                    )}
+                </div>
+            </foreignObject>
         </g>
-      );
+    );
 
 
     const onSubmitTree = (values) => {
@@ -162,7 +167,7 @@ function RodoslovnayaPage() {
         })
     }
 
-   
+
 
     const straightPathFunc = (linkDatum, orientation) => {
         const { source, target } = linkDatum;
@@ -172,13 +177,18 @@ function RodoslovnayaPage() {
     };
     const nodeSize = { x: 200, y: 200 };
     const foreignObjectProps = { width: nodeSize.x, height: nodeSize.y, x: 20 };
-
+    const data = { something: "Hi!"};
     return (
         <App title={t('Ваша родословная')} description={t('Здесь можно создать и распечатать свою родословную')} requiresUser>
             <Flex alignX="center">
                 <Flex alignX="left">
                     <Box width="300px" height="520px" padding="10px" >
-                        <Label marginBottom="20px">Add Tree</Label>
+                        {/* <Button palette="primary" style={{ marginLeft:"100px"}} >Save PDF</Button> */}
+                        {/* <PDFDownloadLink document={<MyDocument data={tree} />} fileName="rodoslovnaya.pdf">
+                            {({ blob, url, loading, error }) =>
+                                loading ? 'Loading document...' :  <Button palette="primary" style={{ marginLeft:"100px"}} >Save PDF</Button>
+                            }
+                        </PDFDownloadLink> */}
                         <Formik
                             initialValues={{}}
                             onSubmit={onSubmitTree}
@@ -199,13 +209,13 @@ function RodoslovnayaPage() {
                     </Box>
                 </Flex>
                 <Flex alignX="right" >
-                    <Box width="800px" height="1000px" >
+                    <Box width="800px" height="600px" >
                         <Tree data={tree}
                             onNodeClick={handleClick}
                             nodeSize={{ x: 200, y: 100 }}
                             renderCustomNodeElement={(rd3tProps) =>
                                 renderForeignObjectNode({ ...rd3tProps, foreignObjectProps, handleClick })
-                              }
+                            }
                             pathFunc={straightPathFunc}
                             orientation={"vertical"} />
                         <AddMemberModal isOpen={isOpen} onClose={close} currentBranch={currentBranch} currentTree={currentTree} />
