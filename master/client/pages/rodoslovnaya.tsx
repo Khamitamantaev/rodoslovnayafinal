@@ -82,7 +82,7 @@ function RodoslovnayaPage() {
             // )
             if (result.branches.length !== 0) {
                 setTree(nest(result.branches))
-                console.log(tree)
+                // console.log(tree)
             }
             
             else setTree(
@@ -136,14 +136,16 @@ function RodoslovnayaPage() {
         toggleNode,
         foreignObjectProps,
         handleClick
-    }) => (
+    }) =>
+    
+    (
         <g>
             <circle r={15} ></circle>
             {/* `foreignObject` requires width & height to be explicitly set. */}
             <foreignObject {...foreignObjectProps}>
-                <div style={{ border: "1px solid black", backgroundColor: "#dedede" }} >
+                <div style={{ border: "1px solid black", backgroundColor: "#1e90ff", fontSize: "12px"}} >
                     <button style={{ width: "100%" }} onClick={() => handleClick(nodeDatum)}>Добавить элемент</button>
-                    <h3 style={{ textAlign: "center" }}>{nodeDatum.name}</h3>
+                    <h3 style={{ textAlign: "center", font: "bold italic large serif", color: "#f4a460" }}>{nodeDatum.name}</h3>
                     {nodeDatum.children && (
                         <button style={{ width: "100%" }} onClick={toggleNode}>
                             {nodeDatum.__rd3t.collapsed ? "Развернуть" : "Свернуть"}
@@ -182,11 +184,11 @@ function RodoslovnayaPage() {
                 <Flex alignX="left">
                     <Box width="300px" height="520px" padding="10px" >
                         {/* <Button palette="primary" style={{ marginLeft:"100px"}} >Save PDF</Button> */}
-                        <PDFDownloadLink document={<MyDocument data={tree} />} fileName="rodoslovnaya.pdf">
+                        {/* <PDFDownloadLink document={<MyDocument data={tree} />} fileName="rodoslovnaya.pdf">
                             {({ blob, url, loading, error }) =>
                                 loading ? 'Loading document...' :  <Button palette="primary" style={{ marginLeft:"100px"}} >Save PDF</Button>
                             }
-                        </PDFDownloadLink>
+                        </PDFDownloadLink> */}
                         <Formik
                             initialValues={{}}
                             onSubmit={onSubmitTree}
