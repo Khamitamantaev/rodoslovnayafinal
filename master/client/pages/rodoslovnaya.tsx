@@ -140,7 +140,7 @@ function RodoslovnayaPage() {
     
     (
         <g>
-            <circle r={15} ></circle>
+            <circle r={15} fill="#1e90ff" ></circle>
             {/* `foreignObject` requires width & height to be explicitly set. */}
             <foreignObject {...foreignObjectProps}>
                 <div style={{ border: "1px solid black", backgroundColor: "#1e90ff", fontSize: "12px"}} >
