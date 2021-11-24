@@ -148,6 +148,8 @@ const config = compose([
   [withOffline, nextOfflineConfig]
 ]);
 
+
+
 config.excludeFile = str => /\*.{spec,test}.js/.test(str);
 
 config.poweredByHeader = false;

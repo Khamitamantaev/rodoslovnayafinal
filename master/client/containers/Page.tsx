@@ -3,7 +3,7 @@ import { styled, Box } from 'bumbag';
 
 const PageContainer = ({ children }) => {
   return (
-    <Box maxWidth="42.5rem" marginX="auto">
+    <Box maxWidth="42.5rem" >
       {children}
     </Box>
   );

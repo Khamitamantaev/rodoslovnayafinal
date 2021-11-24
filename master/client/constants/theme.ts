@@ -80,30 +80,7 @@ const theme: ThemeConfig = {
       base: {
         color: 'text300'
       }
-    },
-    iconSets: [
-      {
-        icons: [
-          faComment,
-          faThumbsUp,
-          faBookmark,
-          faTrashAlt,
-          faPlusSquare,
-          faFileCode,
-          faArrowAltCircleLeft,
-          faArrowAltCircleRight,
-          faShareSquare,
-          faImage
-        ],
-        prefix: 'r-',
-        type: 'font-awesome'
-      },
-      {
-        icons: [faMarkdown, faJs, faGithub, faReddit, faGoogle],
-        prefix: 'b-',
-        type: 'font-awesome'
-      }
-    ]
+    }
   },
   global: {
     fontSize: 16,

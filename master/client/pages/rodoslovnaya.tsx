@@ -10,7 +10,6 @@ import { InputField } from 'bumbag';
 import { useCreateTreeMutation, useCreateUserMutation, useFindAllAncestorsQuery, useFindalltreesQuery } from 'generated';
 import { useEffect, useState } from 'react';
 import Trees from 'components/tree/trees';
-import UncontrolledDiagram from 'components/diagram/diagram';
 import Tree from 'react-d3-tree'
 import { RawNodeDatum } from 'react-d3-tree/lib/types/common';
 import { AddMemberModal } from 'components/modal/AddMemberModal';

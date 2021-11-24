@@ -10,7 +10,6 @@ import { InputField } from 'bumbag';
 import { useCreateTreeMutation, useCreateUserMutation, useFindAllAncestorsQuery, useFindalltreesQuery, useFindTreebyIdQuery } from 'generated';
 import { useEffect, useState } from 'react';
 import BarChart from 'components/svg/BarChart';
-import Smile from 'components/svg/Smile';
 import TestCircle from 'components/svg/circlecomponents/Testcircle';
 import CircleContainer from 'components/svg/circlecomponents/CircleContainer';
 
