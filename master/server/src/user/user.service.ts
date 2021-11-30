@@ -1,4 +1,4 @@
-import { Model, CreateQuery, UpdateQuery, FilterQuery } from 'mongoose';
+import { Model, UpdateQuery, FilterQuery } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './user.schema';
@@ -7,7 +7,7 @@ import pubsub from 'src/subscriptions/pubsub';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel('User') private readonly userModel: Model<User>) { }
+  constructor(@InjectModel('User') private readonly userModel: Model<User>) {  }
 
   async updateById({
     userId,
