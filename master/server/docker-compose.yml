@@ -10,10 +10,21 @@ services:
       context: ./
     image: starter-server
     ports:
-     - "5000:5000"
+     - 5000:5000
     networks:
       - app-network 
-
-networks:    
+  mongodb:
+    image : mongo:latest
+    container_name: mongodb
+    volumes:
+      - ./database:/data/db
+    ports:
+      - 27017:27017
+    networks:
+      - app-network
+    restart: always
+  
+networks:
   app-network:
     external: true
+  
