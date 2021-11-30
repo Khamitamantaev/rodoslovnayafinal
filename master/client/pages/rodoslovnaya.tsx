@@ -142,7 +142,7 @@ function RodoslovnayaPage() {
             <circle r={15} fill="#1e90ff" ></circle>
             {/* `foreignObject` requires width & height to be explicitly set. */}
             <foreignObject {...foreignObjectProps}>
-                <div style={{ border: "1px solid black", backgroundColor: "#1e90ff", fontSize: "12px"}} >
+                <div style={{ border: "1px solid black", backgroundColor: "#eee8aa", fontSize: "12px"}} >
                     <button style={{ width: "100%" }} onClick={() => handleClick(nodeDatum)}>Добавить элемент</button>
                     <h3 style={{ textAlign: "center", font: "bold italic large serif", color: "#191970", fontSize: '20px' }}>{nodeDatum.name}</h3>
                     {nodeDatum.children && (
