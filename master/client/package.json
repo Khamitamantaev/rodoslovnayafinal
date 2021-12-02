@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "predev": "yarn codegen",
     "build": "next build",
     "postbuild": "cp .next/public/service-worker.js public",
     "start": "next start",

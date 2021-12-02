@@ -28,8 +28,8 @@ export class TreeService {
     return CreateTree.save()
   }
 
-  async findAllTrees(): Promise<Tree[]> {
-    return await this.treeModel.find().lean()
+  async findAllTrees(userId: string): Promise<Tree[]> {
+    return await this.treeModel.find({ rootUser: userId }).lean()
   }
 
   async findOne(id: string): Promise<Tree> {

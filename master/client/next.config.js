@@ -13,7 +13,7 @@ const manifestConfig = {
     version: version,
     name: 'My site name',
     short_name: 'Short name',
-    start_url: 'https://example.com',
+    start_url: 'https://khammerson.ru',
     background_color: '#ffffff',
     icons: [
       {
@@ -174,6 +174,6 @@ config.serverRuntimeConfig = {
 };
 
 config.assetPrefix =
-  process.env.NODE_ENV === 'production' ? 'https://static.example.com' : '';
+  process.env.NODE_ENV === 'production' ? 'https://khammerson.ru' : '';
 
 module.exports = config;
