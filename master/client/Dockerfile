@@ -10,8 +10,4 @@ RUN rm -rf /src/node_modules && cp -a /tmp/node_modules /src/
 # Define working directory
 WORKDIR /src
 
-RUN npm run-script build
-
 EXPOSE 3000
-
-CMD npm run start
