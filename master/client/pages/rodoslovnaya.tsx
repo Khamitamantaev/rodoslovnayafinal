@@ -37,10 +37,6 @@ function RodoslovnayaPage() {
 
     const close = () => setIsOpen(false)
 
-    const handleSubmit = (name: string) => {
-
-    }
-
     const [currentTree, setCurrentTree] = useState("");
     // const [trees, setTrees] = useState([{}])
 
@@ -68,57 +64,18 @@ function RodoslovnayaPage() {
     // console.log(trees)
     useEffect(() => {
         if (currentTree) {
-            var result = trees.find(obj => {
-                return obj._id === currentTree
-            })
-            // console.log(result.branches)
+            var result = trees.find(obj => obj._id === currentTree)
             const nest = (items, _id = null, link = 'parentID') =>
                 items
                     .filter(item => item[link] === _id)
-                    .map(item => ({ ...item, children: nest(items, item._id) }));
-            // console.log(
-            //     nest(result.branches)
-            // )
-            if (result.branches.length !== 0) {
+                    .map(item => ({ ...item, children: nest(items, item._id) }))
+            if (result) {
                 setTree(nest(result.branches))
-                // console.log(tree)
             }
-            
-            else setTree(
-                {
-                    name: 'Root',
-                    children: []
-                }
-            )
         }
-
-    }, [dataTrees, currentTree])
-
-    // const renderRectSvgNode = ({ nodeDatum, toogleNode }) => (
-    //     <g fill="white" stroke="green" stroke-width="5" >
-    //         <text fill="black" strokeWidth="1" x="20">
-    //             {nodeDatum.name}
-    //         </text>
-    //         <circle cx="20" cy="20" r="10" onClick={toogleNode} />
-    //     </g>
-    // )
-
-    // const renderRectSvgNode = ({ nodeDatum, toggleNode }) => (
-    //     <g>
-    //       <rect width="20" height="20" x="-10" onClick={toggleNode} />
-    //       <text fill="black" strokeWidth="1" x="20">
-    //         {nodeDatum.name}
-    //       </text>
-    //       {nodeDatum.attributes?.department && (
-    //         <text fill="black" x="20" dy="20" strokeWidth="1">
-    //           Department: {nodeDatum.attributes?.department}
-    //         </text>
-    //       )}
-    //     </g>
-    //   );
+    }, [currentTree, trees])
 
     const handleClick = (nodeDatum) => {
-        // console.log(nodeDatum)
         setCurrentBranch({
             _id: nodeDatum._id,
             name: nodeDatum.name,
@@ -136,13 +93,13 @@ function RodoslovnayaPage() {
         foreignObjectProps,
         handleClick
     }) =>
-    
+
     (
         <g>
             <circle r={15} fill="#1e90ff" ></circle>
             {/* `foreignObject` requires width & height to be explicitly set. */}
             <foreignObject {...foreignObjectProps}>
-                <div style={{ border: "1px solid black", backgroundColor: "#eee8aa", fontSize: "12px"}} >
+                <div style={{ border: "1px solid black", backgroundColor: "#eee8aa", fontSize: "12px" }} >
                     <button style={{ width: "100%" }} onClick={() => handleClick(nodeDatum)}>Добавить элемент</button>
                     <h3 style={{ textAlign: "center", font: "bold italic large serif", color: "#191970", fontSize: '20px' }}>{nodeDatum.name}</h3>
                     {nodeDatum.children && (
@@ -157,6 +114,7 @@ function RodoslovnayaPage() {
 
 
     const onSubmitTree = (values) => {
+      
         return createTree({
             variables: {
                 input: {
@@ -176,7 +134,7 @@ function RodoslovnayaPage() {
     };
     const nodeSize = { x: 200, y: 200 };
     const foreignObjectProps = { width: nodeSize.x, height: nodeSize.y, x: 20 };
-    const data = { something: "Hi!"};
+    const data = { something: "Hi!" };
     return (
         <App title={t('Ваша родословная')} description={t('Здесь можно создать и распечатать свою родословную')} requiresUser>
             <Flex alignX="center">

@@ -12,12 +12,14 @@ export class TreeResolver {
   @Mutation(() => Tree)
   createTree(@Args('createTreeInput') createTreeInput: CreateTreeInput, @Context() context) {
     const userId = get(context, 'req.user._id');
+    console.log(userId + ' сохранил Дерево!')
     return this.treeService.create(createTreeInput, userId);
   }
 
   @Query(() => [Tree], { name: 'findalltrees' })
-  findAll() {
-    return this.treeService.findAllTrees();
+  findAll(@Context() context) {
+    const userId = get(context, 'req.user._id')
+    return this.treeService.findAllTrees(userId);
   }
 
   @Query(() => Tree, { name: 'findTreebyID' })
