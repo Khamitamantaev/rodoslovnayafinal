@@ -31,7 +31,7 @@
 
 export default {
   global: {
-    siteTitle: 'Acme inc',
+    siteTitle: 'Khammerson inc',
     siteShortName: 'A short name',
     twitterHandle: '@example'
   },
@@ -78,7 +78,7 @@ export default {
     login: {
       title: 'Login',
       description: '',
-      heading: 'Login with one of the following:'
+      heading: 'Login to Khammerson App:'
     },
     register: {
       title: 'Register',
