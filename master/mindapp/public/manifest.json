@@ -43,10 +43,9 @@
 			"type": "image/png"
 		}
 	],
-	"start_url": "https://khammerson.ru",
+	"start_url": "http://localhost:3000",
 	"display": "standalone",
 	"orientation": "natural",
 	"background_color": "#ffffff",
-	"theme_color": "#FFFFFF",
-	"version": "0.1.0"
+	"theme_color": "#FFFFFF"
 }

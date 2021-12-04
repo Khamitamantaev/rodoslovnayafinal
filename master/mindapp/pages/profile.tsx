@@ -58,7 +58,7 @@ function SettingsPage() {
     bio: Yup.string(),
   });
 
-  const { handleSubmit, errors, control } = useForm({
+  const { handleSubmit, control } = useForm({
     defaultValues,
     resolver: yupResolver(validationSchema),
   });
