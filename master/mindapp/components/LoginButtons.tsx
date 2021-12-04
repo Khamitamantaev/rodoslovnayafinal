@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Flex, Heading, Columns } from 'bumbag';
-import GoogleLogin from 'components/auth/GoogleLogin';
-import useTranslation from 'locales/useTranslation';
+import GoogleLogin from '../components/auth/GoogleLogin';
+import useTranslation from '../locales/useTranslation';
 
 function LoginButtons() {
   const { t } = useTranslation();

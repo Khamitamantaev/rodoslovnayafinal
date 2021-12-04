@@ -1,11 +1,18 @@
-import type { NextPage } from 'next'
+import * as React from 'react';
+import { get } from 'lodash';
+import { getDataFromTree } from '@apollo/client/react/ssr';
+import App from '../components/App';
+import { useMeQuery } from '../generated';
+import LoggedOutHome from '../containers/LoggedOutHome';
+import withApollo from '../lib/withApollo';
 
-const Home: NextPage = () => {
+const Home = () => {
+  const { data } = useMeQuery();
+  const me = get(data, 'me', null);
+
   return (
-    <div>
-      <p className="italic ...">The quick brown fox ...</p>
-    </div>
-  )
-}
+    <App description="">{me ? `Welcome ${me.name}` : <LoggedOutHome />}</App>
+  );
+};
 
-export default Home
+export default withApollo(Home, { getDataFromTree });
