@@ -13,6 +13,7 @@
     "@emotion/styled": "^11.6.0",
     "@mui/material": "^5.2.2",
     "@sentry/nextjs": "^6.15.0",
+    "bumbag": "^2.7.16",
     "graphql": "^16.0.1",
     "next": "12.0.4",
     "react": "17.0.2",
