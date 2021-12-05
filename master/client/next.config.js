@@ -13,7 +13,7 @@ const manifestConfig = {
     version: version,
     name: 'My site name',
     short_name: 'Short name',
-    start_url: process.env.CLIENT_DOMAIN,
+    start_url: 'http://localhost:3000',
     background_color: '#ffffff',
     icons: [
       {
@@ -164,7 +164,7 @@ config.publicRuntimeConfig = {
   SENTRY_DSN: process.env.SENTRY_DSN,
   BROWSER_API_ENDPOINT: process.env.BROWSER_API_ENDPOINT,
   GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
-  CLIENT_DOMAIN: process.env.CLIENT_DOMAIN || `http://localhost:3000`,
+  CLIENT_DOMAIN: process.env.CLIENT_DOMAIN,
   REDDIT_CLIENT_ID: process.env.REDDIT_CLIENT_ID
 };
 
@@ -174,6 +174,6 @@ config.serverRuntimeConfig = {
 };
 
 config.assetPrefix =
-  process.env.NODE_ENV === 'production' ? process.env.CLIENT_DOMAIN : '';
+  process.env.NODE_ENV === 'production' ? 'http://localhost:3000' : '';
 
 module.exports = config;
