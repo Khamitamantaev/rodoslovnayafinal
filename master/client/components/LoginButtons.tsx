@@ -1,7 +1,5 @@
 import * as React from 'react';
 import { Flex, Heading, Columns } from 'bumbag';
-import GitHubLogin from 'components/auth/GitHubLogin';
-import RedditLogin from 'components/auth/RedditLogin';
 import GoogleLogin from 'components/auth/GoogleLogin';
 import useTranslation from 'locales/useTranslation';
 
