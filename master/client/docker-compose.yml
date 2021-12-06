@@ -6,7 +6,6 @@ services:
       - .env
     build:
       context: ./
-    command: "npm run-script start"
     image: starter-client
     ports:
        - "3000:3000"

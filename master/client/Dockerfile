@@ -15,3 +15,5 @@ COPY . /usr/src/app
 RUN npm run build
 
 EXPOSE 3000
+# Running the app
+CMD ["node_modules/.bin/next", "start"]
