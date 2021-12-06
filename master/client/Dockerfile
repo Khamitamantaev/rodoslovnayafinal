@@ -12,8 +12,8 @@ RUN npm install
 COPY . /usr/src/app
 
 # Building app
-RUN npm run-script build
+RUN npm run build
 
 EXPOSE 3000
 # Running the app
-CMD ["node_modules/.bin/next", "start"]
+CMD [ "npm", "start" ]
