@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "cp .next/public/service-worker.js public",
     "start": "next start",
     "lint": "eslint --fix . && echo 'Lint complete.'",
     "codegen": "graphql-codegen --config codegen.yml"
