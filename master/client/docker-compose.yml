@@ -11,6 +11,24 @@ services:
        - "3000:3000"
     networks:
       - app-network
+    
+  caddy:
+    image: caddy/caddy:2.2.1-alpine
+    container_name: caddy-service
+    restart: unless-stopped
+    ports:
+      -"80:80"
+      -"443:443"
+    volumes:
+    - $PWD/Caddyfile:/etc/caddy/Caddyfile
+    - $PWD/site:/srv
+    - caddy_data:/data
+    - caddy-config:/config
+  
+  volumes:
+    caddy_data:
+    caddy_config:
+
 
 networks:    
   app-network:
