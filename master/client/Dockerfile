@@ -11,8 +11,10 @@ RUN npm install
 # Copying source files
 COPY . /usr/src/app
 
-EXPOSE 3000
-
 # Building app
-RUN npm run build && npm run start
+RUN npm run build
+
+EXPOSE 3000
+# Running the app
+CMD ["node_modules/.bin/next", "start"]
 
