@@ -1,19 +1,17 @@
 FROM node:12-alpine
 
-# Create app directory
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+ADD package.json /tmp/package.json
+RUN cd /tmp && rm -rf node_modules && npm install -q
 
-# Installing dependencies
-COPY package*.json /usr/src/app/
-RUN npm install
+# Code base
+ADD ./ /src
+RUN rm -rf /src/node_modules && cp -a /tmp/node_modules /src/
 
-# Copying source files
-COPY . /usr/src/app
+# Define working directory
+WORKDIR /src
 
-# Building app
-RUN npm run build
+RUN npm run-script build
 
 EXPOSE 3000
-# Running the app
-CMD ["node_modules/.bin/next", "start"]
+
+CMD npm run start
