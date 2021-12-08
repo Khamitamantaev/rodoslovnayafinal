@@ -24,7 +24,9 @@ services:
     - $PWD/site:/srv
     - caddy_data:/data
     - caddy_config:/config
-
+    networks:
+      - app-network
+      
 volumes:
   caddy_data:
   caddy_config:
