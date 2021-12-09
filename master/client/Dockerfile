@@ -11,8 +11,6 @@ RUN npm install
 # Copying source files
 COPY . /usr/src/app
 
-RUN npm run codegen
-
 # Building app
 RUN npm run build
 
