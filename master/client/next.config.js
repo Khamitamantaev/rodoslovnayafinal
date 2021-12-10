@@ -170,7 +170,7 @@ config.publicRuntimeConfig = {
 
 config.serverRuntimeConfig = {
   SERVER_API_ENDPOINT:
-    process.env.SERVER_API_ENDPOINT || 'http://localhost:5000/graphql'
+    process.env.SERVER_API_ENDPOINT || 'http://188.166.119.252:5000/graphql'
 };
 
 config.assetPrefix =
