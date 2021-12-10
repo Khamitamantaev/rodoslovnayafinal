@@ -19,7 +19,7 @@ export const MONO_DB_CONNECTION_STRING =
   process.env.MONO_DB_CONNECTION_STRING ||
   `mongodb://localhost:27017/${DB_NAME}`;
 
-export const CORS_ORIGIN = process.env.CORS_ORIGIN || 'http://localhost:3000';
+export const CORS_ORIGIN = process.env.CORS_ORIGIN || 'http://khammerson.ru';
 
 /*
  * Set this to your client application's domain
