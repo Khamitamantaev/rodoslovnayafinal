@@ -142,3 +142,42 @@ RUN npm run build
 EXPOSE 3000
 # Running the app
 CMD ["node_modules/.bin/next", "start"]
+
+
+
+
+
+version: '3.7'
+services:
+  starter-client:
+    container_name: starter-client
+    env_file:
+      - .env
+    build:
+      context: ./
+    image: starter-client
+    ports:
+       - "3000:3000"
+    networks:
+      - app-network
+
+  caddy:
+    image: caddy/caddy:2.2.1-alpine
+    container_name: caddy-service
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./site:/srv
+      - caddy_data:/data
+      - caddy_config:/config  
+
+volumes:
+  caddy_data:
+  caddy_config:
+
+networks:    
+  app-network:
+    external: true 
