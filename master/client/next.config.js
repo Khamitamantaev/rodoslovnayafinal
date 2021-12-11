@@ -13,7 +13,7 @@ const manifestConfig = {
     version: version,
     name: 'My site name',
     short_name: 'Short name',
-    start_url: process.env.CLIENT_DOMAIN,
+    start_url: 'http://khammerson.ru',
     background_color: '#ffffff',
     icons: [
       {
@@ -156,7 +156,8 @@ config.poweredByHeader = false;
 
 config.publicRuntimeConfig = {
   CLIENT_BASE_URL: process.env.CLIENT_BASE_URL,
-  WEBSOCKET_API_URL: process.env.WEBSOCKET_API_URL,
+  WEBSOCKET_API_URL:
+  process.env.WEBSOCKET_API_URL || 'ws://localhost:5000/graphql',
 
   // Google Analytics UA-
   GA_ID: process.env.GA_ID || '',
@@ -168,10 +169,11 @@ config.publicRuntimeConfig = {
 };
 
 config.serverRuntimeConfig = {
-  SERVER_API_ENDPOINT: process.env.SERVER_API_ENDPOINT
+  SERVER_API_ENDPOINT:
+  process.env.SERVER_API_ENDPOINT || 'http://localhost:5000/graphql'
 };
 
 config.assetPrefix =
-  process.env.NODE_ENV === 'production' ? process.env.CLIENT_DOMAIN : '';
+   process.env.NODE_ENV === 'production' ? 'http://khammerson.ru' : '';
 
 module.exports = config;
