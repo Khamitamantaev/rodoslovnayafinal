@@ -1,4 +1,4 @@
-khammerson.ru {
+188.166.119.252:3000 {
   reverse_proxy starter-client:3000  {
     header_down Strict-Transport-Security max-age=31536000;
    }
