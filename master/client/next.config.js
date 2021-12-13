@@ -13,7 +13,7 @@ const manifestConfig = {
     version: version,
     name: 'My site name',
     short_name: 'Short name',
-    start_url: 'http://localhost:3000',
+    start_url: 'http://165.232.92.192:3000',
     background_color: '#ffffff',
     icons: [
       {
@@ -174,6 +174,6 @@ config.serverRuntimeConfig = {
 };
 
 config.assetPrefix =
-   process.env.NODE_ENV === 'production' ? 'http://localhost:3000' : '';
+   process.env.NODE_ENV === 'production' ? 'http://165.232.92.192:3000' : '';
 
 module.exports = config;
