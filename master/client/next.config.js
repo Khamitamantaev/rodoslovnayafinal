@@ -157,7 +157,7 @@ config.poweredByHeader = false;
 config.publicRuntimeConfig = {
   CLIENT_BASE_URL: process.env.CLIENT_BASE_URL,
   WEBSOCKET_API_URL:
-  process.env.WEBSOCKET_API_URL || 'ws://localhost:5000/graphql',
+  process.env.WEBSOCKET_API_URL || 'ws://165.232.92.192:5000/graphql',
 
   // Google Analytics UA-
   GA_ID: process.env.GA_ID || '',
@@ -170,7 +170,7 @@ config.publicRuntimeConfig = {
 
 config.serverRuntimeConfig = {
   SERVER_API_ENDPOINT:
-  process.env.SERVER_API_ENDPOINT || 'http://localhost:5000/graphql'
+  process.env.SERVER_API_ENDPOINT || 'http://165.232.92.192:5000/graphql'
 };
 
 config.assetPrefix =
