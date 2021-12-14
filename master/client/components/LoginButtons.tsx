@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Flex, Heading, Columns } from 'bumbag';
 import GoogleLogin from 'components/auth/GoogleLogin';
 import useTranslation from 'locales/useTranslation';
+import GitHubLogin from './auth/GitHubLogin';
 
 function LoginButtons() {
   const { t } = useTranslation();
@@ -12,10 +13,10 @@ function LoginButtons() {
         <Flex flexDirection="column">
           <Heading fontSize="400">{t('page.login.heading')}</Heading>
           <br />
-          {/* <GitHubLogin />
+          <GitHubLogin />
+          {/* <br />
+          <RedditLogin /> */}
           <br />
-          <RedditLogin />
-          <br /> */}
           <GoogleLogin />
         </Flex>
       </Columns.Column>
