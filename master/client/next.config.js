@@ -13,7 +13,7 @@ const manifestConfig = {
     version: version,
     name: 'My site name',
     short_name: 'Short name',
-    start_url: 'http://165.232.92.192:3000',
+    start_url: 'http://localhost:3000',
     background_color: '#ffffff',
     icons: [
       {
@@ -157,7 +157,7 @@ config.poweredByHeader = false;
 config.publicRuntimeConfig = {
   CLIENT_BASE_URL: process.env.CLIENT_BASE_URL,
   WEBSOCKET_API_URL:
-  process.env.WEBSOCKET_API_URL || 'ws://165.232.92.192:5000/graphql',
+  process.env.WEBSOCKET_API_URL || 'ws://localhost:5000/graphql',
 
   // Google Analytics UA-
   GA_ID: process.env.GA_ID || '',
@@ -170,10 +170,10 @@ config.publicRuntimeConfig = {
 
 config.serverRuntimeConfig = {
   SERVER_API_ENDPOINT:
-  process.env.SERVER_API_ENDPOINT || 'http://165.232.92.192:5000/graphql'
+  process.env.SERVER_API_ENDPOINT || 'http://localhost:5000/graphql'
 };
 
 config.assetPrefix =
-   process.env.NODE_ENV === 'production' ? 'http://165.232.92.192:3000' : '';
+   process.env.NODE_ENV === 'production' ? 'http://localhost:3000' : '';
 
 module.exports = config;
