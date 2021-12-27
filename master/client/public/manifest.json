@@ -1,6 +1,6 @@
 {
-	"name": "My site name",
-	"short_name": "Short name",
+	"name": "Khammerson incorporated",
+	"short_name": "Khammerson",
 	"icons": [
 		{
 			"src": "/icons/icon-72x72.png",
@@ -43,7 +43,7 @@
 			"type": "image/png"
 		}
 	],
-	"start_url": "http://localhost:3000",
+	"start_url": "http://khammerson.ru",
 	"display": "standalone",
 	"orientation": "natural",
 	"background_color": "#ffffff",
