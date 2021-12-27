@@ -13,7 +13,7 @@ const manifestConfig = {
     version: version,
     name: 'My site name',
     short_name: 'Short name',
-    start_url: 'http://164.92.210.69:3000',
+    start_url: 'http://khammerson.ru',
     background_color: '#ffffff',
     icons: [
       {
@@ -174,6 +174,6 @@ config.serverRuntimeConfig = {
 };
 
 config.assetPrefix =
-   process.env.NODE_ENV === 'production' ? 'http://164.92.210.69:3000' : '';
+   process.env.NODE_ENV === 'production' ? 'http://khammerson.ru' : '';
 
 module.exports = config;
