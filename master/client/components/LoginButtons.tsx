@@ -13,7 +13,7 @@ function LoginButtons() {
         <Flex flexDirection="column">
           <Heading fontSize="400">{t('page.login.heading')}</Heading>
           <br />
-          <GitHubLogin />
+          {/* <GitHubLogin /> */}
           {/* <br />
           <RedditLogin /> */}
           <br />
