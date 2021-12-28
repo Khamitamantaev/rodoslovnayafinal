@@ -28,8 +28,8 @@ import { BranchModule } from './branch/branch.module';
     GraphQLModule.forRoot({
       installSubscriptionHandlers: true,
       cors: {
-        origin: CORS_ORIGIN,
         credentials: true,
+        origin: false,
       },
       autoSchemaFile: 'schema.gql',
       context: ({ req, res, connection }) => {
