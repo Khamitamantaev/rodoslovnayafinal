@@ -27,12 +27,6 @@ import { BranchModule } from './branch/branch.module';
     MongooseModule.forFeature([...schemas]),
     GraphQLModule.forRoot({
       installSubscriptionHandlers: true,
-
-      cors: {
-        origin: CORS_ORIGIN,
-        optionsSuccessStatus: 200,
-        credentials: true,
-      },
       autoSchemaFile: 'schema.gql',
       context: ({ req, res, connection }) => {
         const clientId = get(connection, 'context.clientId');
