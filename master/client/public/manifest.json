@@ -43,7 +43,7 @@
 			"type": "image/png"
 		}
 	],
-	"start_url": "http://localhost:3000",
+	"start_url": "http://164.92.210.69.nip.io:3000",
 	"display": "standalone",
 	"orientation": "natural",
 	"background_color": "#ffffff",
