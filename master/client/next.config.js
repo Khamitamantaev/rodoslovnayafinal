@@ -13,7 +13,7 @@ const manifestConfig = {
     version: version,
     name: 'My site name',
     short_name: 'Short name',
-    start_url: 'https://164.92.210.69.nip.io:3000',
+    start_url: 'http://164.92.210.69.nip.io:3000',
     background_color: '#ffffff',
     icons: [
       {
@@ -170,10 +170,10 @@ config.publicRuntimeConfig = {
 
 config.serverRuntimeConfig = {
   SERVER_API_ENDPOINT:
-  process.env.SERVER_API_ENDPOINT || 'https://164.92.210.69:5000/graphql'
+  process.env.SERVER_API_ENDPOINT || 'http://164.92.210.69:5000/graphql'
 };
 
 config.assetPrefix =
-   process.env.NODE_ENV === 'production' ? 'https://164.92.210.69.nip.io:3000' : '';
+   process.env.NODE_ENV === 'production' ? 'http://164.92.210.69.nip.io:3000' : '';
 
 module.exports = config;
