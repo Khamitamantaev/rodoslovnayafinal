@@ -1,19 +1,20 @@
 version: '3.7'
 services:
   starter-server:
+    container_name: starter-server
+    environment: 
+      - NODE_ENV=production
+    env_file:
+      - .env
     build:
       context: ./
     command: sh -c "yarn build && yarn start"
+    image: starter-server
     ports:
-      - "5000:5000"
-    depends_on:
-      - mongodb
-    env_file:
-      - .env
-    restart: on-failure 
+     - "5000:5000"
     networks:
-      - app-network
-
+      - app-network 
+      
   mongodb:
     image : mongo:latest
     container_name: mongodb
@@ -27,4 +28,4 @@ services:
 
 networks:    
   app-network:
-    external: true 
+    external: true
