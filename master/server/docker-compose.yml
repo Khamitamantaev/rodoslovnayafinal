@@ -11,6 +11,8 @@ services:
     env_file:
       - .env
     restart: on-failure 
+    networks:
+      - app-network
 
   mongodb:
     image : mongo:latest
@@ -20,3 +22,9 @@ services:
     ports:
       - 27017:27017
     restart: always
+    networks:
+      - app-network
+
+networks:    
+  app-network:
+    external: true 
